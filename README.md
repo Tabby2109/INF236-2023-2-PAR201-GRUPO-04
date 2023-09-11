@@ -1,14 +1,14 @@
 # INF236-2023-2-PAR201-GRUPO-04
 > Notar que **X** corresponde al número del grupo asignado.
 
-# Grupo x
+# Grupo 4
 
-Este es el repositorio del *Grupo X*, cuyos integrantes son:
+Este es el repositorio del *Grupo 4*, cuyos integrantes son:
 
-* Integrante 1 - Rol
-* Integrante 2 - Rol
-* Integrante 3 - Rol
-* **Tutor**: Nombre Tutor
+* Juan Daniel Alegría Vásquez - 202023510-4
+* Juan Daniel Cucurella Mora - 202173608-5
+* Javier Vicente Riquelme Toro - 202173551-8
+* **Tutor**: Tabata Ahumada 
 
 ## Wiki
 
