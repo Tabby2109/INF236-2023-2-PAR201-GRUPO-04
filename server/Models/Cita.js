@@ -1,18 +1,29 @@
 const mongoose = require('mongoose');
 
+var Counter2Schema = new mongoose.Schema({
+    _id: {type: String, required: true},
+    seq: { type: Number, default: 0 }
+});
+var counter2 = mongoose.model('counter2', Counter2Schema);
+
+
 const citaSchema = new mongoose.Schema({
+  _id: Number,
   personalId: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Padmin',
+    type: Number,
+    ref: 'Personal',
     required: true,
   },
-  pacienteId: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Paciente',
+  rutPaciente: {
+    type: String,
+    required: true,
+  },
+  nombrePaciente: {
+    type: String,
     required: true,
   },
   maquinaId: {
-    type: mongoose.Schema.Types.ObjectId,
+    type: Number,
     ref: 'Maquina',
     required: true,
   },
@@ -30,7 +41,25 @@ const citaSchema = new mongoose.Schema({
   tipoEx: {
     type: String,
   },
+  infoExtra: {
+    type: String,
+  },
+});
 
+citaSchema.pre('save', async function (next) {
+  try {
+      const doc = this;
+      const counter2Doc = await counter2.findByIdAndUpdate(
+          { _id: 'entityId' },
+          { $inc: { seq: 1 } },
+          { new: true, upsert: true } // Necesario para que la promesa devuelva el documento actualizado
+      );
+
+      doc._id = counter2Doc.seq;
+      next();
+  } catch (error) {
+      next(error);
+  }
 });
 
 // Crea el modelo de datos de la cita

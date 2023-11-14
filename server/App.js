@@ -1,7 +1,9 @@
 const express = require("express");
 const cors = require("cors");
 const morgan = require("morgan");
+const dotenv = require("dotenv");
 
+dotenv.config();
 const db = require("./Database");
 
 const app = express();
@@ -15,10 +17,7 @@ const loginRouter = require('./Routes/login.js');
 
 app.set("port", process.env.port || 5000);
 
-app.use('/users', usersRouter);
-app.use('/pacientes', pacientesRouter);
-app.use('/maquinas', maquinasRouter);
-app.use('/citas', citasRouter);
+
 
 
 // MIDDLEWARE
@@ -29,8 +28,14 @@ app.use(cors());
 
 app.use('/api', registrarRouter);
 app.use('/api', loginRouter);
+app.use('/users', usersRouter);
+app.use('/pacientes', pacientesRouter);
+app.use('/maquinas', maquinasRouter);
+app.use('/citas', citasRouter);
 
 db();
+
+process.env.TOKEN_SECRET = 'WHa2BVAoyzJofdxO029GR4UzYyToBQMW';
 
 app.listen(app.get("port"), () => {
     console.log(`SERVER CONNECTED AND RUNNING IN ${app.get("port")}`);

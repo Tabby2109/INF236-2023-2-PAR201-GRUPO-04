@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import LoginForm from './components/LoginForm';
 import Inicio from './components/Inicio';
 import { Routes, Route, Navigate, BrowserRouter as Router, useNavigate, } from 'react-router-dom';
+import './App.css';
+import Calendar from './components/calendar/Calendar';
 
 const App = () => {
   const [token, setToken] = useState(null);
@@ -30,10 +32,10 @@ const App = () => {
         //</div>
       ) : (
         <Routes>
-            <Route
-              path="/"
-              element={<LoginForm onLogin={HandleLogin} />}
-            />
+            <Route path="/" element={<LoginForm onLogin={HandleLogin} />} />
+            <Route path="/calendar" element={<Calendar />} />
+            <Route path="/inicio" element={<Inicio />} />
+
           </Routes>
       )}
     </div>

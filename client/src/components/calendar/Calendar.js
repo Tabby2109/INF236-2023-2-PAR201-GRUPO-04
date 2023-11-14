@@ -1,6 +1,9 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { DayPilot, DayPilotCalendar, DayPilotNavigator } from "@daypilot/daypilot-lite-react";
 import "./CalendarStyles.css";
+import { Link } from 'react-router-dom';
+import BarraSuperior from '../BarraSuperior';
+import Inicio from '../Inicio';
 
 const styles = {
   wrap: {
@@ -152,26 +155,29 @@ const Calendar = () => {
   }, []);
 
   return (
-    <div style={styles.wrap}>
-      <div style={styles.left}>
-        <DayPilotNavigator
-          selectMode={"Week"}
-          showMonths={3}
-          skipMonths={3}
-          startDate={"2023-10-02"}
-          selectionDay={"2023-10-02"}
-          onTimeRangeSelected={ args => {
-            calendarRef.current.control.update({
-              startDate: args.day
-            });
-          }}
-        />
-      </div>
-      <div style={styles.main}>
-        <DayPilotCalendar
-          {...calendarConfig}
-          ref={calendarRef}
-        />
+    <div>
+      <BarraSuperior/>
+      <div style={styles.wrap}>
+        <div style={styles.left}>
+          <DayPilotNavigator
+            selectMode={"Week"}
+            showMonths={3}
+            skipMonths={3}
+            startDate={"2023-10-02"}
+            selectionDay={"2023-10-02"}
+            onTimeRangeSelected={ args => {
+              calendarRef.current.control.update({
+                startDate: args.day
+              });
+            }}
+          />
+        </div>
+        <div style={styles.main}>
+          <DayPilotCalendar
+            {...calendarConfig}
+            ref={calendarRef}
+          />
+        </div>
       </div>
     </div>
   );

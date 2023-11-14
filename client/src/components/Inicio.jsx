@@ -1,13 +1,23 @@
 import React from 'react';
-import { Link, Routes, Route, useHistory } from 'react-router-dom';
+import { Link, Routes, Route, useNavigate } from 'react-router-dom';
 import BarraSuperior from './BarraSuperior';
-import Calendar from './calendar/Calendar'
-const IngresoHoras = () => (
-  <div>
-    <h2>Ingreso horas</h2>
-    {/* Contenido de la página de Ingreso horas */}
-  </div>
-);
+import Calendar from './calendar/Calendar';
+
+
+const IngresoHoras = () => {
+  const navigate = useNavigate();
+
+  const handleBoxClick = () => {
+    navigate('/somepage');
+  };
+
+  return (
+    <div onClick={handleBoxClick}>
+      <h2>Ingreso horas</h2>
+      {/* Contenido de la página de Ingreso horas */}
+    </div>
+  );
+};
 
 const VisualizacionHoras = () => (
   <div>
@@ -24,10 +34,13 @@ const ModificacionHoras = () => (
     {/* Contenido de la página de Modificación horas */}
   </div>
 );
+
+
+
 //NOTA: CUIDADO CON LAS MAYUSCULAS EN LAS PROPIEDADES/PARAMETROS DE LOS COMPONENTES, REACT NO TE AVISA SI TIPEASTE MAL LA PROPIEDAD, SOLO LA IGNORA, FUE HORA Y MEDIA DE SUFRIMIENTO AYUDA
 const Inicio = ({ token, setToken, OnLogout }) => (
   <div>
-    <BarraSuperior token={token} setToken={setToken} HandleLogout={OnLogout}/> 
+    <BarraSuperior token={token} setToken={setToken} OnLogout={OnLogout}/> 
 
     <div style={containerStyle}>
       <div style={triangleContainerStyle}>
@@ -35,7 +48,7 @@ const Inicio = ({ token, setToken, OnLogout }) => (
           Ingreso horas
         </Link>
         <div style={sideBoxesContainerStyle}>
-          <Link to="/visualizacion-horas" style={boxStyle}>
+          <Link to="/calendar" style={boxStyle}>
             Visualización horas
           </Link>
           <Link to="/modificacion-horas" style={boxStyle}>
@@ -75,7 +88,7 @@ const boxStyle = {
   alignItems: 'center',
   height: '250px', // Igualado el tamaño
   width: '250px', // Igualado el tamaño
-  background: 'navy', // Color azul más intenso
+  background: 'green', // Color azul más intenso
   borderRadius: '15px',
   margin: '80px', // Reducida la distancia
   textDecoration: 'none',

@@ -2,6 +2,9 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const bcryptjs = require('bcryptjs');
 const jwt = require('jsonwebtoken')
+const dotenv = require('dotenv');
+
+dotenv.config();
 
 const router = express.Router();
 const Personal = require('../Models/Personal');
@@ -21,9 +24,10 @@ router.post('/login', async (req, res) => {
       if (!passwordMatch) {
         return res.status(401).json({ message: 'Credenciales incorrectas.' });
       }
-  
+      
+      //console.log(process.env)
       // Generar un token JWT
-      const token = jwt.sign({ userId: user._id, userIsAdmin: user.isAdmin }, 'FUNCIONAELLOGIN', { expiresIn: '1d' });
+      const token = jwt.sign({ userId: user._id, userIsAdmin: user.isAdmin }, process.env.TOKEN_SECRET, { expiresIn: '1d' });
   
       res.status(200).json({ token, userId: user._id });
     } catch (error) {

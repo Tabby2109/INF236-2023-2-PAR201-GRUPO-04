@@ -1,34 +1,41 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
-const BarraSuperior = ({ token, setToken, HandleLogout }) => (
+const BarraSuperior = ({ token, setToken, OnLogout }) => (
   <div style={barraSuperiorStyle}>
     <span style={nombreAppStyle}>Hospitapp</span>
-    <button onClick={HandleLogout} style={cerrarSesionStyle}>
+    <Link to="/inicio" style={volverAlInicioStyle}>Volver al inicio</Link>
+    <button onClick={OnLogout} style={cerrarSesionStyle}>
       Cerrar sesión
     </button>
   </div>
 );
 
 const barraSuperiorStyle = {
-    display: 'flex',        // Add this line
-    justifyContent: 'space-between',   // Add this line
-    backgroundColor: 'gray',
-    padding: '20px',
-    textAlign: 'left',
-    width: '100%', // Ocupar el ancho completo
-  };
+  display: 'flex',
+  justifyContent: 'space-between',
+  backgroundColor: 'black',
+  padding: '20px',
+  textAlign: 'left',
+  width: '100%',
+};
 
 const nombreAppStyle = {
   color: 'white',
   fontSize: '1.5em',
 };
 
+const volverAlInicioStyle = {
+  color: 'white',
+  textDecoration: 'none',
+  marginRight: '20px', // Ajusta el margen según sea necesario
+};
+
 const cerrarSesionStyle = {
-  marginLeft: 'auto', // Mueve el botón al extremo derecho
   backgroundColor: 'red',
   color: 'white',
-  padding: '10px',
-  borderRadius: '5px',
+  padding: '11px',
+  borderRadius: '100px',
   cursor: 'pointer',
 };
 
