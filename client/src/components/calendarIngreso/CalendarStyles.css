@@ -1,6 +1,6 @@
-/* adjusting the built-in theme */
+/* adjusting the built-in theme /
 
-/* calendar event */
+/ calendar event */
 .calendar_default_event_inner {
     background: #2e78d6;
     color: #fff;
@@ -25,7 +25,7 @@
     z-index: 1000;
    }
 
-   
+
 .form-content {
     background-color: #fff;
     padding: 20px;
@@ -40,7 +40,7 @@
     margin-bottom: 10px;
     font-weight: bold;
    }
-   
+
    .form-content input[type="text"],
    .form-content input[type="email"],
    .form-content textarea {
@@ -50,7 +50,7 @@
     border-radius: 5px;
     margin-bottom: 20px;
    }
-   
+
    .form-content button {
     background-color: #007BFF;
     color: #fff;
@@ -59,7 +59,7 @@
     border-radius: 5px;
     cursor: pointer;
    }
-   
+
    .form-content button:hover {
     background-color: #0056b3;
    }

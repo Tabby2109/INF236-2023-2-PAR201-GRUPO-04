@@ -11,7 +11,7 @@ function authenticateToken(req,res,next){
     if (token == null) return res.sendStatus(401);
   
     jwt.verify(token, process.env.TOKEN_SECRET, (err, user) => {
-        console.log(err);
+        //console.log(err);
 
         if (err) return res.sendStatus(403);
 
@@ -26,11 +26,11 @@ router.post('/registrarCita', authenticateToken, (req, res) => {
     try{
         
         const personalId = Number(req.user.userId);
-        console.log(typeof personalId);
-        const {rutPaciente, nombrePaciente, maquinaId, fecha, hora, motivoEx, tipoEx, infoExtra} = req.body;
-
-        const [hour, minutos] = hora.split(':');
-        console.log(hour);
+        var {rutPaciente, nombrePaciente, maquinaId, fecha, motivoEx, tipoEx, infoExtra} = req.body;
+        const [dia,hora] = fecha.split('T');
+        console.log("hora: " + hora);
+        const [hour, minutos,segundos] = hora.split(':');
+        console.log("hour:" + hour);
         const fechaCorrection = new Date(fecha);
         
         fechaCorrection.setHours((parseInt(hour,10) - 3), parseInt(minutos,10)); //arreglar si se desea usar horario de invierno xd
@@ -66,6 +66,7 @@ router.post('/registrarCita', authenticateToken, (req, res) => {
                 endHour = endHour + 1;
             }
         } 
+        console.log("post arreglo");
         endFecha.setHours(endHour, endMin); //arreglar si se desea usar horario de invierno xd
 
         const nuevaCita = new Cita({personalId, rutPaciente, nombrePaciente, maquinaId, fecha:fechaCorrection, fin:endFecha ,hora, motivoEx, tipoEx, infoExtra});

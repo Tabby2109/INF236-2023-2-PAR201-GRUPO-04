@@ -19,7 +19,6 @@ const SimpleForm = ({hora, setShowForm}) => {
     e.preventDefault();
     // Aquí puedes realizar acciones con los datos del formulario, como enviarlos a un servidor
     //console.log('Datos del formulario:', formData);
-    console.log(hora);
     // También puedes restablecer el formulario después de enviar los datos
     setFormData({
       name: '',
@@ -27,12 +26,13 @@ const SimpleForm = ({hora, setShowForm}) => {
       message: ''
     });
     setShowForm(false);
+    console.log(hora);
   };
 
   return (
     <div className="form-overlay">
         <div className="form-content">
-        
+
         <div>
           <h2>{hora && hora.hora}</h2>
           <form onSubmit={handleSubmit}>
