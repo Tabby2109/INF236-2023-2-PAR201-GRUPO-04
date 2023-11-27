@@ -1,29 +1,25 @@
 import React from 'react';
-import { Link, Routes, Route, useNavigate, Navigate } from 'react-router-dom';
+import { Link, Routes, Route, useNavigate } from 'react-router-dom';
 import BarraSuperior from './BarraSuperior';
 import Calendar from './calendar/Calendar';
-
+import CalendarIngreso from './calendarIngreso/CalendarIngreso';
 
 const IngresoHoras = () => {
-  const navigate = useNavigate();
-
-  const handleBoxClick = () => {
-    navigate('/somepage');
-  };
-
   return (
-    <div onClick={handleBoxClick}>
-      <h2>Ingreso horas</h2>
-      {/* Contenido de la página de Ingreso horas */}
+    <div>
+      <h2>Visualización horas</h2>
+      <Link to="/calendarInicio" style={linkStyle}>
+        Ir a Calendar
+      </Link>
     </div>
   );
 };
 
-const VisualizacionHoras = ({ token, setToken, OnLogout }) => (
-  
+
+const VisualizacionHoras = () => (
   <div>
     <h2>Visualización horas</h2>
-    <Link to="/Calendar" style={linkStyle}>
+    <Link to="/calendar" style={linkStyle}>
       Ir a Calendar
     </Link>
   </div>
@@ -40,16 +36,16 @@ const ModificacionHoras = () => (
 
 //NOTA: CUIDADO CON LAS MAYUSCULAS EN LAS PROPIEDADES/PARAMETROS DE LOS COMPONENTES, REACT NO TE AVISA SI TIPEASTE MAL LA PROPIEDAD, SOLO LA IGNORA, FUE HORA Y MEDIA DE SUFRIMIENTO AYUDA
 const Inicio = ({ token, setToken, OnLogout }) => (
-  token ? <div>
-    <BarraSuperior token={token} setToken={setToken} OnLogout={OnLogout}/>
+  <div>
+    <BarraSuperior token={token} setToken={setToken} OnLogout={OnLogout}/> 
 
     <div style={containerStyle}>
       <div style={triangleContainerStyle}>
-        <Link to="/ingreso-horas" style={boxStyle}>
+        <Link to="/calendarIngreso" style={boxStyle}>
           Ingreso horas
         </Link>
         <div style={sideBoxesContainerStyle}>
-          <Link to="/Calendar" style={boxStyle}>
+          <Link to="/calendar" style={boxStyle}>
             Visualización horas
           </Link>
           <Link to="/modificacion-horas" style={boxStyle}>
@@ -59,13 +55,14 @@ const Inicio = ({ token, setToken, OnLogout }) => (
       </div>
   
       <Routes>
-        <Route path="/ingreso-horas" element={<IngresoHoras />} />
-        <Route path="/visualizacion-horas" element={<VisualizacionHoras />} />
+        
         <Route path="/modificacion-horas" element={<ModificacionHoras />} />
-        <Route path="/Calendar" element={<Calendar token={token} setToken={setToken} OnLogout={OnLogout}/>} />
+        <Route path="/calendar" element={<Calendar />} />
+        <Route path="/calendarIngreso" element={<CalendarIngreso />} />
+
       </Routes>
     </div>
-  </div> : Navigate('/')
+  </div>
 
 );
 

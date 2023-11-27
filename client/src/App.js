@@ -4,6 +4,7 @@ import Inicio from './components/Inicio';
 import { Routes, Route, Navigate, BrowserRouter as Router, useNavigate, } from 'react-router-dom';
 import './App.css';
 import Calendar from './components/calendar/Calendar';
+import CalendarIngreso from './components/calendarIngreso/CalendarIngreso';
 
 const App = () => {
   const [token, setToken] = useState(null);
@@ -35,7 +36,7 @@ const App = () => {
             <Route path="/" element={<LoginForm onLogin={HandleLogin} />} />
             <Route path="/calendar" element={<Calendar token={token} setToken={setToken} OnLogout={HandleLogout}/>} />
             <Route path="/inicio" element={<Inicio token={token} setToken={setToken} OnLogout={HandleLogout}/>} />
-
+            <Route path="/calendarIngreso" element={<CalendarIngreso />} />
           </Routes>
       )}
     </div>

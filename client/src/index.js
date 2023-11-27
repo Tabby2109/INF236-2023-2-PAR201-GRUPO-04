@@ -5,6 +5,7 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import Calendar from './components/calendar/Calendar';
+import CalendarIngreso from './components/calendarIngreso/CalendarIngreso';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Inicio from './components/Inicio';
 
@@ -16,7 +17,7 @@ ReactDOM.render(
       <Route path="/" element={<App />} />
       <Route path="/calendar" element={<Calendar />} />
       <Route path="/inicio" element={<Inicio />} />
-
+      <Route path="/calendarIngreso" element={<CalendarIngreso />} />
     </Routes>
   </Router>,
   rootElement
