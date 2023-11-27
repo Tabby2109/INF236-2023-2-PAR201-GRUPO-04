@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link, Routes, Route, useNavigate } from 'react-router-dom';
+import { Link, Routes, Route, useNavigate, Navigate } from 'react-router-dom';
 import BarraSuperior from './BarraSuperior';
 import Calendar from './calendar/Calendar';
 
@@ -19,10 +19,11 @@ const IngresoHoras = () => {
   );
 };
 
-const VisualizacionHoras = () => (
+const VisualizacionHoras = ({ token, setToken, OnLogout }) => (
+  
   <div>
     <h2>Visualización horas</h2>
-    <Link to="/calendar" style={linkStyle}>
+    <Link to="/Calendar" style={linkStyle}>
       Ir a Calendar
     </Link>
   </div>
@@ -39,8 +40,8 @@ const ModificacionHoras = () => (
 
 //NOTA: CUIDADO CON LAS MAYUSCULAS EN LAS PROPIEDADES/PARAMETROS DE LOS COMPONENTES, REACT NO TE AVISA SI TIPEASTE MAL LA PROPIEDAD, SOLO LA IGNORA, FUE HORA Y MEDIA DE SUFRIMIENTO AYUDA
 const Inicio = ({ token, setToken, OnLogout }) => (
-  <div>
-    <BarraSuperior token={token} setToken={setToken} OnLogout={OnLogout}/> 
+  token ? <div>
+    <BarraSuperior token={token} setToken={setToken} OnLogout={OnLogout}/>
 
     <div style={containerStyle}>
       <div style={triangleContainerStyle}>
@@ -48,7 +49,7 @@ const Inicio = ({ token, setToken, OnLogout }) => (
           Ingreso horas
         </Link>
         <div style={sideBoxesContainerStyle}>
-          <Link to="/calendar" style={boxStyle}>
+          <Link to="/Calendar" style={boxStyle}>
             Visualización horas
           </Link>
           <Link to="/modificacion-horas" style={boxStyle}>
@@ -61,10 +62,10 @@ const Inicio = ({ token, setToken, OnLogout }) => (
         <Route path="/ingreso-horas" element={<IngresoHoras />} />
         <Route path="/visualizacion-horas" element={<VisualizacionHoras />} />
         <Route path="/modificacion-horas" element={<ModificacionHoras />} />
-        <Route path="/Calendar" element={<Calendar />} />
+        <Route path="/Calendar" element={<Calendar token={token} setToken={setToken} OnLogout={OnLogout}/>} />
       </Routes>
     </div>
-  </div>
+  </div> : Navigate('/')
 
 );
 

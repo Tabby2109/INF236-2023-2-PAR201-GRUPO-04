@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 const BarraSuperior = ({ token, setToken, OnLogout }) => (
   <div style={barraSuperiorStyle}>
     <span style={nombreAppStyle}>Hospitapp</span>
-    <Link to="/inicio" style={volverAlInicioStyle}>Volver al inicio</Link>
+    <Link to="/Inicio" style={volverAlInicioStyle}>Volver al inicio</Link>
     <button onClick={OnLogout} style={cerrarSesionStyle}>
       Cerrar sesión
     </button>

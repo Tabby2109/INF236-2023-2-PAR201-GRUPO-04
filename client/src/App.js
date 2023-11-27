@@ -16,7 +16,7 @@ const App = () => {
 
   const HandleLogout = () => {
     // Elimina el token del estado para cerrar la sesión
-    console.log("close session");
+    alert("close session");
     setToken(null);
     navigate('/');
     //window.location.href='';
@@ -33,8 +33,8 @@ const App = () => {
       ) : (
         <Routes>
             <Route path="/" element={<LoginForm onLogin={HandleLogin} />} />
-            <Route path="/calendar" element={<Calendar />} />
-            <Route path="/inicio" element={<Inicio />} />
+            <Route path="/calendar" element={<Calendar token={token} setToken={setToken} OnLogout={HandleLogout}/>} />
+            <Route path="/inicio" element={<Inicio token={token} setToken={setToken} OnLogout={HandleLogout}/>} />
 
           </Routes>
       )}

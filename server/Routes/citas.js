@@ -29,14 +29,46 @@ router.post('/registrarCita', authenticateToken, (req, res) => {
         console.log(typeof personalId);
         const {rutPaciente, nombrePaciente, maquinaId, fecha, hora, motivoEx, tipoEx, infoExtra} = req.body;
 
-        
-        const fechaCorrection = new Date(fecha);
-        console.log(fechaCorrection);
         const [hour, minutos] = hora.split(':');
         console.log(hour);
+        const fechaCorrection = new Date(fecha);
+        
         fechaCorrection.setHours((parseInt(hour,10) - 3), parseInt(minutos,10)); //arreglar si se desea usar horario de invierno xd
+        console.log("fecha corregida:")
         console.log(fechaCorrection);
-        const nuevaCita = new Cita({personalId, rutPaciente, nombrePaciente, maquinaId, fecha, hora, motivoEx, tipoEx, infoExtra});
+
+        const endFecha = new Date(fecha);
+        var [endHour, endMin] = hora.split(':');
+        endHour = parseInt(hour,10) - 3;
+        endMin = parseInt(minutos,10);
+
+        if (tipoEx == "Resonancia" || tipoEx == "resonancia") {
+            tipoEx = "Resonancia";
+            endHour = endHour + 1; 
+            if (endMin == 0){
+                endMin = 30;
+            }else{
+                endMin = 0;
+            }
+        }   else if (tipoEx == "Scanner" || tipoEx == "scanner") {
+            tipoEx = "Scanner";
+            endHour = endHour + 1; 
+        }   else if (tipoEx == "Radiografia" || tipoEx == "radiografia" || tipoEx == "ecografia" || tipoEx == "Ecografia") {
+            if (tipoEx == "Radiografia" || tipoEx == "radiografia") {
+                tipoEx = "Radiografia";
+            } else {
+                tipoEx = "Ecografia";
+            }
+            if (endMin == 0){
+                endMin = 30;
+            }else{
+                endMin = 0;
+                endHour = endHour + 1;
+            }
+        } 
+        endFecha.setHours(endHour, endMin); //arreglar si se desea usar horario de invierno xd
+
+        const nuevaCita = new Cita({personalId, rutPaciente, nombrePaciente, maquinaId, fecha:fechaCorrection, fin:endFecha ,hora, motivoEx, tipoEx, infoExtra});
         nuevaCita.save()
             .then(Cita => {
                 console.log('cita guardada', Cita);
@@ -53,13 +85,25 @@ router.post('/registrarCita', authenticateToken, (req, res) => {
     }
 });
 
-router.get('/getCitas', authenticateToken, async (req,res) => {
+router.get('/getCitas', async (req,res) => {
     try {
         const result = await Cita.find();
         res.status(200).json(result)
     } catch (error) {
         console.error(error);
         res.status(500).json({error: 'error al obtener citas'});
+    }
+
+});
+
+router.post('/getCitaById', async (req,res) => {
+    console.log(req);
+    try {
+        const result = await Cita.find({_id:req.body.id});
+        res.status(200).json(result)
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({error: 'error al obtener cita'});
     }
 
 });

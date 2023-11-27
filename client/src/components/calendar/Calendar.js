@@ -4,6 +4,7 @@ import "./CalendarStyles.css";
 import { Link } from 'react-router-dom';
 import BarraSuperior from '../BarraSuperior';
 import Inicio from '../Inicio';
+import axios from 'axios';
 
 const styles = {
   wrap: {
@@ -17,7 +18,81 @@ const styles = {
   }
 };
 
-const Calendar = () => {
+
+const Calendar = ({token,setToken,OnLogout}) => {
+  const editEvent = async (e) => {
+    const dp = calendarRef.current.control;
+    const modal = await DayPilot.Modal.prompt("Update event text:", e.text());
+    if (!modal.result) { return; }
+    e.data.text = modal.result;
+    dp.events.update(e);
+  };
+
+  const fetchEventInfo = async (eID) => {
+    axios.post('http://localhost:5000/citas/getCitaById', {
+      id: eID,
+    })
+      .then(response => {
+      const event = response.data
+      console.log(event[0]);
+      const msg = "RUT: " + event[0].rutPaciente + "<br/>Nombre: " + event[0].nombrePaciente + "<br/>TipoExamen: " + event[0].tipoEx + "<br/>Motivo: " + event[0].motivoEx + "<br/>Informacion extra: " + event[0].infoExtra ;
+      const modal = DayPilot.Modal.alert(msg, {html: true});
+    })
+    .catch(error => console.error(error));
+  }
+  const [config, setConfig] = useState({
+    viewType: "Week",
+    durationBarVisible: false,
+    onEventClick: async args => {
+      await fetchEventInfo(args.e.data.id);
+      //console.log(args.e.data.id);
+    },
+  });
+
+  useEffect(() => {
+    //const events = fetchEvents();
+
+    axios.get('http://localhost:5000/citas/getCitas')
+        .then(response => {
+          // Update your state with the schedules from the database
+          const events = response.data.map(schedule => ({
+            id: schedule._id,
+            text: schedule.nombrePaciente,
+            start: new Date(schedule.fecha),
+            end: new Date(schedule.fin),
+          }));
+          calendarRef.current.control.update({events});
+        })
+        .catch(error => console.error(error));
+
+    const startDate = DayPilot.Date.today();
+
+    //calendarRef.current.control.update({startDate, events});
+  }, []);
+
+  const calendarRef = useRef();
+
+  const handleTimeRangeSelected = args => {
+    calendarRef.current.control.update({
+      startDate: args.day
+    });
+  }
+
+  return (
+    <div>
+      <BarraSuperior token={token} setToken={setToken} OnLogout={OnLogout}/> 
+      <div style={styles.wrap}>
+        
+        <div style={styles.left}>
+            <DayPilotNavigator selectMode={"Week"} showMonths={2} skipMonths={2} onTimeRangeSelected={handleTimeRangeSelected}/>
+        </div>
+        <div> 
+            <DayPilotCalendar {...config} ref={calendarRef}/>
+        </div>
+      </div>
+    </div>
+  );
+  /*
   const calendarRef = useRef()
 
   const editEvent = async (e) => {
@@ -153,12 +228,13 @@ const Calendar = () => {
 
     calendarRef.current.control.update({startDate, events});
   }, []);
-
+  
   return (
     <div>
       <BarraSuperior/>
       <div style={styles.wrap}>
         <div style={styles.left}>
+          
           <DayPilotNavigator
             selectMode={"Week"}
             showMonths={3}
@@ -180,7 +256,7 @@ const Calendar = () => {
         </div>
       </div>
     </div>
-  );
+  );*/
 }
 
 export default Calendar;
