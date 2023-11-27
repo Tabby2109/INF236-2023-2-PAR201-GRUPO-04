@@ -35,12 +35,12 @@ const ModificacionHoras = () => (
 
 
 //NOTA: CUIDADO CON LAS MAYUSCULAS EN LAS PROPIEDADES/PARAMETROS DE LOS COMPONENTES, REACT NO TE AVISA SI TIPEASTE MAL LA PROPIEDAD, SOLO LA IGNORA, FUE HORA Y MEDIA DE SUFRIMIENTO AYUDA
-const Inicio = ({ token, setToken, OnLogout }) => {
+const Inicio = ({setToken, OnLogout }) => {
   const gettoken = sessionStorage.getItem('token');
-  const nowtoken = JSON.parse(gettoken);
+  const token = JSON.parse(gettoken);
   return(
   <div>
-    <BarraSuperior token={nowtoken} setToken={setToken} OnLogout={OnLogout}/> 
+    <BarraSuperior token={token} setToken={setToken} OnLogout={OnLogout}/> 
 
     <div style={containerStyle}>
       <div style={triangleContainerStyle}>
@@ -51,7 +51,7 @@ const Inicio = ({ token, setToken, OnLogout }) => {
           <Link to="/calendar" style={boxStyle}>
             Visualización horas
           </Link>
-          <Link to="/modificacion-horas" style={boxStyle}>
+          <Link to="/Inicio" style={boxStyle}>
             Modificación horas
           </Link>
         </div>
@@ -59,9 +59,9 @@ const Inicio = ({ token, setToken, OnLogout }) => {
   
       <Routes>
         
-        <Route path="/modificacion-horas" element={<ModificacionHoras token={nowtoken} setToken={setToken} OnLogout={OnLogout}/>} />
-        <Route path="/calendar" element={<Calendar token={nowtoken} setToken={setToken} OnLogout={OnLogout}/>} />
-        <Route path="/calendarIngreso" element={<CalendarIngreso token={nowtoken} setToken={setToken} OnLogout={OnLogout}/>} />
+        <Route path="/modificacion-horas" element={<ModificacionHoras token={token} setToken={setToken} OnLogout={OnLogout}/>} />
+        <Route path="/calendar" element={<Calendar token={token} setToken={setToken} OnLogout={OnLogout}/>} />
+        <Route path="/calendarIngreso" element={<CalendarIngreso token={token} setToken={setToken} OnLogout={OnLogout}/>} />
 
       </Routes>
     </div>

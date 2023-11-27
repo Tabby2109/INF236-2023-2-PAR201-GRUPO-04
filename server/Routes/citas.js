@@ -28,7 +28,7 @@ router.post('/registrarCita', authenticateToken, (req, res) => {
         console.log(req);
         console.log("user: " + req.user.userId);
         const personalId = Number(req.user.userId);
-        var {rutPaciente, nombrePaciente, maquinaId, fecha, motivoEx, tipoEx, infoExtra} = req.body;
+        var {rutPaciente, nombrePaciente, maquinaId, fecha, motivoEx, tipoEx, contacto, infoExtra} = req.body;
         const [dia,hora] = fecha.split('T');
         console.log("hora: " + hora);
         const [hour, minutos,segundos] = hora.split(':');
@@ -71,7 +71,7 @@ router.post('/registrarCita', authenticateToken, (req, res) => {
         console.log("post arreglo");
         endFecha.setHours(endHour, endMin); //arreglar si se desea usar horario de invierno xd
 
-        const nuevaCita = new Cita({personalId, rutPaciente, nombrePaciente, maquinaId, fecha:fechaCorrection, fin:endFecha ,hora, motivoEx, tipoEx, infoExtra});
+        const nuevaCita = new Cita({personalId, rutPaciente, nombrePaciente, maquinaId, fecha:fechaCorrection, fin:endFecha ,hora, motivoEx, tipoEx, contacto, infoExtra});
         nuevaCita.save()
             .then(Cita => {
                 console.log('cita guardada', Cita);

@@ -1,15 +1,27 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { Routes, Route, Navigate, BrowserRouter as Router, useNavigate, } from 'react-router-dom';
 
-const BarraSuperior = ({ token, setToken, OnLogout }) => (
-  <div style={barraSuperiorStyle}>
+const BarraSuperior = ({ token, setToken, OnLogout }) => {
+  const navigate = useNavigate();
+
+  const HandleLogout = () => {
+    // Elimina el token del estado para cerrar la sesión
+    alert("closed session");
+    sessionStorage.setItem('token', null);
+    
+    navigate('/');
+    window.location.reload(true);
+  };
+    
+  return(<div style={barraSuperiorStyle}>
     <span style={nombreAppStyle}>Hospitapp</span>
     <Link to="/Inicio" style={volverAlInicioStyle}>Volver al inicio</Link>
-    <button onClick={OnLogout} style={cerrarSesionStyle}>
+    <button onClick={HandleLogout} style={cerrarSesionStyle}>
       Cerrar sesión
     </button>
-  </div>
-);
+  </div>);
+};
 
 const barraSuperiorStyle = {
   display: 'flex',

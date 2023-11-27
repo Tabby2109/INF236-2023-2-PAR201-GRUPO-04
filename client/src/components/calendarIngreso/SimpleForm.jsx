@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { Routes, Route, BrowserRouter as Router, useNavigate, } from 'react-router-dom';
 
 const SimpleForm = ({hora, setShowForm}) => {
   const gettoken = sessionStorage.getItem('token');
   const nowtoken = JSON.parse(gettoken);
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     rutPaciente: '',
     nombrePaciente: '',
@@ -11,6 +13,7 @@ const SimpleForm = ({hora, setShowForm}) => {
     fecha: '',
     motivoEx: '',
     tipoEx: '',
+    contacto: '',
     infoExtra: ''
   });
 
@@ -31,6 +34,7 @@ const SimpleForm = ({hora, setShowForm}) => {
       nombrePaciente: formData.nombrePaciente,
       maquinaId: formData.maquinaId,
       fecha: hora,
+      contacto: formData.contacto,
       motivoEx: formData.motivoEx,
       tipoEx: formData.tipoEx,
       infoExtra: formData.infoExtra
@@ -46,11 +50,14 @@ const SimpleForm = ({hora, setShowForm}) => {
         nombrePaciente: '',
         maquinaId: '',
         fecha: '',
+        contacto: '',
         motivoEx: '',
         tipoEx: '',
         infoExtra: ''
       });
       setShowForm(false);
+      alert("registrada con éxito, los cambios se reflejarán una vez se recargue el calendario, dirijase a visualización");
+      window.location.reload(true);
       console.log(hora);
     })
     .catch(error => console.error('Error guardando cita:', error));
@@ -87,6 +94,11 @@ const SimpleForm = ({hora, setShowForm}) => {
             <label>
             Tipo:
             <input type="text" name="tipoEx" value={formData.tipoEx} onChange={handleChange} />
+            </label>
+            <br />
+            <label>
+            Contacto:
+            <input type="text" name="contacto" value={formData.contacto} onChange={handleChange} />
             </label>
             <br />
             <label>

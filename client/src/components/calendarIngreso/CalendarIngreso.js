@@ -1,11 +1,11 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { DayPilot, DayPilotCalendar, DayPilotNavigator } from "@daypilot/daypilot-lite-react";
 import "./CalendarStyles.css";
-import { Link } from 'react-router-dom';
 import BarraSuperior from '../BarraSuperior';
 import Inicio from '../Inicio';
 import axios from 'axios';
 import SimpleForm from './SimpleForm'
+import { Routes, Route, Navigate, BrowserRouter as Router, useNavigate, } from 'react-router-dom';
 
 const styles = {
   wrap: {
@@ -21,9 +21,10 @@ const styles = {
 
 
 const Calendar = ({setToken,OnLogout}) => {
+  const navigate = useNavigate();
   const gettoken = sessionStorage.getItem('token');
   const token = JSON.parse(gettoken);
-  console.log(token);
+  console.log(OnLogout);
   const [horaSelect, setHoraSelect] = useState(null);
   const fetchEventInfo = async (eID) => {
     axios.post('http://localhost:5000/citas/getCitaById', {
@@ -32,7 +33,7 @@ const Calendar = ({setToken,OnLogout}) => {
       .then(response => {
       const event = response.data
       console.log(event[0]);
-      const msg = "RUT: " + event[0].rutPaciente + "<br/>Nombre: " + event[0].nombrePaciente + "<br/>TipoExamen: " + event[0].tipoEx + "<br/>Motivo: " + event[0].motivoEx + "<br/>Informacion extra: " + event[0].infoExtra ;
+      const msg = "RUT: " + event[0].rutPaciente + "<br/>Nombre: " + event[0].nombrePaciente + "<br/>TipoExamen: " + event[0].tipoEx + "<br/>Motivo: " + event[0].motivoEx + "<br/>Informacion extra: " + event[0].infoExtra + "<br/>contacto: " + event[0].contacto;
       const modal = DayPilot.Modal.alert(msg, {html: true});
     })
     .catch(error => console.error(error));
@@ -80,7 +81,6 @@ const Calendar = ({setToken,OnLogout}) => {
         .catch(error => console.error(error));
 
     const startDate = DayPilot.Date.today();
-
     //calendarRef.current.control.update({startDate, events});
   }, []);
 

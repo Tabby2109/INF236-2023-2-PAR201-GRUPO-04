@@ -24,7 +24,6 @@ const App = () => {
     // Elimina el token del estado para cerrar la sesión
     alert("closed session");
     sessionStorage.setItem('token', null);
-    setToken(null);
     
     navigate('/');
     //window.location.href='';

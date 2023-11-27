@@ -38,7 +38,7 @@ const Calendar = ({setToken, OnLogout}) => {
       .then(response => {
       const event = response.data
       console.log(event[0]);
-      const msg = "RUT: " + event[0].rutPaciente + "<br/>Nombre: " + event[0].nombrePaciente + "<br/>TipoExamen: " + event[0].tipoEx + "<br/>Motivo: " + event[0].motivoEx + "<br/>Informacion extra: " + event[0].infoExtra ;
+      const msg = "RUT: " + event[0].rutPaciente + "<br/>Nombre: " + event[0].nombrePaciente + "<br/>TipoExamen: " + event[0].tipoEx + "<br/>Motivo: " + event[0].motivoEx + "<br/>Informacion extra: " + event[0].infoExtra + "<br/>contacto: " + event[0].contacto;
       const modal = DayPilot.Modal.alert(msg, {html: true});
     })
     .catch(error => console.error(error));

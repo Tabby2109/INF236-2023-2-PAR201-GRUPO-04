@@ -35,8 +35,8 @@ const citaSchema = new mongoose.Schema({
     type: Date,
     required: true,
   },
-  hora: {
-    type: String, 
+  contacto: {
+    type: String,
     required: true,
   },
   motivoEx: {
