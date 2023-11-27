@@ -50,30 +50,6 @@ const Calendar = ({token,setToken,OnLogout}) => {
     
 
   }
-  /*const [showModal, setShowModal] = useState(false);
-
-  const handleModalClose = () => {
-    setShowModal(false);
-  };
-
-  const handleModalSave = (eventText, eventType) => {
-    const dp = calendarRef.current.control;
-
-    /*
-    dp.events.add({
-      start: args.start,
-      end: args.end,
-      id: DayPilot.guid(),
-      text: eventText,
-      type: eventType
-    });*/
-    /*
-    axios.post('http://localhost:5000/api/schedules', newEvent)
-      .then(response => {
-        dp.events.add(newEvent);
-      })
-      .catch(error => console.error(error));
-  };*/
 
 
   const [config, setConfig] = useState({
@@ -81,26 +57,9 @@ const Calendar = ({token,setToken,OnLogout}) => {
     durationBarVisible: false,
     onEventClick: async args => {
       await fetchEventInfo(args.e.data.id);
-      //await editEvent(args.e);
-      //console.log(args.e.data.id);
+
     },
     onTimeRangeSelected: async args => {
-      /*const dp = calendarRef.current.control;
-      DayPilot.Modal.loadingHtml = "<h1>hello world<h1/>";
-      const modal = await DayPilot.Modal.prompt("Ingrese RUT del paciente: ", "");
-      const modal2 = await DayPilot.Modal.prompt("Ingrese Nombre del paciente:","");
-      const modal3 = await DayPilot.Modal.prompt("Ingrese motivo del examen:","");
-      const modal4 = await DayPilot.Modal.prompt("Ingrese el tipo de examen:","");
-      dp.clearSelection();
-      if (!modal.result) { return; }
-      dp.events.add({
-        start: args.start,
-        end: args.end,
-        id: DayPilot.guid(),
-        text: modal.result
-      });*/
-      //createCita(args);
-      //setShowModal(true);
       horaSelect = args.start;
       activateShowForm(horaSelect)
     },
@@ -148,7 +107,7 @@ const Calendar = ({token,setToken,OnLogout}) => {
         </div>
         <div>
         {showForm && (
-          <SimpleForm hora={horaSelect}/>
+          <SimpleForm hora={horaSelect} setShowForm={setShowForm} />
         )}
         </div>
       </div>

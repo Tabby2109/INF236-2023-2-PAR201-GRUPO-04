@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-const SimpleForm = ({hora}) => {
+const SimpleForm = ({hora, setShowForm}) => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -26,29 +26,36 @@ const SimpleForm = ({hora}) => {
       email: '',
       message: ''
     });
+    setShowForm(false);
   };
 
   return (
-    <div>
-      <h2>{hora && hora.hora}</h2>
-      <form onSubmit={handleSubmit}>
-        <label>
-          Nombre:
-          <input type="text" name="name" value={formData.name} onChange={handleChange} />
-        </label>
-        <br />
-        <label>
-          Correo Electrónico:
-          <input type="email" name="email" value={formData.email} onChange={handleChange} />
-        </label>
-        <br />
-        <label>
-          Mensaje:
-          <textarea name="message" value={formData.message} onChange={handleChange} />
-        </label>
-        <br />
-        <button type="submit">Enviar</button>
-      </form>
+    <div className="form-overlay">
+        <div className="form-content">
+        
+        <div>
+          <h2>{hora && hora.hora}</h2>
+          <form onSubmit={handleSubmit}>
+            <label>
+              Nombre:
+              <input type="text" name="name" value={formData.name} onChange={handleChange} />
+            </label>
+            <br />
+            <label>
+              Correo Electrónico:
+              <input type="email" name="email" value={formData.email} onChange={handleChange} />
+            </label>
+            <br />
+            <label>
+              Mensaje:
+              <textarea name="message" value={formData.message} onChange={handleChange} />
+            </label>
+            <br />
+            <button className="cancel-button" onClick={() => setShowForm(false)}>Cancelar</button>
+            <button className="submit-button" onClick={handleSubmit}>Enviar</button>
+          </form>
+        </div>
+      </div>
     </div>
   );
 };
