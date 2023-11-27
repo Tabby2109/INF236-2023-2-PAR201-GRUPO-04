@@ -35,9 +35,12 @@ const ModificacionHoras = () => (
 
 
 //NOTA: CUIDADO CON LAS MAYUSCULAS EN LAS PROPIEDADES/PARAMETROS DE LOS COMPONENTES, REACT NO TE AVISA SI TIPEASTE MAL LA PROPIEDAD, SOLO LA IGNORA, FUE HORA Y MEDIA DE SUFRIMIENTO AYUDA
-const Inicio = ({ token, setToken, OnLogout }) => (
+const Inicio = ({ token, setToken, OnLogout }) => {
+  const gettoken = sessionStorage.getItem('token');
+  const nowtoken = JSON.parse(gettoken);
+  return(
   <div>
-    <BarraSuperior token={token} setToken={setToken} OnLogout={OnLogout}/> 
+    <BarraSuperior token={nowtoken} setToken={setToken} OnLogout={OnLogout}/> 
 
     <div style={containerStyle}>
       <div style={triangleContainerStyle}>
@@ -56,15 +59,15 @@ const Inicio = ({ token, setToken, OnLogout }) => (
   
       <Routes>
         
-        <Route path="/modificacion-horas" element={<ModificacionHoras />} />
-        <Route path="/calendar" element={<Calendar />} />
-        <Route path="/calendarIngreso" element={<CalendarIngreso />} />
+        <Route path="/modificacion-horas" element={<ModificacionHoras token={nowtoken} setToken={setToken} OnLogout={OnLogout}/>} />
+        <Route path="/calendar" element={<Calendar token={nowtoken} setToken={setToken} OnLogout={OnLogout}/>} />
+        <Route path="/calendarIngreso" element={<CalendarIngreso token={nowtoken} setToken={setToken} OnLogout={OnLogout}/>} />
 
       </Routes>
     </div>
-  </div>
+  </div>)
 
-);
+};
 
 const containerStyle = {
   display: 'flex',

@@ -9,12 +9,13 @@ function authenticateToken(req,res,next){
     const token = authHeader && authHeader.split(' ')[1];
   
     if (token == null) return res.sendStatus(401);
-  
+    
     jwt.verify(token, process.env.TOKEN_SECRET, (err, user) => {
+        //console.log("USUARIOOOOO: " + req.user);
         //console.log(err);
 
         if (err) return res.sendStatus(403);
-
+        console.log("this user: " + req.user);
         req.user = user;
 
         next();
@@ -24,7 +25,8 @@ function authenticateToken(req,res,next){
 // Ruta para crear un usuario (Padmin)
 router.post('/registrarCita', authenticateToken, (req, res) => {
     try{
-        
+        console.log(req);
+        console.log("user: " + req.user.userId);
         const personalId = Number(req.user.userId);
         var {rutPaciente, nombrePaciente, maquinaId, fecha, motivoEx, tipoEx, infoExtra} = req.body;
         const [dia,hora] = fecha.split('T');

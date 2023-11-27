@@ -19,7 +19,10 @@ const styles = {
 };
 
 
-const Calendar = ({token,setToken,OnLogout}) => {
+const Calendar = ({setToken, OnLogout}) => {
+  const gettoken = sessionStorage.getItem('token');
+  const token = JSON.parse(gettoken);
+  console.log(token);
   const editEvent = async (e) => {
     const dp = calendarRef.current.control;
     const modal = await DayPilot.Modal.prompt("Update event text:", e.text());

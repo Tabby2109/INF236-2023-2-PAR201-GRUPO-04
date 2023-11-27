@@ -12,13 +12,20 @@ const App = () => {
   
   const HandleLogin = (userToken) => {
     // Almacena el token en el estado para manejar la autenticación
+    console.log(userToken);
+    sessionStorage.setItem('token', JSON.stringify(userToken));
+/*    const tokenString = sessionStorage.getItem('token')
+    const nowToken = JSON.parse(tokenString)
+    console.log(nowToken?.token);*/
     setToken(userToken);
   };
 
   const HandleLogout = () => {
     // Elimina el token del estado para cerrar la sesión
-    alert("close session");
+    alert("closed session");
+    sessionStorage.setItem('token', null);
     setToken(null);
+    
     navigate('/');
     //window.location.href='';
   };
@@ -36,7 +43,7 @@ const App = () => {
             <Route path="/" element={<LoginForm onLogin={HandleLogin} />} />
             <Route path="/calendar" element={<Calendar token={token} setToken={setToken} OnLogout={HandleLogout}/>} />
             <Route path="/inicio" element={<Inicio token={token} setToken={setToken} OnLogout={HandleLogout}/>} />
-            <Route path="/calendarIngreso" element={<CalendarIngreso />} />
+            <Route path="/calendarIngreso" element={<CalendarIngreso token={token} setToken={setToken} OnLogout={HandleLogout}/>} />
           </Routes>
       )}
     </div>

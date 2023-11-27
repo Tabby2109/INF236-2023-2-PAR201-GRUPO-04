@@ -20,7 +20,10 @@ const styles = {
 };
 
 
-const Calendar = ({token,setToken,OnLogout}) => {
+const Calendar = ({setToken,OnLogout}) => {
+  const gettoken = sessionStorage.getItem('token');
+  const token = JSON.parse(gettoken);
+  console.log(token);
   const [horaSelect, setHoraSelect] = useState(null);
   const fetchEventInfo = async (eID) => {
     axios.post('http://localhost:5000/citas/getCitaById', {

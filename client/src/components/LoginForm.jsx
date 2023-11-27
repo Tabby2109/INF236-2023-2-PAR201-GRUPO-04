@@ -17,7 +17,7 @@ const LoginForm = ({ onLogin }) => {
 
       onLogin(response.data.token);
     } catch (error) {
-      alert('Usuario o contraseña incorrectos', error.message);
+      console.log('Usuario o contraseña incorrectos', error.message);
     }
   };
 
