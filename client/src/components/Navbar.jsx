@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 
 const Navbar = () => {
@@ -42,19 +41,6 @@ const navbarStyle = {
 const nombreAppStyle = {
   color: 'white',
   fontSize: '1.5em',
-};
-
-const volverAlInicioStyle = {
-  color: 'white',
-  textDecoration: 'none',
-  marginLeft: 'auto',
-};
-
-const cerrarSesionStyle = {
-  backgroundColor: 'red',
-  color: 'white',
-  padding: '8px 12px',
-  borderRadius: '100px',
 };
 
 export default Navbar;
