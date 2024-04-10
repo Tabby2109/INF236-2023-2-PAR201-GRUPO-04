@@ -19,22 +19,24 @@ const Navbar = () => {
     }
   }, [unLogged, navigate])
     
-  return(<div style={barraSuperiorStyle}>
+  return(<div style={navbarStyle}>
     <span style={nombreAppStyle}>Hospitapp</span>
-    <Link to="/inicio" style={volverAlInicioStyle}>Volver al inicio</Link>
-    <button onClick={HandleLogout} style={cerrarSesionStyle}>
+    <button type="button" className='btn btn-dark ms-auto me-3' onClick={() => navigate('/inicio')}>
+      Volver al inicio
+    </button>
+    <button type="button" className='btn btn-danger' onClick={HandleLogout}>
       Cerrar sesión
     </button>
   </div>);
 };
 
-const barraSuperiorStyle = {
+const navbarStyle = {
   display: 'flex',
-  justifyContent: 'space-between',
+  alignItems: 'center',
   backgroundColor: 'black',
-  padding: '20px',
+  padding: '24px 32px',
   textAlign: 'left',
-  width: '100%',
+  width: '100vw',
 };
 
 const nombreAppStyle = {
@@ -45,15 +47,14 @@ const nombreAppStyle = {
 const volverAlInicioStyle = {
   color: 'white',
   textDecoration: 'none',
-  marginRight: '20px', // Ajusta el margen según sea necesario
+  marginLeft: 'auto',
 };
 
 const cerrarSesionStyle = {
   backgroundColor: 'red',
   color: 'white',
-  padding: '11px',
+  padding: '8px 12px',
   borderRadius: '100px',
-  cursor: 'pointer',
 };
 
 export default Navbar;
