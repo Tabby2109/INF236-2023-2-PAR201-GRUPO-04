@@ -3,7 +3,7 @@ import { Routes, Route } from 'react-router-dom';
 
 import Login from './components/Login';
 import Inicio from './components/Inicio';
-import CalendarVisualizacion from './components/Calendar/CalendarVisualizacion';
+import CalendarVisualizacion from './components/CalendarVisualizacion/CalendarVisualizacion';
 import CalendarIngresoHoras from './components/CalendarIngresoHoras/CalendarIngresoHoras';
 import ProtectedRoute from './components/utils/ProtectedRoute';
 
