@@ -1,11 +1,11 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { DayPilot, DayPilotCalendar, DayPilotNavigator } from "@daypilot/daypilot-lite-react";
+import { DayPilotCalendar, DayPilotNavigator } from "@daypilot/daypilot-lite-react";
 import "./CalendarStyles.css";
-import BarraSuperior from '../BarraSuperior';
-import Inicio from '../Inicio';
+import Navbar from '../Navbar';
+
 import axios from 'axios';
 import SimpleForm from './SimpleForm'
-import { Routes, Route, Navigate, BrowserRouter as Router, useNavigate, } from 'react-router-dom';
+// import { useNavigate } from 'react-router-dom';
 
 const styles = {
   wrap: {
@@ -21,7 +21,7 @@ const styles = {
 
 
 const Calendar = ({setToken,OnLogout}) => {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const gettoken = sessionStorage.getItem('token');
   const token = JSON.parse(gettoken);
   console.log(OnLogout);
@@ -33,25 +33,26 @@ const Calendar = ({setToken,OnLogout}) => {
       .then(response => {
       const event = response.data
       console.log(event[0]);
-      const msg = "RUT: " + event[0].rutPaciente + "<br/>Nombre: " + event[0].nombrePaciente + "<br/>TipoExamen: " + event[0].tipoEx + "<br/>Motivo: " + event[0].motivoEx + "<br/>Informacion extra: " + event[0].infoExtra + "<br/>contacto: " + event[0].contacto;
-      const modal = DayPilot.Modal.alert(msg, {html: true});
+      // const msg = "RUT: " + event[0].rutPaciente + "<br/>Nombre: " + event[0].nombrePaciente + "<br/>TipoExamen: " + event[0].tipoEx + "<br/>Motivo: " + event[0].motivoEx + "<br/>Informacion extra: " + event[0].infoExtra + "<br/>contacto: " + event[0].contacto;
+      // const modal = DayPilot.Modal.alert(msg, {html: true});
     })
     .catch(error => console.error(error));
   }
 
-  const editEvent = async (e) => {
-    const dp = calendarRef.current.control;
-    const modal = await DayPilot.Modal.prompt("Update event text:", e.text());
-    if (!modal.result) { return; }
-    e.data.text = modal.result;
-    dp.events.update(e);
-  };
+  // const editEvent = async (e) => {
+  //   const dp = calendarRef.current.control;
+  //   const modal = await DayPilot.Modal.prompt("Update event text:", e.text());
+  //   if (!modal.result) { return; }
+  //   e.data.text = modal.result;
+  //   dp.events.update(e);
+  // };
+
   const [showForm, setShowForm] = useState(false);
 
   const activateShowForm = () => {
     setShowForm(!showForm);
   }
-  const [config, setConfig] = useState({
+  const [config] = useState({
     viewType: "Week",
     durationBarVisible: false,
     onEventClick: async args => {
@@ -80,7 +81,7 @@ const Calendar = ({setToken,OnLogout}) => {
         })
         .catch(error => console.error(error));
 
-    const startDate = DayPilot.Date.today();
+    // const startDate = DayPilot.Date.today();
     //calendarRef.current.control.update({startDate, events});
   }, []);
 
@@ -94,7 +95,7 @@ const Calendar = ({setToken,OnLogout}) => {
 
   return (
     <div>
-      <BarraSuperior token={token} setToken={setToken} OnLogout={OnLogout}/> 
+      <Navbar token={token} setToken={setToken} OnLogout={OnLogout}/> 
       <div style={styles.wrap}>
         
         <div style={styles.left}>

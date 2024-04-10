@@ -1,11 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Routes, Route } from 'react-router-dom';
-import { useSessionStorage } from 'react-use';
 
 import Login from './components/Login';
 import Inicio from './components/Inicio';
-import Calendar from './components/calendar/Calendar';
-import CalendarIngreso from './components/calendarIngreso/CalendarIngreso';
+import CalendarVisualizacion from './components/Calendar/CalendarVisualizacion';
+import CalendarIngresoHoras from './components/CalendarIngresoHoras/CalendarIngresoHoras';
 import ProtectedRoute from './components/utils/ProtectedRoute';
 
 import './App.css';
@@ -17,9 +16,9 @@ const App = () => {
       <Route path="/" element={<Login />} />
       {/* Rutas protegidas por el token */}
       <Route element={<ProtectedRoute />}>
-        <Route path="/calendar" element={<Calendar />} />
         <Route path="/inicio" element={<Inicio />} />
-        <Route path="/calendarIngreso" element={<CalendarIngreso />} />
+        <Route path="/calendar-visualizacion" element={<CalendarVisualizacion />} />
+        <Route path="/calendar-ingreso-horas" element={<CalendarIngresoHoras />} />
       </Route>
     </Routes>
   )

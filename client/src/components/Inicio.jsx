@@ -1,71 +1,50 @@
 import React from 'react';
-import { Link, Routes, Route, useNavigate } from 'react-router-dom';
-import BarraSuperior from './BarraSuperior';
-import Calendar from './calendar/Calendar';
-import CalendarIngreso from './calendarIngreso/CalendarIngreso';
+import { Link } from 'react-router-dom';
+import Navbar from './Navbar';
 
-const IngresoHoras = () => {
-  return (
-    <div>
-      <h2>Visualización horas</h2>
-      <Link to="/calendarInicio" style={linkStyle}>
-        Ir a Calendar
-      </Link>
-    </div>
-  );
-};
+// import Calendar from './calendar/Calendar';
+// import {Routes, Route, useNavigate } from 'react-router-dom';
+// import CalendarIngreso from './calendarIngreso/CalendarIngreso';
 
-
-const VisualizacionHoras = () => (
-  <div>
-    <h2>Visualización horas</h2>
-    <Link to="/calendar" style={linkStyle}>
-      Ir a Calendar
-    </Link>
-  </div>
-);
-
-const ModificacionHoras = () => (
-  <div>
-    <h2>Modificación horas</h2>
-    {/* Contenido de la página de Modificación horas */}
-  </div>
-);
-
-
+// const ModificacionHoras = () => (
+//   <div>
+//     <h2>Modificación horas</h2>
+//     {/* Contenido de la página de Modificación horas */}
+//   </div>
+// );
 
 //NOTA: CUIDADO CON LAS MAYUSCULAS EN LAS PROPIEDADES/PARAMETROS DE LOS COMPONENTES, REACT NO TE AVISA SI TIPEASTE MAL LA PROPIEDAD, SOLO LA IGNORA, FUE HORA Y MEDIA DE SUFRIMIENTO AYUDA
 const Inicio = ({setToken, OnLogout }) => {
   const gettoken = sessionStorage.getItem('token');
   const token = JSON.parse(gettoken);
   return(
-  <div>
-    <BarraSuperior token={token} setToken={setToken} OnLogout={OnLogout}/> 
-
-    <div style={containerStyle}>
-      <div style={triangleContainerStyle}>
-        <Link to="/calendarIngreso" style={boxStyle}>
-          Ingreso horas
-        </Link>
-        <div style={sideBoxesContainerStyle}>
-          <Link to="/calendar" style={boxStyle}>
-            Visualización horas
+    <div>
+      <Navbar token={token} setToken={setToken} OnLogout={OnLogout}/> 
+      <div style={containerStyle}>
+        <div style={triangleContainerStyle}>
+          <Link to="/calendar-ingreso-horas" style={boxStyle}>
+            Ingreso horas
           </Link>
-          <Link to="/Inicio" style={boxStyle}>
-            Modificación horas
-          </Link>
+          <div style={sideBoxesContainerStyle}>
+            <Link to="/calendar-visualizacion" style={boxStyle}>
+              Visualización horas
+            </Link>
+            {/* Se debe agregar modificación de horas */}
+            <Link to="/modificacion-horas" style={boxStyle}>
+              Modificación horas
+            </Link>
+          </div>
         </div>
-      </div>
-  
-      <Routes>
-        
-        <Route path="/modificacion-horas" element={<ModificacionHoras token={token} setToken={setToken} OnLogout={OnLogout}/>} />
-        <Route path="/calendar" element={<Calendar token={token} setToken={setToken} OnLogout={OnLogout}/>} />
-        <Route path="/calendarIngreso" element={<CalendarIngreso token={token} setToken={setToken} OnLogout={OnLogout}/>} />
 
-      </Routes>
+        {/* Cambiar rutas al app.js -> */}
+        {/* <Routes>
+          <Route path="/modificacion-horas" element={<ModificacionHoras token={token} setToken={setToken} OnLogout={OnLogout}/>} />
+          <Route path="/calendar-ingreso-horas" element={<Calendar token={token} setToken={setToken} OnLogout={OnLogout}/>} />
+          <Route path="/calendar-visualizacion" element={<CalendarIngreso token={token} setToken={setToken} OnLogout={OnLogout}/>} />
+        </Routes> */}
+      </div>
     </div>
-  </div>)
+  )
 
 };
 
@@ -100,11 +79,5 @@ const sideBoxesContainerStyle = {
   display: 'flex',
   flexDirection: 'row',
 };
-
-const linkStyle = {
-    textDecoration: 'none',
-    color: 'blue',
-    marginTop: '20px',  // Ajusta el margen superior según sea necesario
-  };
 
 export default Inicio;

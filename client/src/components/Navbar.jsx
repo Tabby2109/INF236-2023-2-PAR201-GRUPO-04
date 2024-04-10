@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Routes, Route, Navigate, BrowserRouter as Router, useNavigate, } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
-const BarraSuperior = () => {
+const Navbar = () => {
   const [unLogged, setUnLogged] = useState(false);
   const navigate = useNavigate();
 
@@ -17,7 +17,7 @@ const BarraSuperior = () => {
     if (unLogged){
       navigate('/');
     }
-  }, [unLogged])
+  }, [unLogged, navigate])
     
   return(<div style={barraSuperiorStyle}>
     <span style={nombreAppStyle}>Hospitapp</span>
@@ -56,4 +56,4 @@ const cerrarSesionStyle = {
   cursor: 'pointer',
 };
 
-export default BarraSuperior;
+export default Navbar;
