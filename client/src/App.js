@@ -1,52 +1,35 @@
-import React, { useState } from 'react';
-import LoginForm from './components/LoginForm';
+import React from 'react';
+import { Routes, Route } from 'react-router-dom';
+import { useSessionStorage } from 'react-use';
+
+import Login from './components/Login';
 import Inicio from './components/Inicio';
-import { Routes, Route, Navigate, BrowserRouter as Router, useNavigate, } from 'react-router-dom';
-import './App.css';
 import Calendar from './components/calendar/Calendar';
 import CalendarIngreso from './components/calendarIngreso/CalendarIngreso';
+import ProtectedRoute from './components/utils/ProtectedRoute';
+
+import './App.css';
 
 const App = () => {
-  const [token, setToken] = useState(null);
-  const navigate = useNavigate();
-  
-  const HandleLogin = (userToken) => {
-    // Almacena el token en el estado para manejar la autenticación
-    console.log(userToken);
-    sessionStorage.setItem('token', JSON.stringify(userToken));
-/*    const tokenString = sessionStorage.getItem('token')
-    const nowToken = JSON.parse(tokenString)
-    console.log(nowToken?.token);*/
-    setToken(userToken);
-  };
+  // De forma momentanea solo entra a rutas protegidas teniendo un token, pudiendo ser cualquiera.
+  const [token, setToken] = useSessionStorage('token');
 
-  const HandleLogout = () => {
-    // Elimina el token del estado para cerrar la sesión
-    alert("closed session");
-    sessionStorage.setItem('token', null);
+  // Debo saber que el token es valido... Crear endpoint para checkear token!
+  // useEffect(() => {
     
-    navigate('/');
-    //window.location.href='';
-  };
+  // },[token])
 
   return (
-    <div>
-      {token ? (
-        //<div>
-        //  <h2>Bienvenido</h2>
-        //  <button onClick={handleLogout}>Cerrar Sesión</button>
-        <Inicio token={token} setToken={setToken} OnLogout={HandleLogout} />
-        //</div>
-      ) : (
-        <Routes>
-            <Route path="/" element={<LoginForm onLogin={HandleLogin} />} />
-            <Route path="/calendar" element={<Calendar token={token} setToken={setToken} OnLogout={HandleLogout}/>} />
-            <Route path="/inicio" element={<Inicio token={token} setToken={setToken} OnLogout={HandleLogout}/>} />
-            <Route path="/calendarIngreso" element={<CalendarIngreso token={token} setToken={setToken} OnLogout={HandleLogout}/>} />
-          </Routes>
-      )}
-    </div>
-  );
-};
+    <Routes>
+      <Route path="/" element={<Login />} />
+      {/* Rutas protegidas por el token */}
+      <Route element={<ProtectedRoute canActivate={token} />}>
+        <Route path="/calendar" element={<Calendar />} />
+        <Route path="/inicio" element={<Inicio />} />
+        <Route path="/calendarIngreso" element={<CalendarIngreso />} />
+      </Route>
+    </Routes>
+  )
+}
 
 export default App;

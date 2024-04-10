@@ -7,8 +7,8 @@ const BarraSuperior = ({ token, setToken, OnLogout }) => {
 
   const HandleLogout = () => {
     // Elimina el token del estado para cerrar la sesión
-    alert("closed session");
-    sessionStorage.setItem('token', null);
+    alert("Closed session");
+    sessionStorage.removeItem('token');
     
     navigate('/');
     window.location.reload(true);

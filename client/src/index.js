@@ -1,25 +1,17 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import ReactDOM from 'react-dom/client';
+import { BrowserRouter } from 'react-router-dom';
 import App from './App';
-import reportWebVitals from './reportWebVitals';
-import Calendar from './components/calendar/Calendar';
-import CalendarIngreso from './components/calendarIngreso/CalendarIngreso';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Inicio from './components/Inicio';
+import reportWebVitals from './reportWebVitals';
 
-const rootElement = document.getElementById("root");
-
-ReactDOM.render(
-  <Router>
-    <Routes>
-      <Route path="/" element={<App />} />
-      <Route path="/calendar" element={<Calendar />} />
-      <Route path="/inicio" element={<Inicio />} />
-      <Route path="/calendarIngreso" element={<CalendarIngreso />} />
-    </Routes>
-  </Router>,
-  rootElement
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(
+  <React.StrictMode>
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
+  </React.StrictMode>
 );
 
 reportWebVitals();
