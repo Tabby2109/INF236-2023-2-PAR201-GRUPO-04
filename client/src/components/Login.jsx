@@ -40,19 +40,21 @@ const Login = () => {
   
   return (
     <Container className="d-flex justify-content-center align-items-center" style={{ minHeight: "100vh" }}>
-      <Card className="w-100" style={{ maxWidth: "400px" }}>
+      <Card className="w-100" style={{ maxWidth: "40%" }}>
         <Card.Body>
-          <h2 className="text-center mb-4">Iniciar Sesión</h2>
+          <h1>Hospitapp</h1>
+          <hr/>
+          <h3 className="mb-4">Iniciar Sesión</h3>
           <Form onSubmit={handleLogin}>
             <Form.Group controlId="rut">
-              <Form.Label>RUT:</Form.Label>
+              <Form.Label>RUT: (ej. 12345678-9)</Form.Label>
               <Form.Control type="text" required value={rut} onChange={(e) => setRut(e.target.value)} />
             </Form.Group>
             <Form.Group controlId="password">
               <Form.Label>Contraseña:</Form.Label>
               <Form.Control type="password" required value={password} onChange={(e) => setPassword(e.target.value)} />
             </Form.Group>
-            <Button className="w-1000" type="submit">Iniciar Sesión</Button>
+            <Button className="w-1000 mt-3" type="submit">Iniciar Sesión</Button>
           </Form>
         </Card.Body>
       </Card>
