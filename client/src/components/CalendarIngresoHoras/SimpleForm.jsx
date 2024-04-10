@@ -66,50 +66,49 @@ const SimpleForm = ({hora, setShowForm}) => {
 
   return (
     <div className="form-overlay">
-        <div className="form-content">
-
-        <div>
-          <h2>{hora && hora.hora}</h2>
-          <form onSubmit={handleSubmit}>       
-            <label>
-            RUT:
-            <input type="text" name="rutPaciente" value={formData.rutPaciente} onChange={handleChange} />
+      <div className="form-content">
+        <h2>{hora && hora.hora}</h2>
+        <form onSubmit={handleSubmit}>
+          <div className='d-flex'>
+            <label className='label-rut'>
+              RUT:
+              <input type="text" name="rutPaciente" value={formData.rutPaciente} onChange={handleChange} />
             </label>
-            <br />
-            <label>
-            Nombre:
-            <input type="text" name="nombrePaciente" value={formData.nombrePaciente} onChange={handleChange} />
+            <label className='label-nombre'>
+              Nombre:
+              <input type="text" name="nombrePaciente" value={formData.nombrePaciente} onChange={handleChange} />
             </label>
-            <br />
-            <label>
-            Máquina ID:
-            <input type="text" name="maquinaId" value={formData.maquinaId} onChange={handleChange} />
-            </label>
-            <br />
-            <label>
+          </div>
+          
+          <label>
             Motivo:
             <textarea name="motivoEx" value={formData.motivoEx} onChange={handleChange} />
+          </label>
+
+          <div className='d-flex'>
+            <label className='label-maquina'>
+              Máquina ID:
+              <input type="text" name="maquinaId" value={formData.maquinaId} onChange={handleChange} />
             </label>
-            <br />
-            <label>
-            Tipo:
-            <input type="text" name="tipoEx" value={formData.tipoEx} onChange={handleChange} />
+            <label className='label-tipo'>
+              Tipo de examen:
+              <input type="text" name="tipoEx" value={formData.tipoEx} onChange={handleChange} />
             </label>
-            <br />
-            <label>
+            <label className='label-contacto'>
             Contacto:
             <input type="text" name="contacto" value={formData.contacto} onChange={handleChange} />
-            </label>
-            <br />
-            <label>
+          </label>
+
+          </div>
+
+          <label className='label-info'>
             Información extra:
             <textarea name="infoExtra" value={formData.infoExtra} onChange={handleChange} />
-            </label>
-            <br />
-            <button className="cancel-button" onClick={() => setShowForm(false)}>Cancelar</button>
-            <button className="submit-button" onClick={handleSubmit}>Enviar</button>
-          </form>
-        </div>
+          </label>
+
+          <button type="button" className="btn btn-danger me-3 " onClick={() => setShowForm(false)}>Cancelar</button>
+          <button type="button" className="btn btn-primary" onClick={handleSubmit}>Enviar</button>
+        </form>
       </div>
     </div>
   );

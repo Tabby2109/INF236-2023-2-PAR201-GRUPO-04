@@ -31,46 +31,46 @@
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.1);
-    width: 400px;
-    max-width: 90%;
-   }
+    width: 45%;
+}
 
-   .form-content label {
+.form-content label {
     display: block;
     margin-bottom: 10px;
     font-weight: bold;
-   }
+}
 
-   .form-content input[type="text"],
-   .form-content input[type="email"],
-   .form-content textarea {
+.form-content input[type="text"],
+.form-content input[type="email"],
+.form-content textarea {
     width: 100%;
     padding: 10px;
     border: 1px solid #ddd;
     border-radius: 5px;
     margin-bottom: 20px;
-   }
-
-   .form-content button {
-    background-color: #007BFF;
-    color: #fff;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 5px;
-    cursor: pointer;
-   }
-
-   .form-content button:hover {
-    background-color: #0056b3;
-   }
-
-   .cancel-button,
-.submit-button {
- display: inline-block;
- margin-right: 10px;
 }
 
-.cancel-button {
- background-color: red;
- color: white;
+.form-content button {
+    padding: 8px 24px;
+}
+
+/* Primer sección */
+.form-content .label-rut {
+    width: 30%;
+    margin-right: 5%;
+}
+
+.form-content .label-nombre {
+    width: 65%;
+}
+
+/* Segunda sección */
+.form-content .label-maquina {
+    width: 20%;
+    margin-right: 5%;
+}
+
+.form-content .label-tipo {
+    width: 40%;
+    margin-right: 5%;
 }
