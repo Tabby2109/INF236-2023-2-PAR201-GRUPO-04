@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { useSessionStorage } from 'react-use';
 
@@ -12,12 +12,13 @@ import './App.css';
 
 const App = () => {
   // De forma momentanea solo entra a rutas protegidas teniendo un token, pudiendo ser cualquiera.
-  const [token, setToken] = useSessionStorage('token');
+  const [token, setToken] = useState(null);
 
-  // Debo saber que el token es valido... Crear endpoint para checkear token!
-  // useEffect(() => {
-    
-  // },[token])
+  useEffect(()=>{
+    if (sessionStorage.getItem('token') != null){
+      setToken(sessionStorage.getItem('token'));
+    }
+  }, [token])
 
   return (
     <Routes>

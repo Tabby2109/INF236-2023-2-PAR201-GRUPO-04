@@ -1,22 +1,27 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Routes, Route, Navigate, BrowserRouter as Router, useNavigate, } from 'react-router-dom';
 
-const BarraSuperior = ({ token, setToken, OnLogout }) => {
+const BarraSuperior = () => {
+  const [unLogged, setUnLogged] = useState(false);
   const navigate = useNavigate();
 
   const HandleLogout = () => {
     // Elimina el token del estado para cerrar la sesión
     alert("Closed session");
     sessionStorage.removeItem('token');
-    
-    navigate('/');
-    window.location.reload(true);
+    setUnLogged(true);
   };
+
+  useEffect(()=>{
+    if (unLogged){
+      navigate('/');
+    }
+  }, [unLogged])
     
   return(<div style={barraSuperiorStyle}>
     <span style={nombreAppStyle}>Hospitapp</span>
-    <Link to="/Inicio" style={volverAlInicioStyle}>Volver al inicio</Link>
+    <Link to="/inicio" style={volverAlInicioStyle}>Volver al inicio</Link>
     <button onClick={HandleLogout} style={cerrarSesionStyle}>
       Cerrar sesión
     </button>

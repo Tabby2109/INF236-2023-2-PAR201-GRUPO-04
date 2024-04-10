@@ -1,15 +1,20 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Card, Form, Button, Container } from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
   const [rut, setRut] = useState('');
   const [password, setPassword] = useState('');
+  const [logged, setLogged] = useState(false);
+
+  const navigate = useNavigate();
 
   const saveToken = (userToken) => {
     // Almacena el token en el estado para manejar la autenticación
     console.log(userToken);
     sessionStorage.setItem('token', JSON.stringify(userToken));
+    setLogged(true);
   };
 
   const handleLogin = async (e) => {
@@ -27,6 +32,12 @@ const Login = () => {
     }
   };
 
+  useEffect(()=>{
+    if (logged){
+      navigate('/inicio');
+    }
+  }, [logged])
+  
   return (
     <Container className="d-flex justify-content-center align-items-center" style={{ minHeight: "100vh" }}>
       <Card className="w-100" style={{ maxWidth: "400px" }}>
