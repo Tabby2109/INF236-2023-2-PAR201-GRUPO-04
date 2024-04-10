@@ -36,7 +36,7 @@ const Login = () => {
     if (logged){
       navigate('/inicio');
     }
-  }, [logged])
+  }, [logged, navigate])
   
   return (
     <Container className="d-flex justify-content-center align-items-center" style={{ minHeight: "100vh" }}>
