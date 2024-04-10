@@ -18,20 +18,20 @@ const Inicio = ({setToken, OnLogout }) => {
   const gettoken = sessionStorage.getItem('token');
   const token = JSON.parse(gettoken);
   return(
-    <div>
+    <>
       <Navbar token={token} setToken={setToken} OnLogout={OnLogout}/> 
       <div style={containerStyle}>
         <div style={triangleContainerStyle}>
           <Link to="/calendar-ingreso-horas" style={boxStyle}>
-            Ingreso horas
+            Ingreso de horas
           </Link>
           <div style={sideBoxesContainerStyle}>
             <Link to="/calendar-visualizacion" style={boxStyle}>
-              Visualización horas
+              Visualización de horas
             </Link>
             {/* Se debe agregar modificación de horas */}
             <Link to="/modificacion-horas" style={boxStyle}>
-              Modificación horas
+              Modificación de horas
             </Link>
           </div>
         </div>
@@ -43,7 +43,7 @@ const Inicio = ({setToken, OnLogout }) => {
           <Route path="/calendar-visualizacion" element={<CalendarIngreso token={token} setToken={setToken} OnLogout={OnLogout}/>} />
         </Routes> */}
       </div>
-    </div>
+    </>
   )
 
 };
@@ -53,7 +53,7 @@ const containerStyle = {
   flexDirection: 'column',
   justifyContent: 'center',
   alignItems: 'center',
-  height: '100vh', // Ajusta la altura al 100% de la ventana visible
+  width: '100vw',
 };
 
 const triangleContainerStyle = {
@@ -66,13 +66,14 @@ const boxStyle = {
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',
-  height: '250px', // Igualado el tamaño
-  width: '250px', // Igualado el tamaño
-  background: 'green', // Color azul más intenso
+  height: '250px',
+  width: '250px',
+  background: 'green',
   borderRadius: '15px',
-  margin: '80px', // Reducida la distancia
+  margin: '20px', 
   textDecoration: 'none',
-  color: 'white', // Texto en color blanco
+  color: 'white', 
+  fontSize: '18px',
 };
 
 const sideBoxesContainerStyle = {
