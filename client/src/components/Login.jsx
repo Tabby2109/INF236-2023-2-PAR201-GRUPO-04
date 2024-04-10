@@ -44,11 +44,11 @@ const Login = () => {
         <Card.Body>
           <h2 className="text-center mb-4">Iniciar Sesión</h2>
           <Form onSubmit={handleLogin}>
-            <Form.Group id="rut">
+            <Form.Group controlId="rut">
               <Form.Label>RUT:</Form.Label>
               <Form.Control type="text" required value={rut} onChange={(e) => setRut(e.target.value)} />
             </Form.Group>
-            <Form.Group id="password">
+            <Form.Group controlId="password">
               <Form.Label>Contraseña:</Form.Label>
               <Form.Control type="password" required value={password} onChange={(e) => setPassword(e.target.value)} />
             </Form.Group>

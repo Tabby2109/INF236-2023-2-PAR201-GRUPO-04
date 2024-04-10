@@ -1,11 +1,9 @@
 import { Navigate, Outlet} from 'react-router-dom';
 
-const ProtectedRoute = ({ 
-    canActivate,
-    redirectPath = '/'
-}) => {
-    if (!canActivate){
-        return <Navigate to={redirectPath} replace/>
+const ProtectedRoute = () => {
+    let token = sessionStorage.getItem('token');
+    if (token === null){
+        return <Navigate to="/"/>
     }
     return <Outlet />;
 }
