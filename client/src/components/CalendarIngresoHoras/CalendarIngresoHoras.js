@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { DayPilotCalendar, DayPilotNavigator } from "@daypilot/daypilot-lite-react";
+import { DayPilot, DayPilotCalendar, DayPilotNavigator } from "@daypilot/daypilot-lite-react";
 import "./CalendarStyles.css";
 import Navbar from '../Navbar';
 
@@ -24,17 +24,16 @@ const Calendar = ({setToken,OnLogout}) => {
   // const navigate = useNavigate();
   const gettoken = sessionStorage.getItem('token');
   const token = JSON.parse(gettoken);
-  console.log(OnLogout);
   const [horaSelect, setHoraSelect] = useState(null);
+
   const fetchEventInfo = async (eID) => {
     axios.post('http://localhost:5000/citas/getCitaById', {
       id: eID,
     })
       .then(response => {
-      const event = response.data
-      console.log(event[0]);
-      // const msg = "RUT: " + event[0].rutPaciente + "<br/>Nombre: " + event[0].nombrePaciente + "<br/>TipoExamen: " + event[0].tipoEx + "<br/>Motivo: " + event[0].motivoEx + "<br/>Informacion extra: " + event[0].infoExtra + "<br/>contacto: " + event[0].contacto;
-      // const modal = DayPilot.Modal.alert(msg, {html: true});
+      const event = response.data;
+      const msg = "RUT: " + event[0].rutPaciente + "<br/>Nombre: " + event[0].nombrePaciente + "<br/>TipoExamen: " + event[0].tipoEx + "<br/>Motivo: " + event[0].motivoEx + "<br/>Informacion extra: " + event[0].infoExtra + "<br/>contacto: " + event[0].contacto;
+      DayPilot.Modal.alert(msg, {html: true});
     })
     .catch(error => console.error(error));
   }
@@ -50,8 +49,9 @@ const Calendar = ({setToken,OnLogout}) => {
   const [showForm, setShowForm] = useState(false);
 
   const activateShowForm = () => {
-    setShowForm(!showForm);
+    setShowForm(true);
   }
+
   const [config] = useState({
     viewType: "Week",
     durationBarVisible: false,
