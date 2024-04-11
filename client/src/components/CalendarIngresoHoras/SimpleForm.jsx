@@ -5,6 +5,8 @@ import axios from 'axios';
 const SimpleForm = ({hora, setShowForm}) => {
   const gettoken = sessionStorage.getItem('token');
   const nowtoken = JSON.parse(gettoken);
+
+  const tiposExamen = ["Radiografía", "Scanner","Ecografía","Resonancia"]
   // const navigate = useNavigate();
   const [formData, setFormData] = useState({
     rutPaciente: '',
@@ -72,11 +74,11 @@ const SimpleForm = ({hora, setShowForm}) => {
           <div className='d-flex'>
             <label className='label-rut'>
               RUT:
-              <input type="text" name="rutPaciente" value={formData.rutPaciente} onChange={handleChange} />
+              <input type="text" name="rutPaciente" value={formData.rutPaciente} autoComplete="off" onChange={handleChange} />
             </label>
             <label className='label-nombre'>
               Nombre:
-              <input type="text" name="nombrePaciente" value={formData.nombrePaciente} onChange={handleChange} />
+              <input type="text" name="nombrePaciente" value={formData.nombrePaciente} autoComplete="off" onChange={handleChange} />
             </label>
           </div>
           
@@ -85,19 +87,27 @@ const SimpleForm = ({hora, setShowForm}) => {
             <textarea name="motivoEx" value={formData.motivoEx} onChange={handleChange} />
           </label>
 
-          <div className='d-flex'>
+          <div className='d-flex align-items-center
+          justify-content-center'>
             <label className='label-maquina'>
               Máquina ID:
               <input type="text" name="maquinaId" value={formData.maquinaId} onChange={handleChange} />
             </label>
-            <label className='label-tipo'>
+            {/* <label className='label-tipo'>
               Tipo de examen:
               <input type="text" name="tipoEx" value={formData.tipoEx} onChange={handleChange} />
+            </label> */}
+            <label className='label-tipo'>
+              Tipo de examen:
+              <select className='form-select' name="tipoEx" value={formData.tipoEx} onChange={handleChange}>
+                <option defaultValue>Seleccione un tipo</option>
+                { tiposExamen.map(examen => <option key={examen} value={examen}>{examen}</option>)}
+              </select>
             </label>
             <label className='label-contacto'>
-            Contacto:
-            <input type="text" name="contacto" value={formData.contacto} onChange={handleChange} />
-          </label>
+              Contacto:
+              <input type="text" name="contacto" value={formData.contacto} autoComplete="off" onChange={handleChange} />
+            </label>
 
           </div>
 

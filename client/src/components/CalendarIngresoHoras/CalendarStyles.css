@@ -50,6 +50,12 @@
     margin-bottom: 20px;
 }
 
+.form-content select {
+    padding: 10px;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
 .form-content button {
     padding: 8px 24px;
 }
