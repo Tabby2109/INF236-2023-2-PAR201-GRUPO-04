@@ -7,6 +7,7 @@ const Login = () => {
   const [rut, setRut] = useState('');
   const [password, setPassword] = useState('');
   const [logged, setLogged] = useState(false);
+  const [error, setError] = useState(false);
 
   const navigate = useNavigate();
 
@@ -28,7 +29,7 @@ const Login = () => {
 
       saveToken(response.data.token);
     } catch (error) {
-      alert('Usuario o contraseña incorrectos', error.message);
+      setError(true);
     }
   };
 
@@ -44,6 +45,11 @@ const Login = () => {
         <Card.Body>
           <h1>Hospitapp</h1>
           <hr/>
+          {error && 
+            <div class="alert alert-danger" role="alert">
+              Usuario y/o contraseña incorrectos.
+            </div>
+          }
           <h3 className="mb-4">Iniciar Sesión</h3>
           <Form onSubmit={handleLogin}>
             <Form.Group controlId="rut">
