@@ -3,10 +3,12 @@ import { Routes, Route, Navigate } from 'react-router-dom';
 
 import Login from './components/Login';
 import Inicio from './components/Inicio';
+import ProtectedRoute from './components/utils/ProtectedRoute';
 import CalendarVisualizacion from './components/CalendarVisualizacion/CalendarVisualizacion';
 import CalendarIngresoHoras from './components/CalendarIngresoHoras/CalendarIngresoHoras';
 import CalendarModificacion from './components/CalendarModificacion/CalendarModificacion';
-import ProtectedRoute from './components/utils/ProtectedRoute';
+import BusquedaPaciente from './components/BusquedaPaciente/BusquedaPaciente';
+
 
 import './App.css';
 
@@ -21,6 +23,7 @@ const App = () => {
         <Route path="/calendar-visualizacion" element={<CalendarVisualizacion />} />
         <Route path="/calendar-ingreso-horas" element={<CalendarIngresoHoras />} />
         <Route path="/calendar-modificacion" element={<CalendarModificacion />} />
+        <Route path="/busqueda-por-paciente" element={<BusquedaPaciente />} />
       </Route>
       <Route path="*" element={<Navigate to="/inicio" />} />
     </Routes>

@@ -110,4 +110,27 @@ router.post('/getCitaById', async (req,res) => {
     }
 
 });
+
+router.get('/getCitaByRUT/:rut', async (req, res) => {
+    try {
+        const rut = req.params.rut;
+        const result = await Cita.find({ rutPaciente: rut });
+        res.status(200).json(result)
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({error: 'error al obtener las citas por rut'});
+    }
+});
+
+router.get('/getCitaByName/:nombre', async (req, res) => {
+    try {
+        const nombre = req.params.nombre;
+        const result = await Cita.find({ nombrePaciente: nombre });
+        res.status(200).json(result)
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({error: 'error al obtener las citas por rut'});
+    }
+});
+
 module.exports = router;

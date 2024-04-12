@@ -21,7 +21,10 @@ const Navbar = () => {
   return(
     <div style={navbarStyle}>
       <span style={nombreAppStyle}>Hospitapp</span>
-      <button type="button" className='btn btn-dark ms-auto me-3' onClick={() => navigate('/inicio')}>
+      <button type="button" className='btn btn-dark ms-auto me-3' onClick={() => navigate('/busqueda-por-paciente')}>
+        Búsqueda por paciente
+      </button>
+      <button type="button" className='btn btn-dark me-3' onClick={() => navigate('/inicio')}>
         Volver al inicio
       </button>
       <button type="button" className='btn btn-danger' onClick={HandleLogout}>
