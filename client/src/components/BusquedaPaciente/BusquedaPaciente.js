@@ -65,7 +65,7 @@ const BusquedaPaciente = ({setToken, OnLogout}) => {
   return (
     <>
       <Navbar token={token} setToken={setToken} OnLogout={OnLogout}/>
-      <div className='bg-light h-100'>
+      <div className='h-100'>
         <div className='container pt-5 pb-5 h-100'>
           <h2>Búsqueda avanzada</h2>
           <div className='d-flex'>
