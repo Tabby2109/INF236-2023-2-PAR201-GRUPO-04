@@ -1,5 +1,5 @@
 import React from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom';
 
 import Login from './components/Login';
 import Inicio from './components/Inicio';
@@ -20,6 +20,7 @@ const App = () => {
         <Route path="/calendar-visualizacion" element={<CalendarVisualizacion />} />
         <Route path="/calendar-ingreso-horas" element={<CalendarIngresoHoras />} />
       </Route>
+      <Route path="*" element={<Navigate to="/inicio" />} />
     </Routes>
   )
 }

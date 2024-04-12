@@ -13,7 +13,6 @@ import Navbar from './Navbar';
 //   </div>
 // );
 
-//NOTA: CUIDADO CON LAS MAYUSCULAS EN LAS PROPIEDADES/PARAMETROS DE LOS COMPONENTES, REACT NO TE AVISA SI TIPEASTE MAL LA PROPIEDAD, SOLO LA IGNORA, FUE HORA Y MEDIA DE SUFRIMIENTO AYUDA
 const Inicio = ({setToken, OnLogout }) => {
   const gettoken = sessionStorage.getItem('token');
   const token = JSON.parse(gettoken);
