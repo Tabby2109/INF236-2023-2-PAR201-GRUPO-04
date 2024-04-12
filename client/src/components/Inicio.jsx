@@ -29,7 +29,7 @@ const Inicio = ({setToken, OnLogout }) => {
               Visualización de horas
             </Link>
             {/* Se debe agregar modificación de horas */}
-            <Link to="/modificacion-horas" style={boxStyle}>
+            <Link to="/calendar-modificacion" style={boxStyle}>
               Modificación de horas
             </Link>
           </div>
