@@ -111,10 +111,18 @@ router.post('/getCitaById', async (req,res) => {
 
 });
 
+// Búsqueda avanzada del paciente, por rut y nombre
 router.get('/getCitaByRUT/:rut', async (req, res) => {
     try {
         const rut = req.params.rut;
-        const result = await Cita.find({ rutPaciente: rut });
+        var today = new Date();
+        today.setHours(0, 0, 0, 0);
+        console.log(today);
+        // Desde hoy en adelante busca las citas pendientes por rut
+        const result = await Cita.find({ 
+            rutPaciente: rut,
+            fecha: {$gte: today}
+        }).sort({fecha: 1});
         res.status(200).json(result)
     } catch (error) {
         console.error(error);
@@ -124,9 +132,17 @@ router.get('/getCitaByRUT/:rut', async (req, res) => {
 
 router.get('/getCitaByName/:nombre', async (req, res) => {
     try {
-        const nombre = req.params.nombre;
-        const result = await Cita.find({ nombrePaciente: nombre });
+        const name = req.params.nombre;
+        var today = new Date();
+        today.setHours(0, 0, 0, 0);
+        console.log(today);
+        // Desde hoy en adelante busca las citas pendientes por nombre
+        const result = await Cita.find({ 
+            nombrePaciente: name, 
+            fecha: {$gte: today} 
+        }).sort({fecha: 1});
         res.status(200).json(result)
+        
     } catch (error) {
         console.error(error);
         res.status(500).json({error: 'error al obtener las citas por rut'});

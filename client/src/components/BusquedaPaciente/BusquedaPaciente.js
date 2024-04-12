@@ -8,7 +8,7 @@ import moment from 'moment';
 const BusquedaPaciente = ({setToken, OnLogout}) => {
   const gettoken = sessionStorage.getItem('token');
   const token = JSON.parse(gettoken);
-  const [events, setEvents] = useState('');
+  const [events, setEvents] = useState(null);
 
   const [searchType, setSearchType] = useState('placeholder');
   const [searchValue, setSearchValue] = useState('');
@@ -83,6 +83,7 @@ const BusquedaPaciente = ({setToken, OnLogout}) => {
             </select>
             <button className="btn btn-outline-success my-2 my-sm-0" onClick={handleSearch}>Buscar</button>
           </div>
+          {(events != null && events.length == 0) && <p className='mt-2'>No existen citas pendientes.</p>}
           {events && 
             <div className='mt-3'>
               { events.map( (event, index)=> (
@@ -90,7 +91,7 @@ const BusquedaPaciente = ({setToken, OnLogout}) => {
                   <h3>Cita {index + 1}</h3>
                   <p>RUT: {event.rutPaciente}</p>
                   <p>Paciente: {event.nombrePaciente}</p>
-                  <p>Fecha: {moment(Date(event.fecha)).format('DD/MM/YYYY')}</p>
+                  <p>Fecha: {moment(event.fecha).format('DD/MM/YYYY')}</p>
                   <p>Hora: {event.hora}</p>
                   <p>Contacto: {event.contacto}</p>
                   <p>Tipo de examen: {event.tipoEx}</p>
