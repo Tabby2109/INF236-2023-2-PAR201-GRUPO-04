@@ -67,7 +67,7 @@ const boxStyle = {
   alignItems: 'center',
   height: '250px',
   width: '250px',
-  background: 'green',
+  background: 'linear-gradient(to top, #09203f 0%, #537895 100%)',
   borderRadius: '15px',
   margin: '20px', 
   textDecoration: 'none',
