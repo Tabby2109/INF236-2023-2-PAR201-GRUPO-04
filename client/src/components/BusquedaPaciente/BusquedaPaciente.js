@@ -68,6 +68,7 @@ const BusquedaPaciente = ({setToken, OnLogout}) => {
       <div className='h-100'>
         <div className='container pt-5 pb-5 h-100'>
           <h2>Búsqueda avanzada</h2>
+          <h5>Busca las citas pendientes del paciente.</h5>
           <p>Asegúrese de que el RUT/nombre esté completo. Recuerde que el RUT debe ser en formato ej. 12345678-9</p>
           <div className='d-flex'>
             <input
