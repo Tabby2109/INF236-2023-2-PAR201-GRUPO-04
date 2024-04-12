@@ -19,7 +19,7 @@ const Inicio = ({setToken, OnLogout }) => {
   return(
     <>
       <Navbar token={token} setToken={setToken} OnLogout={OnLogout}/> 
-      <div style={containerStyle}>
+      <div className="background-color" style={containerStyle}>
         <div style={triangleContainerStyle}>
           <Link to="/calendar-ingreso-horas" style={boxStyle}>
             Ingreso de horas
@@ -53,6 +53,7 @@ const containerStyle = {
   justifyContent: 'center',
   alignItems: 'center',
   width: '100vw',
+  height: '100vh',
 };
 
 const triangleContainerStyle = {

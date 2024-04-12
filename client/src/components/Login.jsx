@@ -40,7 +40,7 @@ const Login = () => {
   }, [logged, navigate])
   
   return (
-    <Container className="d-flex justify-content-center align-items-center" style={{ minHeight: "100vh" }}>
+    <Container className="background-color d-flex justify-content-center align-items-center" style={{ minHeight: "100vh", minWidth: '100vw'}}>
       <Card className="w-100" style={{ maxWidth: "40%" }}>
         <Card.Body>
           <h1>Hospitapp</h1>

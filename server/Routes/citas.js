@@ -55,11 +55,11 @@ router.post('/registrarCita', authenticateToken, (req, res) => {
         }   else if (tipoEx == "Scanner" || tipoEx == "scanner") {
             tipoEx = "Scanner";
             endHour = endHour + 1; 
-        }   else if (tipoEx == "Radiografia" || tipoEx == "radiografia" || tipoEx == "ecografia" || tipoEx == "Ecografia") {
-            if (tipoEx == "Radiografia" || tipoEx == "radiografia") {
-                tipoEx = "Radiografia";
+        }   else if (tipoEx == "Radiografía" || tipoEx == "radiografía" || tipoEx == "ecografía" || tipoEx == "Ecografía") {
+            if (tipoEx == "Radiografía" || tipoEx == "radiografía") {
+                tipoEx = "Radiografía";
             } else {
-                tipoEx = "Ecografia";
+                tipoEx = "Ecografía";
             }
             if (endMin == 0){
                 endMin = 30;

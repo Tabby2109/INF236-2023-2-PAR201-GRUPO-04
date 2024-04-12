@@ -1,4 +1,4 @@
-body {
+.background-color {
   background: white; /* fallback for old browsers */
   background: -webkit-linear-gradient(to right, white, navy); /* Chrome 10-25, Safari 5.1-6 */
   background: linear-gradient(to right, white, navy); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
@@ -7,5 +7,7 @@ body {
 html, body{
   width: 100vw;
   height: 100vh;
+  margin: 0px;
+  padding: 0px;
   overflow-x: hidden;
 }

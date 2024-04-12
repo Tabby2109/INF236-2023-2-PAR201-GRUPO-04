@@ -2,6 +2,8 @@ import React, { useState } from 'react'
 import Navbar from '../Navbar';
 import axios from 'axios';
 import "./BusquedaPacienteStyles.css";
+// Date format
+import moment from 'moment';
 
 const BusquedaPaciente = ({setToken, OnLogout}) => {
   const gettoken = sessionStorage.getItem('token');
@@ -49,12 +51,22 @@ const BusquedaPaciente = ({setToken, OnLogout}) => {
     }
   }
 
+  // date1-> inicial, date2 -> final
+  function calcDiff(date1, date2){
+    var initial = new Date(date1);
+    var final = new Date(date2);
+
+    // diff está en milisegundos
+    var diff = final - initial;
+    var hhmm = moment.duration(diff);
+    return hhmm.hours() + " horas y " + hhmm.minutes() + " minutos."
+  }
 
   return (
     <>
       <Navbar token={token} setToken={setToken} OnLogout={OnLogout}/>
-      <div className='bg-light vh-100'>
-        <div className='container pt-5'>
+      <div className='bg-light h-100'>
+        <div className='container pt-5 pb-5 h-100'>
           <h2>Búsqueda avanzada</h2>
           <div className='d-flex'>
             <input
@@ -72,15 +84,21 @@ const BusquedaPaciente = ({setToken, OnLogout}) => {
             <button className="btn btn-outline-success my-2 my-sm-0" onClick={handleSearch}>Buscar</button>
           </div>
           {events && 
-            <div>
-              { events.map( event => (
-                <div className="shadow" key={event._id}>
-                  <p>{event.nombrePaciente}</p>
-                  <p>{event.fecha}</p>
-                  <p>{event.hora}</p>
+            <div className='mt-3'>
+              { events.map( (event, index)=> (
+                <div className="shadow p-3 m-2" key={event._id}>
+                  <h3>Cita {index + 1}</h3>
+                  <p>RUT: {event.rutPaciente}</p>
+                  <p>Paciente: {event.nombrePaciente}</p>
+                  <p>Fecha: {moment(Date(event.fecha)).format('DD/MM/YYYY')}</p>
+                  <p>Hora: {event.hora}</p>
+                  <p>Contacto: {event.contacto}</p>
+                  <p>Tipo de examen: {event.tipoEx}</p>
+                  <p>Motivo: {event.motivoEx}</p>
+                  <p>Información extra: {event.infoExtra}</p>
+                  <p>Duración: {calcDiff(event.fecha, event.fin)}</p>
                 </div>
-              )
-              )}
+              ))}
             </div>}
           
         </div>

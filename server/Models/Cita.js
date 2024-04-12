@@ -48,6 +48,9 @@ const citaSchema = new mongoose.Schema({
   infoExtra: {
     type: String,
   },
+  hora: {
+    type: String,
+  },
 });
 
 citaSchema.pre('save', async function (next) {
