@@ -68,6 +68,7 @@ const BusquedaPaciente = ({setToken, OnLogout}) => {
       <div className='h-100'>
         <div className='container pt-5 pb-5 h-100'>
           <h2>Búsqueda avanzada</h2>
+          <p>Asegúrese de que el RUT/nombre esté completo. Recuerde que el RUT debe ser en formato ej. 12345678-9</p>
           <div className='d-flex'>
             <input
               className='form-control mr-sm-2 w-50'
@@ -76,12 +77,12 @@ const BusquedaPaciente = ({setToken, OnLogout}) => {
               value={searchValue}
               onChange={(e) => setSearchValue(e.target.value)}
             />
-            <select value={searchType} onChange={(e) => setSearchType(e.target.value)}>
+            <select className="form-select w-25" value={searchType} onChange={(e) => setSearchType(e.target.value)}>
               <option value="placeholder">Seleccione una casilla</option>
               <option value="rut">Buscar por RUT</option>
               <option value="nombre">Buscar por nombre</option>
             </select>
-            <button className="btn btn-outline-success my-2 my-sm-0" onClick={handleSearch}>Buscar</button>
+            <button className="btn btn-success my-2 my-sm-0" onClick={handleSearch}>Buscar</button>
           </div>
           {(events != null && events.length == 0) && <p className='mt-2'>No existen citas pendientes.</p>}
           {events && 
