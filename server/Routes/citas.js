@@ -103,7 +103,8 @@ router.post('/registrarCita', authenticateToken, (req, res) => {
 
 router.get('/getCitas', async (req,res) => {
     try {
-        const result = await Cita.find();
+        const tipoExamen = req.query.tipoEx;
+        const result = await Cita.find({tipoEx: tipoExamen});
         res.status(200).json(result)
     } catch (error) {
         console.error(error);

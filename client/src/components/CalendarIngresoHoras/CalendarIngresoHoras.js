@@ -5,26 +5,13 @@ import Navbar from '../Navbar';
 
 import axios from 'axios';
 import SimpleForm from './SimpleForm'
-// import { useNavigate } from 'react-router-dom';
-
-const styles = {
-  wrap: {
-    display: "flex"
-  },
-  left: {
-    marginRight: "10px"
-  },
-  main: {
-    flexGrow: "1"
-  }
-};
-
 
 const Calendar = ({setToken,OnLogout}) => {
-  // const navigate = useNavigate();
   const gettoken = sessionStorage.getItem('token');
   const token = JSON.parse(gettoken);
   const [horaSelect, setHoraSelect] = useState(null);
+  const [tipoExamen, setTipoExamen] = useState("placeholder");
+  const [selected, setSelected] = useState(false);
 
   const fetchEventInfo = async (eID) => {
     axios.post('http://localhost:5000/citas/getCitaById', {
@@ -72,11 +59,13 @@ const Calendar = ({setToken,OnLogout}) => {
   });
 
   useEffect(() => {
-    //const events = fetchEvents();
-
-    axios.get('http://localhost:5000/citas/getCitas')
+    if (tipoExamen !== "placeholder"){
+      axios.get('http://localhost:5000/citas/getCitas', {
+        params:  {
+          tipoEx: tipoExamen
+        }
+      })
       .then(response => {
-        // Update your state with the schedules from the database
         const events = response.data.map(schedule => ({
           id: schedule._id,
           text: schedule.nombrePaciente,
@@ -86,10 +75,12 @@ const Calendar = ({setToken,OnLogout}) => {
         calendarRef.current.control.update({events});
       })
       .catch(error => console.error(error));
-
+    } else {
+      calendarRef.current.control.update({events: []});
+    }
     // const startDate = DayPilot.Date.today();
     //calendarRef.current.control.update({startDate, events});
-  }, []);
+  }, [tipoExamen, selected]);
 
   const calendarRef = useRef();
 
@@ -98,28 +89,41 @@ const Calendar = ({setToken,OnLogout}) => {
       startDate: args.day
     });
   }
+  
+  const handleSelect = (e) => {
+    setTipoExamen(e.target.value); 
+    if (e.target.value !== "placeholder"){
+      setSelected(true);
+    } else {
+      setSelected(false);
+    }
+  }
 
   return (
-    <div>
+    <>
       <Navbar token={token} setToken={setToken} OnLogout={OnLogout}/> 
-      <div style={styles.wrap}>
-        
-        <div style={styles.left}>
-          <select className='form-select' name="tipoExamen">
-            <option value="placeholder">Seleccione un tipo de examen</option>
-          </select> 
+      <div className="d-flex">
+        <div className="d-flex flex-column justify-content-center align-items-center mx-3" style={{width: '21%'}}>
+          <div className='d-flex flex-column mt-2 w-100 mb-4 align-items-start'>
+            <h5>Tipo de examen:</h5>
+            <select className='form-select w-100' name="tipoExamen" value={tipoExamen} onChange={(e) => handleSelect(e)}>
+              <option value="placeholder">Seleccione un tipo de examen</option>
+              <option value="Radiografía">Radiografía</option>
+              <option value="Scanner">Scanner</option>
+              <option value="Ecografía">Ecografía</option>
+              <option value="Resonancia">Resonancia magnética</option>
+            </select> 
+          </div>
           <DayPilotNavigator selectMode={"Week"} showMonths={2} skipMonths={2} onTimeRangeSelected={handleTimeRangeSelected}/>
         </div>
-        <div> 
-            <DayPilotCalendar {...config} ref={calendarRef}/>
-        </div>
+        <DayPilotCalendar {...config} ref={calendarRef}/>
         <div>
-        {showForm && (
-          <SimpleForm hora={horaSelect} setShowForm={setShowForm} />
-        )}
+          {showForm && (
+            <SimpleForm hora={horaSelect} setShowForm={setShowForm} />
+          )}
         </div>
       </div>
-    </div>
+    </>
   );
 }
 
