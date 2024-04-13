@@ -1,8 +1,10 @@
 const express = require('express');
 const jwt = require('jsonwebtoken');
 const router = express.Router();
+const mongoose = require('mongoose');
 
 const Cita = require('../Models/Cita');
+const Cambio = require('../Models/Cambio');
 
 function authenticateToken(req,res,next){
     const authHeader = req.headers['authorization'];
@@ -70,21 +72,33 @@ router.post('/registrarCita', authenticateToken, (req, res) => {
         } 
         console.log("post arreglo");
         endFecha.setHours(endHour, endMin); //arreglar si se desea usar horario de invierno xd
+        console.log("userid: ", req.user.userId);
 
         const nuevaCita = new Cita({personalId, rutPaciente, nombrePaciente, maquinaId, fecha:fechaCorrection, fin:endFecha ,hora, motivoEx, tipoEx, contacto, infoExtra});
         nuevaCita.save()
             .then(Cita => {
-                console.log('cita guardada', Cita);
-                res.status(201).json({ confirmacion: 'cita registrada con exito'});
+                var cast = new mongoose.Types.ObjectId(req.user.userId)
+                const cambio = new Cambio({ usuario: cast, tipoCambio: "Nueva cita" });
+                cambio.save()
+                .then(()=>{
+                    console.log('cita guardada con exito', Cita);
+                    res.status(201).json({ confirmacion: 'cita registrada con exito'});
+                })
+                .catch(error =>{
+                    console.error('error guardando cambio', error);
+                    res.status(500).json({ error: 'error guardando cambio', user:req.user.userId})
+                })
+                
             })
             .catch(error => {
                 console.error('error guardando', error);
                 res.status(500).json({ error: 'error registrando cita', user:req.user.userId})
             });
         
-
     } catch (error) {
         res.status(500).json({ error: error.message});
+        console.log('ID del usuario:', req.user.userId);
+        console.log('cast:', user_id_cast);
     }
 });
 
@@ -112,7 +126,7 @@ router.post('/getCitaById', async (req,res) => {
 });
 
 // Búsqueda avanzada del paciente, por rut y nombre
-router.get('/getCitaByRUT/:rut', async (req, res) => {
+router.get('/getCitaByRUT/:rut', authenticateToken, async (req, res) => {
     try {
         const rut = req.params.rut;
         var today = new Date();
@@ -130,7 +144,7 @@ router.get('/getCitaByRUT/:rut', async (req, res) => {
     }
 });
 
-router.get('/getCitaByName/:nombre', async (req, res) => {
+router.get('/getCitaByName/:nombre', authenticateToken, async (req, res) => {
     try {
         const name = req.params.nombre;
         var today = new Date();
