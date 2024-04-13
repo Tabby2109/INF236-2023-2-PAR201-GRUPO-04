@@ -44,6 +44,7 @@ const BusquedaPaciente = ({setToken, OnLogout}) => {
     try {
       const response = await axios.get('http://localhost:5000/citas/getCitaByName/' + name)
       const data = response.data;
+      console.log(data);
       setEvents(data);
       
     } catch (error) {

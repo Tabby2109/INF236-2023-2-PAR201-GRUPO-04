@@ -24,6 +24,9 @@ const Navbar = () => {
       <button type="button" className='btn btn-dark ms-auto me-3' onClick={() => navigate('/busqueda-por-paciente')}>
         Búsqueda por paciente
       </button>
+      <button type="button" className='btn btn-dark me-3' onClick={() => navigate('/historial-de-cambios')}>
+        Historial de cambios
+      </button>
       <button type="button" className='btn btn-dark me-3' onClick={() => navigate('/inicio')}>
         Volver al inicio
       </button>

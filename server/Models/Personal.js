@@ -46,6 +46,6 @@ personalSchema.pre('save', async function (next) {
     }
 });
 
-const Personal = mongoose.model('Personal', personalSchema);
+const Personal = mongoose.model('Personal', personalSchema, 'personals');
 
 module.exports = Personal;

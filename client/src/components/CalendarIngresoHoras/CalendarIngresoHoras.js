@@ -75,17 +75,17 @@ const Calendar = ({setToken,OnLogout}) => {
     //const events = fetchEvents();
 
     axios.get('http://localhost:5000/citas/getCitas')
-        .then(response => {
-          // Update your state with the schedules from the database
-          const events = response.data.map(schedule => ({
-            id: schedule._id,
-            text: schedule.nombrePaciente,
-            start: new Date(schedule.fecha),
-            end: new Date(schedule.fin),
-          }));
-          calendarRef.current.control.update({events});
-        })
-        .catch(error => console.error(error));
+      .then(response => {
+        // Update your state with the schedules from the database
+        const events = response.data.map(schedule => ({
+          id: schedule._id,
+          text: schedule.nombrePaciente,
+          start: new Date(schedule.fecha),
+          end: new Date(schedule.fin),
+        }));
+        calendarRef.current.control.update({events});
+      })
+      .catch(error => console.error(error));
 
     // const startDate = DayPilot.Date.today();
     //calendarRef.current.control.update({startDate, events});
@@ -105,7 +105,10 @@ const Calendar = ({setToken,OnLogout}) => {
       <div style={styles.wrap}>
         
         <div style={styles.left}>
-            <DayPilotNavigator selectMode={"Week"} showMonths={2} skipMonths={2} onTimeRangeSelected={handleTimeRangeSelected}/>
+          <select className='form-select' name="tipoExamen">
+            <option value="placeholder">Seleccione un tipo de examen</option>
+          </select> 
+          <DayPilotNavigator selectMode={"Week"} showMonths={2} skipMonths={2} onTimeRangeSelected={handleTimeRangeSelected}/>
         </div>
         <div> 
             <DayPilotCalendar {...config} ref={calendarRef}/>

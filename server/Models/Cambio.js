@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const cambioSchema = new mongoose.Schema({
     usuario: {
-        type: mongoose.Schema.Types.ObjectId,
+        type: Number,
         ref: 'Personal',
         required: true,
     },

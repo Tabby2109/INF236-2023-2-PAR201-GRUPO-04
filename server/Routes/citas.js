@@ -77,8 +77,7 @@ router.post('/registrarCita', authenticateToken, (req, res) => {
         const nuevaCita = new Cita({personalId, rutPaciente, nombrePaciente, maquinaId, fecha:fechaCorrection, fin:endFecha ,hora, motivoEx, tipoEx, contacto, infoExtra});
         nuevaCita.save()
             .then(Cita => {
-                var cast = new mongoose.Types.ObjectId(req.user.userId)
-                const cambio = new Cambio({ usuario: cast, tipoCambio: "Nueva cita" });
+                const cambio = new Cambio({ usuario: req.user.userId, tipoCambio: "Nueva cita" });
                 cambio.save()
                 .then(()=>{
                     console.log('cita guardada con exito', Cita);
@@ -126,7 +125,8 @@ router.post('/getCitaById', async (req,res) => {
 });
 
 // Búsqueda avanzada del paciente, por rut y nombre
-router.get('/getCitaByRUT/:rut', authenticateToken, async (req, res) => {
+// No olvidar agregar el authenticate token, pero considerarlo en los headers de busquedaPaciente.js
+router.get('/getCitaByRUT/:rut', async (req, res) => {
     try {
         const rut = req.params.rut;
         var today = new Date();
@@ -144,7 +144,7 @@ router.get('/getCitaByRUT/:rut', authenticateToken, async (req, res) => {
     }
 });
 
-router.get('/getCitaByName/:nombre', authenticateToken, async (req, res) => {
+router.get('/getCitaByName/:nombre', async (req, res) => {
     try {
         const name = req.params.nombre;
         var today = new Date();

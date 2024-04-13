@@ -14,6 +14,7 @@ const maquinasRouter = require('./Routes/maquinas.js');
 const citasRouter = require('./Routes/citas.js')
 const registrarRouter = require('./Routes/registrar.js');
 const loginRouter = require('./Routes/login.js');
+const historialRouter = require('./Routes/historial.js');
 
 app.set("port", process.env.port || 5000);
 
@@ -32,6 +33,7 @@ app.use('/users', usersRouter);
 app.use('/pacientes', pacientesRouter);
 app.use('/maquinas', maquinasRouter);
 app.use('/citas', citasRouter);
+app.use('/historial', historialRouter);
 
 db();
 

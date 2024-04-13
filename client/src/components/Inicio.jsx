@@ -2,17 +2,6 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import Navbar from './Navbar';
 
-// import Calendar from './calendar/Calendar';
-// import {Routes, Route, useNavigate } from 'react-router-dom';
-// import CalendarIngreso from './calendarIngreso/CalendarIngreso';
-
-// const ModificacionHoras = () => (
-//   <div>
-//     <h2>Modificación horas</h2>
-//     {/* Contenido de la página de Modificación horas */}
-//   </div>
-// );
-
 const Inicio = ({setToken, OnLogout }) => {
   const gettoken = sessionStorage.getItem('token');
   const token = JSON.parse(gettoken);
@@ -34,13 +23,6 @@ const Inicio = ({setToken, OnLogout }) => {
             </Link>
           </div>
         </div>
-
-        {/* Cambiar rutas al app.js -> */}
-        {/* <Routes>
-          <Route path="/modificacion-horas" element={<ModificacionHoras token={token} setToken={setToken} OnLogout={OnLogout}/>} />
-          <Route path="/calendar-ingreso-horas" element={<Calendar token={token} setToken={setToken} OnLogout={OnLogout}/>} />
-          <Route path="/calendar-visualizacion" element={<CalendarIngreso token={token} setToken={setToken} OnLogout={OnLogout}/>} />
-        </Routes> */}
       </div>
     </>
   )
