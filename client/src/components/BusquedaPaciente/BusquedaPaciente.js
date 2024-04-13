@@ -34,7 +34,6 @@ const BusquedaPaciente = ({setToken, OnLogout}) => {
       const response = await axios.get('http://localhost:5000/citas/getCitaByRUT/' + rut)
       const data = response.data;
       setEvents(data);
-      
     } catch (error) {
       console.log(error);
     }
@@ -44,9 +43,7 @@ const BusquedaPaciente = ({setToken, OnLogout}) => {
     try {
       const response = await axios.get('http://localhost:5000/citas/getCitaByName/' + name)
       const data = response.data;
-      console.log(data);
       setEvents(data);
-      
     } catch (error) {
       console.log(error);
     }
@@ -86,7 +83,7 @@ const BusquedaPaciente = ({setToken, OnLogout}) => {
             </select>
             <button className="btn btn-success my-2 my-sm-0" onClick={handleSearch}>Buscar</button>
           </div>
-          {(events != null && events.length == 0) && <p className='mt-2'>No existen citas pendientes.</p>}
+          {(events != null && events.length === 0) && <p className='mt-2'>No existen citas pendientes.</p>}
           {events && 
             <div className='mt-3'>
               { events.map( (event, index)=> (
@@ -104,7 +101,6 @@ const BusquedaPaciente = ({setToken, OnLogout}) => {
                 </div>
               ))}
             </div>}
-          
         </div>
       </div>
     </>
