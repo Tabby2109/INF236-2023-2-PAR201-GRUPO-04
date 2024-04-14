@@ -10,8 +10,7 @@ const Calendar = ({setToken,OnLogout}) => {
   const gettoken = sessionStorage.getItem('token');
   const token = JSON.parse(gettoken);
   const [horaSelect, setHoraSelect] = useState(null);
-  const [tipoExamen, setTipoExamen] = useState("placeholder");
-  const [selected, setSelected] = useState(false);
+  const [tipoExamen, setTipoExamen] = useState("Radiografía");
 
   const fetchEventInfo = async (eID) => {
     axios.post('http://localhost:5000/citas/getCitaById', {
@@ -54,33 +53,29 @@ const Calendar = ({setToken,OnLogout}) => {
     },
     onTimeRangeSelected: async args => {
       setHoraSelect(args.start);
-      activateShowForm()
+      activateShowForm();
     },
   });
 
   useEffect(() => {
-    if (tipoExamen !== "placeholder"){
-      axios.get('http://localhost:5000/citas/getCitas', {
-        params:  {
-          tipoEx: tipoExamen
-        }
-      })
-      .then(response => {
-        const events = response.data.map(schedule => ({
-          id: schedule._id,
-          text: schedule.nombrePaciente,
-          start: new Date(schedule.fecha),
-          end: new Date(schedule.fin),
-        }));
-        calendarRef.current.control.update({events});
-      })
-      .catch(error => console.error(error));
-    } else {
-      calendarRef.current.control.update({events: []});
-    }
+    axios.get('http://localhost:5000/citas/getCitas', {
+      params:  {
+        tipoEx: tipoExamen
+      }
+    })
+    .then(response => {
+      const events = response.data.map(schedule => ({
+        id: schedule._id,
+        text: schedule.nombrePaciente,
+        start: new Date(schedule.fecha),
+        end: new Date(schedule.fin),
+      }));
+      calendarRef.current.control.update({events});
+    })
+    .catch(error => console.error(error));
     // const startDate = DayPilot.Date.today();
     //calendarRef.current.control.update({startDate, events});
-  }, [tipoExamen, selected]);
+  }, [tipoExamen]);
 
   const calendarRef = useRef();
 
@@ -92,11 +87,6 @@ const Calendar = ({setToken,OnLogout}) => {
   
   const handleSelect = (e) => {
     setTipoExamen(e.target.value); 
-    if (e.target.value !== "placeholder"){
-      setSelected(true);
-    } else {
-      setSelected(false);
-    }
   }
 
   return (
@@ -107,7 +97,6 @@ const Calendar = ({setToken,OnLogout}) => {
           <div className='d-flex flex-column mt-2 w-100 mb-4 align-items-start'>
             <h5>Tipo de examen:</h5>
             <select className='form-select w-100' name="tipoExamen" value={tipoExamen} onChange={(e) => handleSelect(e)}>
-              <option value="placeholder">Seleccione un tipo de examen</option>
               <option value="Radiografía">Radiografía</option>
               <option value="Scanner">Scanner</option>
               <option value="Ecografía">Ecografía</option>

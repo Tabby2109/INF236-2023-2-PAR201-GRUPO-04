@@ -8,23 +8,10 @@ import Navbar from '../Navbar';
 // import Inicio from '../Inicio';
 import axios from 'axios';
 
-const styles = {
-  wrap: {
-    display: "flex"
-  },
-  left: {
-    marginRight: "10px"
-  },
-  main: {
-    flexGrow: "1"
-  }
-};
-
-
 const Calendar = ({setToken, OnLogout}) => {
   const gettoken = sessionStorage.getItem('token');
   const token = JSON.parse(gettoken);
-  console.log(token);
+  const [tipoExamen, setTipoExamen] = useState("Radiografía");
   // const editEvent = async (e) => {
   //   const dp = calendarRef.current.control;
   //   const modal = await DayPilot.Modal.prompt("Update event text:", e.text());
@@ -64,25 +51,24 @@ const Calendar = ({setToken, OnLogout}) => {
   });
 
   useEffect(() => {
-    //const events = fetchEvents();
-
-    axios.get('http://localhost:5000/citas/getCitas')
-        .then(response => {
-          // Update your state with the schedules from the database
-          const events = response.data.map(schedule => ({
-            id: schedule._id,
-            text: schedule.nombrePaciente,
-            start: new Date(schedule.fecha),
-            end: new Date(schedule.fin),
-          }));
-          calendarRef.current.control.update({events});
-        })
-        .catch(error => console.error(error));
-
+    axios.get('http://localhost:5000/citas/getCitas', {
+      params:  {
+        tipoEx: tipoExamen
+      }
+    })
+    .then(response => {
+      const events = response.data.map(schedule => ({
+        id: schedule._id,
+        text: schedule.nombrePaciente,
+        start: new Date(schedule.fecha),
+        end: new Date(schedule.fin),
+      }));
+      calendarRef.current.control.update({events});
+    })
+    .catch(error => console.error(error));
     // const startDate = DayPilot.Date.today();
-
     //calendarRef.current.control.update({startDate, events});
-  }, []);
+  }, [tipoExamen]);
 
   const calendarRef = useRef();
 
@@ -92,12 +78,24 @@ const Calendar = ({setToken, OnLogout}) => {
     });
   }
 
+  const handleSelect = (e) => {
+    setTipoExamen(e.target.value);
+  }
+  
   return (
     <div>
       <Navbar token={token} setToken={setToken} OnLogout={OnLogout}/> 
-      <div style={styles.wrap}>
-        
-        <div style={styles.left}>
+      <div className="d-flex">
+        <div className="d-flex flex-column justify-content-center align-items-center mx-3" style={{width: '21%'}}>
+          <div className='d-flex flex-column mt-2 w-100 mb-4 align-items-start'>
+            <h5>Tipo de examen:</h5>
+            <select className='form-select w-100' name="tipoExamen" value={tipoExamen} onChange={(e) => handleSelect(e)}>
+              <option value="Radiografía">Radiografía</option>
+              <option value="Scanner">Scanner</option>
+              <option value="Ecografía">Ecografía</option>
+              <option value="Resonancia">Resonancia magnética</option>
+            </select> 
+          </div>
             <DayPilotNavigator selectMode={"Week"} showMonths={2} skipMonths={2} onTimeRangeSelected={handleTimeRangeSelected}/>
         </div>
         <div> 
