@@ -1,34 +1,35 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 
-import Login from './components/Login';
-import Inicio from './components/Inicio';
 import ProtectedRoute from './components/utils/ProtectedRoute';
-import CalendarVisualizacion from './components/CalendarVisualizacion/CalendarVisualizacion';
-import CalendarIngresoHoras from './components/CalendarIngresoHoras/CalendarIngresoHoras';
-import CalendarModificacion from './components/CalendarModificacion/CalendarModificacion';
-import BusquedaPaciente from './components/BusquedaPaciente/BusquedaPaciente';
-import HistorialCambios from './components/HistorialCambios/HistorialCambios';
-
-
 import './App.css';
+
+const Login = React.lazy(()=> import('./components/Login'));
+const Inicio = React.lazy(() => import('./components/Inicio'));
+const CalendarVisualizacion = React.lazy(()=> import('./components/CalendarVisualizacion/CalendarVisualizacion'));
+const CalendarIngresoHoras = React.lazy(()=> import('./components/CalendarIngresoHoras/CalendarIngresoHoras'));
+const CalendarModificacion = React.lazy(()=> import('./components/CalendarModificacion/CalendarModificacion'));
+const BusquedaPaciente = React.lazy(()=> import('./components/BusquedaPaciente/BusquedaPaciente'));
+const HistorialCambios = React.lazy(()=> import('./components/HistorialCambios/HistorialCambios'));
 
 const App = () => {
   // De forma momentanea solo entra a rutas protegidas teniendo un token, pudiendo ser cualquiera.
   return (
-    <Routes>
-      <Route path="/" element={<Login />} />
-      {/* Rutas protegidas por el token */}
-      <Route element={<ProtectedRoute />}>
-        <Route path="/inicio" element={<Inicio />} />
-        <Route path="/calendar-visualizacion" element={<CalendarVisualizacion />} />
-        <Route path="/calendar-ingreso-horas" element={<CalendarIngresoHoras />} />
-        <Route path="/calendar-modificacion" element={<CalendarModificacion />} />
-        <Route path="/busqueda-por-paciente" element={<BusquedaPaciente />} />
-        <Route path="/historial-de-cambios" element={<HistorialCambios />} />
-      </Route>
-      <Route path="*" element={<Navigate to="/inicio" />} />
-    </Routes>
+    <Suspense fallback={<h1>Cargando...</h1>}>
+      <Routes>
+        <Route path="/" element={<Login />} />
+        {/* Rutas protegidas por el token */}
+        <Route element={<ProtectedRoute />}>
+          <Route path="/inicio" element={<Inicio />} />
+          <Route path="/calendar-visualizacion" element={<CalendarVisualizacion />} />
+          <Route path="/calendar-ingreso-horas" element={<CalendarIngresoHoras />} />
+          <Route path="/calendar-modificacion" element={<CalendarModificacion />} />
+          <Route path="/busqueda-por-paciente" element={<BusquedaPaciente />} />
+          <Route path="/historial-de-cambios" element={<HistorialCambios />} />
+        </Route>
+        <Route path="*" element={<Navigate to="/inicio" />} />
+      </Routes>
+    </Suspense>
   )
 }
 
