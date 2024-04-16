@@ -1,13 +1,11 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-// import { useNavigate } from 'react-router-dom';
 
 const SimpleForm = ({hora, setShowForm}) => {
   const gettoken = sessionStorage.getItem('token');
   const nowtoken = JSON.parse(gettoken);
 
   const tiposExamen = ["Radiografía", "Scanner","Ecografía","Resonancia"]
-  // const navigate = useNavigate();
   const [formData, setFormData] = useState({
     rutPaciente: '',
     nombrePaciente: '',

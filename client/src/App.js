@@ -4,6 +4,8 @@ import './App.css';
 
 import ProtectedRoute from './components/ProtectedRoute';
 import LoginLoader from './components/ContentLoader/LoginLoader';
+import { PrivateRoutes, PublicRoutes } from './models/routes';
+
 
 const Navbar = React.lazy(() => import('./components/Navbar'));
 const Login = React.lazy(()=> import('./pages/Login'));
@@ -30,22 +32,23 @@ const App = () => {
   // De forma momentanea solo entra a rutas protegidas teniendo un token, pudiendo ser cualquiera.
   return (
     <Routes>
+      <Route path="/" element={<Navigate to={PrivateRoutes.HOME} />} />
       <Route 
-        path="/" 
+        path={PublicRoutes.LOGIN} 
         element={<Suspense fallback={<LoginLoader />}><Login /></Suspense>} 
       />
       {/* Rutas protegidas por el token */}
       <Route element={<ProtectedRoute />}>
         <Route element={<GlobalTemplate/>}>
-          <Route path="/inicio" element={<Home />} />
-          <Route path="/calendar-visualizacion" element={<CalendarVisualizer />} />
-          <Route path="/calendar-ingreso-horas" element={<CalendarScheduler />} />
-          <Route path="/calendar-modificacion" element={<CalendarModify />} />
-          <Route path="/busqueda-por-paciente" element={<CheckPatientSchedule />} />
-          <Route path="/historial-de-cambios" element={<ChangeHistory />} />
+          <Route path={PrivateRoutes.HOME} element={<Home />} />
+          <Route path={PrivateRoutes.CALENDAR.VISUALIZER} element={<CalendarVisualizer />} />
+          <Route path={PrivateRoutes.CALENDAR.SCHEDULER} element={<CalendarScheduler />} />
+          <Route path={PrivateRoutes.CALENDAR.MODIFY} element={<CalendarModify />} />
+          <Route path={PrivateRoutes.CHECKPATIENTSCHEDULE} element={<CheckPatientSchedule />} />
+          <Route path={PrivateRoutes.CHANGEHISTORY} element={<ChangeHistory />} />
         </Route>
       </Route>
-      <Route path="*" element={<Navigate to="/inicio" />} />
+      <Route path="*" element={<Navigate to={PrivateRoutes.HOME} />} />
     </Routes>
   )
 }

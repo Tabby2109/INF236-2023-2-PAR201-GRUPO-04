@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { PrivateRoutes, PublicRoutes } from '../models/routes';
 
 const Navbar = () => {
   const [unLogged, setUnLogged] = useState(false);
@@ -14,20 +15,20 @@ const Navbar = () => {
 
   useEffect(()=>{
     if (unLogged){
-      navigate('/');
+      navigate(PublicRoutes.LOGIN);
     }
   }, [unLogged, navigate])
     
   return(
     <div style={navbarStyle}>
       <span style={nombreAppStyle}>Hospitapp</span>
-      <button type="button" className='btn btn-dark ms-auto me-3' onClick={() => navigate('/busqueda-por-paciente')}>
+      <button type="button" className='btn btn-dark ms-auto me-3' onClick={() => navigate(PrivateRoutes.CHECKPATIENTSCHEDULE)}>
         Búsqueda por paciente
       </button>
-      <button type="button" className='btn btn-dark me-3' onClick={() => navigate('/historial-de-cambios')}>
+      <button type="button" className='btn btn-dark me-3' onClick={() => navigate(PrivateRoutes.CHANGEHISTORY)}>
         Historial de cambios
       </button>
-      <button type="button" className='btn btn-dark me-3' onClick={() => navigate('/inicio')}>
+      <button type="button" className='btn btn-dark me-3' onClick={() => navigate(PrivateRoutes.HOME)}>
         Volver al inicio
       </button>
       <button type="button" className='btn btn-danger' onClick={HandleLogout}>

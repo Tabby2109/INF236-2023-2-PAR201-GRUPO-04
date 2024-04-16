@@ -1,20 +1,21 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { PrivateRoutes } from '../models/routes';
 
 const Inicio = () => {
   return(
     <>
       <div className="background-color" style={containerStyle}>
         <div style={triangleContainerStyle}>
-          <Link to="/calendar-ingreso-horas" style={boxStyle}>
+          <Link replace to={`/${PrivateRoutes.CALENDAR.SCHEDULER}`} style={boxStyle}>
             Ingreso de horas
           </Link>
           <div style={sideBoxesContainerStyle}>
-            <Link to="/calendar-visualizacion" style={boxStyle}>
+            <Link replace to={`/${PrivateRoutes.CALENDAR.VISUALIZER}`} style={boxStyle}>
               Visualización de horas
             </Link>
             {/* Se debe agregar modificación de horas */}
-            <Link to="/calendar-modificacion" style={boxStyle}>
+            <Link replace to={`/${PrivateRoutes.CALENDAR.MODIFY}`} style={boxStyle}>
               Modificación de horas
             </Link>
           </div>
