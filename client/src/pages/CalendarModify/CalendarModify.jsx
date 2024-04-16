@@ -18,7 +18,7 @@ const styles = {
   }
 };
 
-const Calendar = ({setToken, OnLogout}) => {
+const CalendarModify = ({setToken, OnLogout}) => {
   const gettoken = sessionStorage.getItem('token');
   const token = JSON.parse(gettoken);
   console.log(token);
@@ -103,4 +103,4 @@ const Calendar = ({setToken, OnLogout}) => {
   );
 }
 
-export default Calendar;
+export default CalendarModify;

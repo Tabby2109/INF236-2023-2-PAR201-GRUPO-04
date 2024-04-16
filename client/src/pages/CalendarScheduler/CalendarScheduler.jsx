@@ -6,7 +6,7 @@ import Navbar from '../../components/Navbar';
 import axios from 'axios';
 import SimpleForm from './SimpleForm'
 
-const Calendar = ({setToken,OnLogout}) => {
+const CalendarScheduler = ({setToken,OnLogout}) => {
   const gettoken = sessionStorage.getItem('token');
   const token = JSON.parse(gettoken);
   const [horaSelect, setHoraSelect] = useState(null);
@@ -116,4 +116,4 @@ const Calendar = ({setToken,OnLogout}) => {
   );
 }
 
-export default Calendar;
+export default CalendarScheduler;

@@ -4,7 +4,7 @@ import axios from 'axios';
 // Date format
 import moment from 'moment';
 
-const BusquedaPaciente = ({setToken, OnLogout}) => {
+const CheckPatientSchedule = ({setToken, OnLogout}) => {
   const gettoken = sessionStorage.getItem('token');
   const token = JSON.parse(gettoken);
   const [events, setEvents] = useState(null);
@@ -106,4 +106,4 @@ const BusquedaPaciente = ({setToken, OnLogout}) => {
   );
 };
 
-export default BusquedaPaciente;
+export default CheckPatientSchedule;

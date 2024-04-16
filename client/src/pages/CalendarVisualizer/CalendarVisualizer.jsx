@@ -8,7 +8,7 @@ import Navbar from '../../components/Navbar';
 // import Inicio from '../Inicio';
 import axios from 'axios';
 
-const Calendar = ({setToken, OnLogout}) => {
+const CalendarVisualizer = ({setToken, OnLogout}) => {
   const gettoken = sessionStorage.getItem('token');
   const token = JSON.parse(gettoken);
   const [tipoExamen, setTipoExamen] = useState("Radiografía");
@@ -271,4 +271,4 @@ const Calendar = ({setToken, OnLogout}) => {
   );*/
 }
 
-export default Calendar;
+export default CalendarVisualizer;

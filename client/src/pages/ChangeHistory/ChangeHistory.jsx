@@ -3,7 +3,7 @@ import Navbar from '../../components/Navbar';
 import axios from 'axios';
 import moment from 'moment';
 
-const HistorialCambios = ({ setToken,OnLogout }) => {
+const ChangeHistory = ({ setToken,OnLogout }) => {
   let gettoken = sessionStorage.getItem('token');
   let token = JSON.parse(gettoken);
   const [changesHistory, setChangesHistory] = useState([]);
@@ -49,4 +49,4 @@ const HistorialCambios = ({ setToken,OnLogout }) => {
   )
 }
 
-export default HistorialCambios;
+export default ChangeHistory;
