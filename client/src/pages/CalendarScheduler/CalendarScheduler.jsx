@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { DayPilot, DayPilotCalendar, DayPilotNavigator } from "@daypilot/daypilot-lite-react";
 import "./CalendarStyles.css";
-import Navbar from '../Navbar';
+import Navbar from '../../components/Navbar';
 
 import axios from 'axios';
 import SimpleForm from './SimpleForm'

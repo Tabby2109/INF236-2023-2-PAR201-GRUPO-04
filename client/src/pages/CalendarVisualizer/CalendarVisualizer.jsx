@@ -4,7 +4,7 @@ import { DayPilot } from "@daypilot/daypilot-lite-react";
 
 import "./CalendarStyles.css";
 // import { Link } from 'react-router-dom';
-import Navbar from '../Navbar';
+import Navbar from '../../components/Navbar';
 // import Inicio from '../Inicio';
 import axios from 'axios';
 

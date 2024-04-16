@@ -3,7 +3,7 @@ import { DayPilotCalendar, DayPilotNavigator} from "@daypilot/daypilot-lite-reac
 import { Modal } from "@daypilot/modal";
 
 import "./CalendarStyles.css";
-import Navbar from '../Navbar';
+import Navbar from '../../components/Navbar';
 import axios from 'axios';
 
 const styles = {

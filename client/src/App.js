@@ -1,16 +1,16 @@
 import React, { Suspense } from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 
-import ProtectedRoute from './components/utils/ProtectedRoute';
+import ProtectedRoute from './components/ProtectedRoute';
 import './App.css';
 
-const Login = React.lazy(()=> import('./components/Login'));
-const Home = React.lazy(() => import('./components/Home'));
-const CalendarVisualizer = React.lazy(()=> import('./components/CalendarVisualizer/CalendarVisualizer'));
-const CalendarScheduler = React.lazy(()=> import('./components/CalendarScheduler/CalendarScheduler'));
-const CalendarModify = React.lazy(()=> import('./components/CalendarModify/CalendarModify'));
-const CheckPatientSchedule = React.lazy(()=> import('./components/CheckPatientSchedule/CheckPatientSchedule'));
-const ChangeHistory = React.lazy(()=> import('./components/ChangeHistory/ChangeHistory'));
+const Login = React.lazy(()=> import('./pages/Login'));
+const Home = React.lazy(() => import('./pages/Home'));
+const CalendarVisualizer = React.lazy(()=> import('./pages/CalendarVisualizer/CalendarVisualizer'));
+const CalendarScheduler = React.lazy(()=> import('./pages/CalendarScheduler/CalendarScheduler'));
+const CalendarModify = React.lazy(()=> import('./pages/CalendarModify/CalendarModify'));
+const CheckPatientSchedule = React.lazy(()=> import('./pages/CheckPatientSchedule/CheckPatientSchedule'));
+const ChangeHistory = React.lazy(()=> import('./pages/ChangeHistory/ChangeHistory'));
 
 const App = () => {
   // De forma momentanea solo entra a rutas protegidas teniendo un token, pudiendo ser cualquiera.
