@@ -101,7 +101,7 @@ router.post('/registrarCita', authenticateToken, (req, res) => {
     }
 });
 
-router.get('/getCitas', async (req,res) => {
+router.get('/getCitas', authenticateToken, async (req,res) => {
     try {
         const tipoExamen = req.query.tipoEx;
         const result = await Cita.find({tipoEx: tipoExamen});
@@ -113,7 +113,7 @@ router.get('/getCitas', async (req,res) => {
 
 });
 
-router.post('/getCitaById', async (req,res) => {
+router.post('/getCitaById', authenticateToken, async (req,res) => {
     console.log(req);
     try {
         const result = await Cita.find({_id:req.body.id});
@@ -127,7 +127,7 @@ router.post('/getCitaById', async (req,res) => {
 
 // Búsqueda avanzada del paciente, por rut y nombre
 // No olvidar agregar el authenticate token, pero considerarlo en los headers de busquedaPaciente.js
-router.get('/getCitaByRUT/:rut', async (req, res) => {
+router.get('/getCitaByRUT/:rut', authenticateToken, async (req, res) => {
     try {
         const rut = req.params.rut;
         var today = new Date();
@@ -145,7 +145,7 @@ router.get('/getCitaByRUT/:rut', async (req, res) => {
     }
 });
 
-router.get('/getCitaByName/:nombre', async (req, res) => {
+router.get('/getCitaByName/:nombre', authenticateToken, async (req, res) => {
     try {
         const name = req.params.nombre;
         var today = new Date();

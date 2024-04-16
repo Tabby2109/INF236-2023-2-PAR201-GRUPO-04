@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import axios from 'axios';
 import { PendingAppointmentCard } from '../../components/Cards/PendingAppointmentCard';
 
-const CheckPatientSchedule = ({setToken, OnLogout}) => {
+const CheckPatientSchedule = () => {
   const gettoken = sessionStorage.getItem('token');
   const token = JSON.parse(gettoken);
   const [events, setEvents] = useState(null);
@@ -28,7 +28,9 @@ const CheckPatientSchedule = ({setToken, OnLogout}) => {
 
   const fetchEventInfoByRUT = async (rut) => {
     try {
-      const response = await axios.get('http://localhost:5000/citas/getCitaByRUT/' + rut)
+      const response = await axios.get(`http://localhost:5000/citas/getCitaByRUT/${rut}`,{headers: {
+        'Authorization': `Bearer ${token}`
+      }})
       const data = response.data;
       setEvents(data);
     } catch (error) {
@@ -38,7 +40,9 @@ const CheckPatientSchedule = ({setToken, OnLogout}) => {
 
   const fetchEventInfoByName = async (name) => {
     try {
-      const response = await axios.get('http://localhost:5000/citas/getCitaByName/' + name)
+      const response = await axios.get(`http://localhost:5000/citas/getCitaByName/${name}`, {headers: {
+        'Authorization': `Bearer ${token}`
+      }})
       const data = response.data;
       setEvents(data);
     } catch (error) {

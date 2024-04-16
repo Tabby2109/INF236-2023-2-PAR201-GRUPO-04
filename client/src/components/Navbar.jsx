@@ -1,6 +1,5 @@
-import React, { Suspense, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import LoginLoader from './ContentLoader/LoginLoader';
 
 const Navbar = () => {
   const [unLogged, setUnLogged] = useState(false);

@@ -65,7 +65,9 @@ const CalendarModify = ({setToken, OnLogout}) => {
   });
 
   useEffect(() => {
-    axios.get('http://localhost:5000/citas/getCitas')
+    axios.get('http://localhost:5000/citas/getCitas', {headers: {
+      'Authorization': `Bearer ${token}`
+    }})
         .then(response => {
           const events = response.data.map(schedule => ({
             id: schedule._id,

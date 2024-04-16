@@ -22,7 +22,9 @@ const CalendarVisualizer = ({setToken, OnLogout}) => {
   const fetchEventInfo = async (eID) => {
     axios.post('http://localhost:5000/citas/getCitaById', {
       id: eID,
-    })
+    }, {headers: {
+      'Authorization': `Bearer ${token}`
+    }})
       .then(response => {
       const event = response.data
       console.log(event[0]);
@@ -55,7 +57,9 @@ const CalendarVisualizer = ({setToken, OnLogout}) => {
       params:  {
         tipoEx: tipoExamen
       }
-    })
+    }, {headers: {
+      'Authorization': `Bearer ${token}`
+    }})
     .then(response => {
       const events = response.data.map(schedule => ({
         id: schedule._id,

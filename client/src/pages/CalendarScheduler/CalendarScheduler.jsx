@@ -63,7 +63,9 @@ const CalendarScheduler = ({setToken,OnLogout}) => {
       params:  {
         tipoEx: tipoExamen
       }
-    })
+    }, {headers: {
+      'Authorization': `Bearer ${token}`
+    }})
     .then(response => {
       const events = response.data.map(schedule => ({
         id: schedule._id,
