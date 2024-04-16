@@ -4,7 +4,7 @@ import "./CalendarStyles.css";
 import axios from 'axios';
 import SimpleForm from './SimpleForm'
 
-const CalendarScheduler = ({setToken,OnLogout}) => {
+const CalendarScheduler = () => {
   const gettoken = sessionStorage.getItem('token');
   const token = JSON.parse(gettoken);
   const [horaSelect, setHoraSelect] = useState(null);
@@ -12,7 +12,11 @@ const CalendarScheduler = ({setToken,OnLogout}) => {
 
   const fetchEventInfo = async (eID) => {
     axios.post('http://localhost:5000/citas/getCitaById', {
-      id: eID,
+      id: eID
+    },{
+      headers: {
+      'Authorization': `Bearer ${token}`
+      }
     })
       .then(response => {
       const event = response.data;
@@ -28,7 +32,9 @@ const CalendarScheduler = ({setToken,OnLogout}) => {
 
       DayPilot.Modal.alert(msg, { theme: "modal_rounded"});
     })
-    .catch(error => console.error(error));
+    .catch(error => {
+      console.error(error)
+    });
   }
 
   // const editEvent = async (e) => {
@@ -62,10 +68,11 @@ const CalendarScheduler = ({setToken,OnLogout}) => {
     axios.get('http://localhost:5000/citas/getCitas', {
       params:  {
         tipoEx: tipoExamen
+      }, 
+      headers: {
+        'Authorization': `Bearer ${token}`
       }
-    }, {headers: {
-      'Authorization': `Bearer ${token}`
-    }})
+    })
     .then(response => {
       const events = response.data.map(schedule => ({
         id: schedule._id,
@@ -78,7 +85,7 @@ const CalendarScheduler = ({setToken,OnLogout}) => {
     .catch(error => console.error(error));
     // const startDate = DayPilot.Date.today();
     //calendarRef.current.control.update({startDate, events});
-  }, [tipoExamen]);
+  }, [tipoExamen, token]);
 
   const calendarRef = useRef();
 

@@ -7,7 +7,7 @@ import "./CalendarStyles.css";
 // import Inicio from '../Inicio';
 import axios from 'axios';
 
-const CalendarVisualizer = ({setToken, OnLogout}) => {
+const CalendarVisualizer = () => {
   const gettoken = sessionStorage.getItem('token');
   const token = JSON.parse(gettoken);
   const [tipoExamen, setTipoExamen] = useState("Radiografía");
@@ -48,7 +48,6 @@ const CalendarVisualizer = ({setToken, OnLogout}) => {
     durationBarVisible: false,
     onEventClick: async args => {
       await fetchEventInfo(args.e.data.id);
-      //console.log(args.e.data.id);
     },
   });
 
@@ -56,10 +55,11 @@ const CalendarVisualizer = ({setToken, OnLogout}) => {
     axios.get('http://localhost:5000/citas/getCitas', {
       params:  {
         tipoEx: tipoExamen
+      },
+      headers: {
+        'Authorization': `Bearer ${token}`
       }
-    }, {headers: {
-      'Authorization': `Bearer ${token}`
-    }})
+    })
     .then(response => {
       const events = response.data.map(schedule => ({
         id: schedule._id,
@@ -72,7 +72,7 @@ const CalendarVisualizer = ({setToken, OnLogout}) => {
     .catch(error => console.error(error));
     // const startDate = DayPilot.Date.today();
     //calendarRef.current.control.update({startDate, events});
-  }, [tipoExamen]);
+  }, [tipoExamen, token]);
 
   const calendarRef = useRef();
 

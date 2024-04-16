@@ -31,7 +31,6 @@ const SimpleForm = ({hora, setShowForm}) => {
     e.preventDefault();
     console.log(hora);
     axios.post('http://localhost:5000/citas/registrarCita', {
-      
       rutPaciente: formData.rutPaciente,
       nombrePaciente: formData.nombrePaciente,
       maquinaId: formData.maquinaId,

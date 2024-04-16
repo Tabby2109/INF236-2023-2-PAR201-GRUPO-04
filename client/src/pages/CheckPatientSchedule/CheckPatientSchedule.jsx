@@ -77,6 +77,7 @@ const CheckPatientSchedule = () => {
             <div className='mt-3'>
               { events.map( (event, index)=> (
                 <PendingAppointmentCard
+                  key = {event._id}
                   event = {event}
                   index = {index}
                 />

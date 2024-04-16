@@ -34,7 +34,8 @@ const ChangeHistory = ({ setToken,OnLogout }) => {
         <h2>Historial de cambios</h2>
         <h5>Todo cambio quedará registrado aquí.</h5>
         {changesHistory.length !== 0 && changesHistory.map((data, index) => 
-          <ChangeCard 
+          <ChangeCard
+            key={data._id}
             data={data}
             index={index}
           />

@@ -25,7 +25,9 @@ const CalendarModify = ({setToken, OnLogout}) => {
   const fetchEventInfo = async (eID) => {
     axios.post('http://localhost:5000/citas/getCitaById', {
       id: eID,
-    })
+    }, {headers: {
+      'Authorization': `Bearer ${token}`
+    }})
       .then(response => {
       const event = response.data
       
@@ -78,7 +80,7 @@ const CalendarModify = ({setToken, OnLogout}) => {
           calendarRef.current.control.update({events});
         })
         .catch(error => console.error(error));
-  }, []);
+  }, [token]);
 
   const calendarRef = useRef();
 

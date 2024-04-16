@@ -9,12 +9,14 @@ const Cambio = require('../Models/Cambio');
 function authenticateToken(req,res,next){
     const authHeader = req.headers['authorization'];
     const token = authHeader && authHeader.split(' ')[1];
-  
+    // console.log("authheader: ", authHeader);
+    console.log("token: ", token);
+    console.log("\n");
     if (token == null) return res.sendStatus(401);
     
     jwt.verify(token, process.env.TOKEN_SECRET, (err, user) => {
-        //console.log("USUARIOOOOO: " + req.user);
-        //console.log(err);
+        // console.log("USUARIOOOOO: " + req.user);
+        // console.log(err);
 
         if (err) return res.sendStatus(403);
         console.log("this user: " + req.user);

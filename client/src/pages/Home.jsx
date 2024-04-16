@@ -1,9 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-const Inicio = ({setToken, OnLogout }) => {
-  const gettoken = sessionStorage.getItem('token');
-  const token = JSON.parse(gettoken);
+const Inicio = () => {
   return(
     <>
       <div className="background-color" style={containerStyle}>
