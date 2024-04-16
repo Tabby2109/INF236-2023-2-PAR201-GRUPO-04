@@ -4,7 +4,6 @@ import { DayPilot } from "@daypilot/daypilot-lite-react";
 
 import "./CalendarStyles.css";
 // import { Link } from 'react-router-dom';
-import Navbar from '../../components/Navbar';
 // import Inicio from '../Inicio';
 import axios from 'axios';
 
@@ -84,24 +83,21 @@ const CalendarVisualizer = ({setToken, OnLogout}) => {
   }
   
   return (
-    <div>
-      <Navbar token={token} setToken={setToken} OnLogout={OnLogout}/> 
-      <div className="d-flex">
-        <div className="d-flex flex-column justify-content-center align-items-center mx-3" style={{width: '21%'}}>
-          <div className='d-flex flex-column mt-2 w-100 mb-4 align-items-start'>
-            <h5>Tipo de examen:</h5>
-            <select className='form-select w-100' name="tipoExamen" value={tipoExamen} onChange={(e) => handleSelect(e)}>
-              <option value="Radiografía">Radiografía</option>
-              <option value="Scanner">Scanner</option>
-              <option value="Ecografía">Ecografía</option>
-              <option value="Resonancia">Resonancia magnética</option>
-            </select> 
-          </div>
-            <DayPilotNavigator selectMode={"Week"} showMonths={2} skipMonths={2} onTimeRangeSelected={handleTimeRangeSelected}/>
+    <div className="d-flex">
+      <div className="d-flex flex-column justify-content-center align-items-center mx-3" style={{width: '21%'}}>
+        <div className='d-flex flex-column mt-2 w-100 mb-4 align-items-start'>
+          <h5>Tipo de examen:</h5>
+          <select className='form-select w-100' name="tipoExamen" value={tipoExamen} onChange={(e) => handleSelect(e)}>
+            <option value="Radiografía">Radiografía</option>
+            <option value="Scanner">Scanner</option>
+            <option value="Ecografía">Ecografía</option>
+            <option value="Resonancia">Resonancia magnética</option>
+          </select> 
         </div>
-        <div> 
-            <DayPilotCalendar {...config} ref={calendarRef}/>
-        </div>
+          <DayPilotNavigator selectMode={"Week"} showMonths={2} skipMonths={2} onTimeRangeSelected={handleTimeRangeSelected}/>
+      </div>
+      <div> 
+          <DayPilotCalendar {...config} ref={calendarRef}/>
       </div>
     </div>
   );

@@ -1,13 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import Navbar from '../components/Navbar';
 
 const Inicio = ({setToken, OnLogout }) => {
   const gettoken = sessionStorage.getItem('token');
   const token = JSON.parse(gettoken);
   return(
     <>
-      <Navbar token={token} setToken={setToken} OnLogout={OnLogout}/> 
       <div className="background-color" style={containerStyle}>
         <div style={triangleContainerStyle}>
           <Link to="/calendar-ingreso-horas" style={boxStyle}>

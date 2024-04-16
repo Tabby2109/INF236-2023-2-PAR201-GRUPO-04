@@ -3,7 +3,6 @@ import { DayPilotCalendar, DayPilotNavigator} from "@daypilot/daypilot-lite-reac
 import { Modal } from "@daypilot/modal";
 
 import "./CalendarStyles.css";
-import Navbar from '../../components/Navbar';
 import axios from 'axios';
 
 const styles = {
@@ -89,9 +88,7 @@ const CalendarModify = ({setToken, OnLogout}) => {
 
   return (
     <div>
-      <Navbar token={token} setToken={setToken} OnLogout={OnLogout}/> 
       <div style={styles.wrap}>
-        
         <div style={styles.left}>
             <DayPilotNavigator selectMode={"Week"} showMonths={2} skipMonths={2} onTimeRangeSelected={handleTimeRangeSelected}/>
         </div>

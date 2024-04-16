@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import Navbar from '../../components/Navbar';
 import axios from 'axios';
 import { PendingAppointmentCard } from '../../components/Cards/PendingAppointmentCard';
 
@@ -49,7 +48,6 @@ const CheckPatientSchedule = ({setToken, OnLogout}) => {
 
   return (
     <>
-      <Navbar token={token} setToken={setToken} OnLogout={OnLogout}/>
       <div className='h-100'>
         <div className='container pt-5 pb-5 h-100'>
           <h2>Búsqueda avanzada</h2>

@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import Navbar from '../../components/Navbar';
 import axios from 'axios';
 
 import { ChangeCard } from '../../components/Cards/ChangeCard';
@@ -30,7 +29,6 @@ const ChangeHistory = ({ setToken,OnLogout }) => {
 
   return (
     <>
-      <Navbar token={token} setToken={setToken} OnLogout={OnLogout}/>
       {!loading &&
       <div className='container mt-5'>
         <h2>Historial de cambios</h2>
