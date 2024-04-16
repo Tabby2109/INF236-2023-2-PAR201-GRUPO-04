@@ -71,48 +71,48 @@ const SimpleForm = ({hora, setShowForm}) => {
         <h2>{hora && hora.hora}</h2>
         <form onSubmit={handleSubmit}>
           <div className='d-flex'>
-            <label className='label-rut'>
+            <label className='label-rut' htmlFor="rutPaciente">
               RUT:
-              <input type="text" name="rutPaciente" value={formData.rutPaciente} autoComplete="off" onChange={handleChange} />
+              <input type="text" id="rutPaciente" name="rutPaciente" value={formData.rutPaciente} autoComplete="off" onChange={handleChange} />
             </label>
-            <label className='label-nombre'>
+            <label className='label-nombre' htmlFor="nombrePaciente">
               Nombre:
-              <input type="text" name="nombrePaciente" value={formData.nombrePaciente} autoComplete="off" onChange={handleChange} />
+              <input type="text" id="nombrePaciente" name="nombrePaciente" value={formData.nombrePaciente} autoComplete="off" onChange={handleChange} />
             </label>
           </div>
           
-          <label>
+          <label htmlFor="motivoEx">
             Motivo:
-            <textarea name="motivoEx" value={formData.motivoEx} onChange={handleChange} />
+            <textarea id="motivoEx" name="motivoEx" value={formData.motivoEx} onChange={handleChange} />
           </label>
 
           <div className='d-flex align-items-center
           justify-content-center'>
-            <label className='label-maquina'>
+            <label className='label-maquina' htmlFor="maquinaId">
               Máquina ID:
-              <input type="text" name="maquinaId" value={formData.maquinaId} onChange={handleChange} />
+              <input type="text" id="maquinaId" name="maquinaId" value={formData.maquinaId} onChange={handleChange} />
             </label>
             {/* <label className='label-tipo'>
               Tipo de examen:
               <input type="text" name="tipoEx" value={formData.tipoEx} onChange={handleChange} />
             </label> */}
-            <label className='label-tipo'>
+            <label className='label-tipo' htmlFor="tipoEx">
               Tipo de examen:
-              <select className='form-select' name="tipoEx" value={formData.tipoEx} onChange={handleChange}>
+              <select className='form-select' id="tipoEx" name="tipoEx" value={formData.tipoEx} onChange={handleChange}>
                 <option defaultValue>Seleccione un tipo</option>
                 { tiposExamen.map(examen => <option key={examen} value={examen}>{examen}</option>)}
               </select>
             </label>
-            <label className='label-contacto'>
+            <label className='label-contacto' htmlFor="contacto">
               Contacto:
-              <input type="text" name="contacto" value={formData.contacto} autoComplete="off" onChange={handleChange} />
+              <input type="text" id="contacto" name="contacto" value={formData.contacto} autoComplete="off" onChange={handleChange} />
             </label>
 
           </div>
 
-          <label className='label-info'>
+          <label className='label-info' htmlFor="infoExtra">
             Información extra:
-            <textarea name="infoExtra" value={formData.infoExtra} onChange={handleChange} />
+            <textarea id="infoExtra" name="infoExtra" value={formData.infoExtra} onChange={handleChange} />
           </label>
 
           <button type="button" className="btn btn-danger me-3 " onClick={() => setShowForm(false)}>Cancelar</button>
