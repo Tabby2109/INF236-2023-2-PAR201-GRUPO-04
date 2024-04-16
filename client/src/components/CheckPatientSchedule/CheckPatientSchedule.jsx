@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import Navbar from '../Navbar';
 import axios from 'axios';
-import "./BusquedaPacienteStyles.css";
 // Date format
 import moment from 'moment';
 

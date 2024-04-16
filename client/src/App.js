@@ -5,27 +5,27 @@ import ProtectedRoute from './components/utils/ProtectedRoute';
 import './App.css';
 
 const Login = React.lazy(()=> import('./components/Login'));
-const Inicio = React.lazy(() => import('./components/Inicio'));
-const CalendarVisualizacion = React.lazy(()=> import('./components/CalendarVisualizacion/CalendarVisualizacion'));
-const CalendarIngresoHoras = React.lazy(()=> import('./components/CalendarIngresoHoras/CalendarIngresoHoras'));
-const CalendarModificacion = React.lazy(()=> import('./components/CalendarModificacion/CalendarModificacion'));
-const BusquedaPaciente = React.lazy(()=> import('./components/BusquedaPaciente/BusquedaPaciente'));
-const HistorialCambios = React.lazy(()=> import('./components/HistorialCambios/HistorialCambios'));
+const Home = React.lazy(() => import('./components/Home'));
+const CalendarVisualizer = React.lazy(()=> import('./components/CalendarVisualizer/CalendarVisualizer'));
+const CalendarScheduler = React.lazy(()=> import('./components/CalendarScheduler/CalendarScheduler'));
+const CalendarModify = React.lazy(()=> import('./components/CalendarModify/CalendarModify'));
+const CheckPatientSchedule = React.lazy(()=> import('./components/CheckPatientSchedule/CheckPatientSchedule'));
+const ChangeHistory = React.lazy(()=> import('./components/ChangeHistory/ChangeHistory'));
 
 const App = () => {
   // De forma momentanea solo entra a rutas protegidas teniendo un token, pudiendo ser cualquiera.
   return (
-    <Suspense fallback={<h1>Cargando...</h1>}>
+    <Suspense fallback={<body className='background-color'><h1>Cargando...</h1></body>}>
       <Routes>
         <Route path="/" element={<Login />} />
         {/* Rutas protegidas por el token */}
         <Route element={<ProtectedRoute />}>
-          <Route path="/inicio" element={<Inicio />} />
-          <Route path="/calendar-visualizacion" element={<CalendarVisualizacion />} />
-          <Route path="/calendar-ingreso-horas" element={<CalendarIngresoHoras />} />
-          <Route path="/calendar-modificacion" element={<CalendarModificacion />} />
-          <Route path="/busqueda-por-paciente" element={<BusquedaPaciente />} />
-          <Route path="/historial-de-cambios" element={<HistorialCambios />} />
+          <Route path="/inicio" element={<Home />} />
+          <Route path="/calendar-visualizacion" element={<CalendarVisualizer />} />
+          <Route path="/calendar-ingreso-horas" element={<CalendarScheduler />} />
+          <Route path="/calendar-modificacion" element={<CalendarModify />} />
+          <Route path="/busqueda-por-paciente" element={<CheckPatientSchedule />} />
+          <Route path="/historial-de-cambios" element={<ChangeHistory />} />
         </Route>
         <Route path="*" element={<Navigate to="/inicio" />} />
       </Routes>
