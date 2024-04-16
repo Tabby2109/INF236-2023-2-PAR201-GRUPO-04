@@ -1,8 +1,7 @@
 import React, { useState } from 'react'
 import Navbar from '../../components/Navbar';
 import axios from 'axios';
-// Date format
-import moment from 'moment';
+import { PendingAppointmentCard } from '../../components/Cards/PendingAppointmentCard';
 
 const CheckPatientSchedule = ({setToken, OnLogout}) => {
   const gettoken = sessionStorage.getItem('token');
@@ -48,17 +47,6 @@ const CheckPatientSchedule = ({setToken, OnLogout}) => {
     }
   }
 
-  // date1-> inicial, date2 -> final
-  function calcDiff(date1, date2){
-    var initial = new Date(date1);
-    var final = new Date(date2);
-
-    // diff está en milisegundos
-    var diff = final - initial;
-    var hhmm = moment.duration(diff);
-    return hhmm.hours() + " horas y " + hhmm.minutes() + " minutos."
-  }
-
   return (
     <>
       <Navbar token={token} setToken={setToken} OnLogout={OnLogout}/>
@@ -86,18 +74,10 @@ const CheckPatientSchedule = ({setToken, OnLogout}) => {
           {events && 
             <div className='mt-3'>
               { events.map( (event, index)=> (
-                <div className="shadow p-3 m-2" key={event._id}>
-                  <h3>Cita {index + 1}</h3>
-                  <p>RUT: {event.rutPaciente}</p>
-                  <p>Paciente: {event.nombrePaciente}</p>
-                  <p>Fecha: {moment(event.fecha).format('DD/MM/YYYY')}</p>
-                  <p>Hora: {event.hora}</p>
-                  <p>Contacto: {event.contacto}</p>
-                  <p>Tipo de examen: {event.tipoEx}</p>
-                  <p>Motivo: {event.motivoEx}</p>
-                  <p>Información extra: {event.infoExtra}</p>
-                  <p>Duración: {calcDiff(event.fecha, event.fin)}</p>
-                </div>
+                <PendingAppointmentCard
+                  event = {event}
+                  index = {index}
+                />
               ))}
             </div>}
         </div>

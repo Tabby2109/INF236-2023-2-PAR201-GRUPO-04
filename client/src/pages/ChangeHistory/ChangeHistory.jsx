@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import Navbar from '../../components/Navbar';
 import axios from 'axios';
-import moment from 'moment';
+
+import { ChangeCard } from '../../components/Cards/ChangeCard';
 
 const ChangeHistory = ({ setToken,OnLogout }) => {
   let gettoken = sessionStorage.getItem('token');
@@ -34,14 +35,11 @@ const ChangeHistory = ({ setToken,OnLogout }) => {
       <div className='container mt-5'>
         <h2>Historial de cambios</h2>
         <h5>Todo cambio quedará registrado aquí.</h5>
-        {changesHistory.length !== 0 && changesHistory.map((changes, index) => 
-          <div key={changes._id} className='shadow p-2'>
-            <h4>Cambio {index + 1}</h4>
-            <p>RUT: {changes.usuario.rut}</p>
-            <p>Nombre: {changes.usuario.nombre}</p>
-            <p>Tipo de cambio: {changes.tipoCambio}</p>
-            <p>Fecha y hora: {moment(changes.fecha).format("DD/MM/YYYY")} {moment(changes.fecha).format("HH:mm:ss")}</p>
-          </div>
+        {changesHistory.length !== 0 && changesHistory.map((data, index) => 
+          <ChangeCard 
+            data={data}
+            index={index}
+          />
         )}
       </div>
       }

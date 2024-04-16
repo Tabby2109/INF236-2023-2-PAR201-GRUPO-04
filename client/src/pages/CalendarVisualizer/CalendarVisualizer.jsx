@@ -30,6 +30,7 @@ const CalendarVisualizer = ({setToken, OnLogout}) => {
       const msg = "<div className='alo'>" +
       "RUT: " + event[0].rutPaciente + 
       "<br/>Nombre: " + event[0].nombrePaciente + 
+      "<br/>ID de máquina: " + event[0].maquinaId +
       "<br/>Tipo de examen: " + event[0].tipoEx + 
       "<br/>Motivo: " + event[0].motivoEx + 
       "<br/>Información extra: " + event[0].infoExtra + 

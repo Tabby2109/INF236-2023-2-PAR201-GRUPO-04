@@ -18,13 +18,16 @@ const CalendarScheduler = ({setToken,OnLogout}) => {
     })
       .then(response => {
       const event = response.data;
-      const msg = 
+      const msg = "<div className='alo'>" +
       "RUT: " + event[0].rutPaciente + 
       "<br/>Nombre: " + event[0].nombrePaciente + 
+      "<br/>ID de máquina: " + event[0].maquinaId +
       "<br/>Tipo de examen: " + event[0].tipoEx + 
       "<br/>Motivo: " + event[0].motivoEx + 
       "<br/>Información extra: " + event[0].infoExtra + 
-      "<br/>Contacto: " + event[0].contacto;
+      "<br/>Contacto: " + event[0].contacto +
+      "</div>";
+
       DayPilot.Modal.alert(msg, { theme: "modal_rounded"});
     })
     .catch(error => console.error(error));
