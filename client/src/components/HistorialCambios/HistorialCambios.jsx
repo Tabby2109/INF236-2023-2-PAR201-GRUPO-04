@@ -4,9 +4,10 @@ import axios from 'axios';
 import moment from 'moment';
 
 const HistorialCambios = ({ setToken,OnLogout }) => {
-  const gettoken = sessionStorage.getItem('token');
-  const token = JSON.parse(gettoken);
+  let gettoken = sessionStorage.getItem('token');
+  let token = JSON.parse(gettoken);
   const [changesHistory, setChangesHistory] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(()=>{
     const fetchChangesHistory = async () => {
@@ -17,8 +18,10 @@ const HistorialCambios = ({ setToken,OnLogout }) => {
           }})
         const data = response.data;
         setChangesHistory(data);
+        setLoading(false);
       } catch(error) {
         console.log(error);
+        setLoading(false);
       }
     }  
     fetchChangesHistory();
@@ -26,11 +29,12 @@ const HistorialCambios = ({ setToken,OnLogout }) => {
 
   return (
     <>
-      <Navbar token={token} setToken={setToken} OnLogout={OnLogout}/> 
+      <Navbar token={token} setToken={setToken} OnLogout={OnLogout}/>
+      {!loading &&
       <div className='container mt-5'>
         <h2>Historial de cambios</h2>
         <h5>Todo cambio quedará registrado aquí.</h5>
-        {changesHistory && changesHistory.map((changes, index) => 
+        {changesHistory.length !== 0 && changesHistory.map((changes, index) => 
           <div key={changes._id} className='shadow p-2'>
             <h4>Cambio {index + 1}</h4>
             <p>RUT: {changes.usuario.rut}</p>
@@ -40,6 +44,7 @@ const HistorialCambios = ({ setToken,OnLogout }) => {
           </div>
         )}
       </div>
+      }
     </>
   )
 }
