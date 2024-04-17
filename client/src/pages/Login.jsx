@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Card, Form, Button, Container } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
+// import { useDispatch } from "react-redux";
+// import { createUser } from '../redux/states/user';
 
 const Login = () => {
   const [rut, setRut] = useState('');
@@ -26,8 +28,9 @@ const Login = () => {
         rut,
         password,
       });
-
+      console.log(response);
       saveToken(response.data.token);
+      // dispatch(createUser(response.data))
     } catch (error) {
       setError(true);
     }
