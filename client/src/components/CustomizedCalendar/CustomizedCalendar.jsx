@@ -4,7 +4,8 @@ import { Calendar, momentLocalizer} from 'react-big-calendar';
 import moment from 'moment';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import 'moment-timezone';
-import AppointmentForm from './AppointmentForm';
+import SlotForm from './SlotForm';
+import EventForm from './EventForm';
 
 require('moment/locale/es.js')
 
@@ -16,10 +17,13 @@ const CustomizedCalendar = () => {
   const [events, setEvents] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [selectedDate, setSelectedDate] = useState(null);
+  const [selectedEvent, setSelectedEvent] = useState(null);
   const [tipoExamen, setTipoExamen] = useState("Radiografía");
+
   const [settings, setSettings] = useState({
     step: 15
   })
+
   const { formats } = useMemo(
     () => ({
       formats: {
@@ -28,21 +32,17 @@ const CustomizedCalendar = () => {
       },
     }), [])
   
+  // Manejar celdas vacías
   const handleSelectSlot = (slotInfo) =>{
     setShowModal(true);
     setSelectedDate(slotInfo);
   }
-
-  // const saveEvent = () => {
-  //   if ( selectedDate ){
-  //     const newEvent = {
-  //       title: "si",
-  //       start: selectedDate,
-  //       end: moment(),
-  //     }
-  //     setShowModal(false);
-  //   }
-  // }
+  
+  // Manejar eventos
+  const handleSelectEvent = (eventInfo) =>{
+    setShowModal(true);
+    setSelectedEvent(eventInfo);
+  }
 
   // Obtener todos los eventos
   useEffect(() => {
@@ -76,12 +76,19 @@ const CustomizedCalendar = () => {
         title: schedule.nombrePaciente,
         start: new Date(schedule.fecha),
         end: new Date(schedule.fin),
+        data: { schedule }
       }));
 
       setEvents(events);
     })
     .catch(error => console.error(error));
   }, [token, tipoExamen]);
+
+  const handleClose = () =>{
+    if (selectedDate){setSelectedDate(null)}
+    if (selectedEvent){setSelectedEvent(null)}
+    setShowModal(false)
+  }
 
   return (
     <div className='d-flex justify-content-center mt-3 mx-5' >
@@ -125,6 +132,7 @@ const CustomizedCalendar = () => {
       formats={formats}
       selectable = {true}
       onSelectSlot={handleSelectSlot}
+      onSelectEvent={handleSelectEvent}
       style={{
         width: '90vw',
         height: '80vh',
@@ -145,15 +153,24 @@ const CustomizedCalendar = () => {
         }}
         tabIndex="-1" 
       >
-        {console.log(selectedDate)}
         <div className="modal-dialog">
           <div className="modal-content">
             <div className="modal-header">
-              <h5 className="modal-title">Agregar cita - { tipoExamen } - { moment(selectedDate.start).format("DD/MM/YYYY HH:mm") }</h5>
-              <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close" onClick={()=>setShowModal(false)}></button>
+              {   (selectedDate !== null) ? 
+                    (<h5 className="modal-title">Agregar cita - { tipoExamen } - { moment(selectedDate.start).format("DD/MM/YYYY HH:mm") }</h5>)
+                : (selectedEvent !== null) ?
+                    (<h5 className="modal-title">Cita { moment(selectedEvent.start).format("DD/MM/YYYY HH:mm") }</h5>)
+                : (<h5>Error, hay dos seleccionados</h5>)
+              }
+              <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close" onClick={handleClose}></button>
             </div>
             <div className="modal-body">
-              <AppointmentForm token={token} setShowModal={setShowModal} tipoExamen={tipoExamen} fecha={selectedDate.start}/>
+             { (selectedDate !== null)
+              ? (<SlotForm token={token} setShowModal={setShowModal} tipoExamen={tipoExamen} fecha={selectedDate.start} handleClose={handleClose} />)              
+              : (selectedEvent !== null)
+              ? (<EventForm token={token} setShowModal={setShowModal} handleClose={handleClose} data={selectedEvent.data.schedule} />)
+              : (<h5>Error, hay dos seleccionados</h5>)
+            }
             </div>
           </div>
         </div>

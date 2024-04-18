@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import './formStyles.css';
-import moment from 'moment'
 
-const AppointmentForm = ({ token, setShowModal, tipoExamen, fecha }) => {
+const SlotForm = ({ token, setShowModal, tipoExamen, fecha, handleClose }) => {
   const [formData, setFormData] = useState({
     rutPaciente: '',
     nombrePaciente: '',
@@ -92,11 +91,11 @@ const AppointmentForm = ({ token, setShowModal, tipoExamen, fecha }) => {
         <textarea id="infoExtra" name="infoExtra" value={formData.infoExtra} onChange={handleChange} />
       </label>
       <div className="modal-footer">
-        <button type="button" className="btn btn-secondary" data-bs-dismiss="modal" onClick={()=>setShowModal(false)}>Cerrar</button>
+        <button type="button" className="btn btn-secondary" data-bs-dismiss="modal" onClick={handleClose}>Cerrar</button>
         <button type="button" className="btn btn-primary" onClick={handleSubmit}>Agregar cita</button>
       </div>
     </form>
   )
 }
 
-export default AppointmentForm;
+export default SlotForm;
