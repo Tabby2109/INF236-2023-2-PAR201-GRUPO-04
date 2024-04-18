@@ -7,7 +7,8 @@ export const PrivateRoutes = {
     CALENDAR: {
         VISUALIZER: 'calendar-visualizacion',
         SCHEDULER: 'calendar-ingreso-horas',
-        MODIFY: 'calendar-modificacion'
+        MODIFY: 'calendar-modificacion',
+        BIGCALENDAR: 'customized-calendar'
     },
     CHECKPATIENTSCHEDULE: 'busqueda-por-paciente',
     CHANGEHISTORY: 'historial-de-cambios'

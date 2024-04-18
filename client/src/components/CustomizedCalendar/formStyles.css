@@ -1,0 +1,52 @@
+.form-content {
+    background-color: #fff;
+    padding: 10px;
+    border-radius: 10px;
+    width: 100%;
+}
+
+.form-content label {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+.form-content input[type="text"],
+.form-content input[type="email"],
+.form-content textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin-bottom: 20px;
+}
+
+.form-content select {
+    padding: 10px;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.form-content button {
+    padding: 8px 24px;
+}
+
+/* Primer sección */
+.form-content .label-rut {
+    width: 30%;
+    margin-right: 5%;
+}
+
+.form-content .label-nombre {
+    width: 65%;
+}
+
+/* Segunda sección */
+.form-content .label-maquina {
+    max-width: 25%;
+    margin-right: 5%;
+}
+
+.form-content .label-contacto {
+    width: 100%;
+}

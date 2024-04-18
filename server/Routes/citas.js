@@ -2,6 +2,7 @@ const express = require('express');
 const jwt = require('jsonwebtoken');
 const router = express.Router();
 const mongoose = require('mongoose');
+const moment = require('moment-timezone');
 
 const Cita = require('../Models/Cita');
 const Cambio = require('../Models/Cambio');
@@ -10,7 +11,7 @@ function authenticateToken(req,res,next){
     const authHeader = req.headers['authorization'];
     const token = authHeader && authHeader.split(' ')[1];
     // console.log("authheader: ", authHeader);
-    console.log("token: ", token);
+    // console.log("token: ", token);
     console.log("\n");
     if (token == null) return res.sendStatus(401);
     
@@ -19,7 +20,7 @@ function authenticateToken(req,res,next){
         // console.log(err);
 
         if (err) return res.sendStatus(403);
-        console.log("this user: " + req.user);
+        // console.log("this user: " + req.user);
         req.user = user;
 
         next();
@@ -33,50 +34,22 @@ router.post('/registrarCita', authenticateToken, (req, res) => {
         console.log("user: " + req.user.userId);
         const personalId = Number(req.user.userId);
         var {rutPaciente, nombrePaciente, maquinaId, fecha, motivoEx, tipoEx, contacto, infoExtra} = req.body;
-        const [dia,hora] = fecha.split('T');
-        console.log("hora: " + hora);
-        const [hour, minutos,segundos] = hora.split(':');
-        console.log("hour:" + hour);
-        const fechaCorrection = new Date(fecha);
+
+        var duration;
+
+        if (tipoEx == "Radiografía") { duration = 15} 
+        else if (tipoEx == "Resonancia"){ duration = 60} 
+        else if (tipoEx == "Scanner"){ duration = 40} 
+        else if (tipoEx == "Ecografía"){ duration = 20}
+
+        var final = new Date(fecha)
+   
+        final.setMinutes(final.getMinutes() + duration);
         
-        fechaCorrection.setHours((parseInt(hour,10) - 3), parseInt(minutos,10)); //arreglar si se desea usar horario de invierno xd
-        console.log("fecha corregida:")
-        console.log(fechaCorrection);
+        const hora = String(moment(fecha).format("HH:mm"));
+        console.log(hora)
 
-        const endFecha = new Date(fecha);
-        var [endHour, endMin] = hora.split(':');
-        endHour = parseInt(hour,10) - 3;
-        endMin = parseInt(minutos,10);
-
-        if (tipoEx == "Resonancia" || tipoEx == "resonancia") {
-            tipoEx = "Resonancia";
-            endHour = endHour + 1; 
-            if (endMin == 0){
-                endMin = 30;
-            }else{
-                endMin = 0;
-            }
-        }   else if (tipoEx == "Scanner" || tipoEx == "scanner") {
-            tipoEx = "Scanner";
-            endHour = endHour + 1; 
-        }   else if (tipoEx == "Radiografía" || tipoEx == "radiografía" || tipoEx == "ecografía" || tipoEx == "Ecografía") {
-            if (tipoEx == "Radiografía" || tipoEx == "radiografía") {
-                tipoEx = "Radiografía";
-            } else {
-                tipoEx = "Ecografía";
-            }
-            if (endMin == 0){
-                endMin = 30;
-            }else{
-                endMin = 0;
-                endHour = endHour + 1;
-            }
-        } 
-        console.log("post arreglo");
-        endFecha.setHours(endHour, endMin); //arreglar si se desea usar horario de invierno xd
-        console.log("userid: ", req.user.userId);
-
-        const nuevaCita = new Cita({personalId, rutPaciente, nombrePaciente, maquinaId, fecha:fechaCorrection, fin:endFecha ,hora, motivoEx, tipoEx, contacto, infoExtra});
+        const nuevaCita = new Cita({personalId, rutPaciente, nombrePaciente, maquinaId, fecha: fecha, fin: final, hora, motivoEx, tipoEx, contacto, infoExtra});
         nuevaCita.save()
             .then(Cita => {
                 const cambio = new Cambio({ usuario: req.user.userId, tipoCambio: "Nueva cita" });
@@ -97,9 +70,8 @@ router.post('/registrarCita', authenticateToken, (req, res) => {
             });
         
     } catch (error) {
-        res.status(500).json({ error: error.message});
+        res.status(500).json({ error: 'error general registrando cita'});
         console.log('ID del usuario:', req.user.userId);
-        console.log('cast:', user_id_cast);
     }
 });
 

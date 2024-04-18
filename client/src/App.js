@@ -16,6 +16,8 @@ const CalendarModify = React.lazy(()=> import('./pages/CalendarModify/CalendarMo
 const CheckPatientSchedule = React.lazy(()=> import('./pages/CheckPatientSchedule/CheckPatientSchedule'));
 const ChangeHistory = React.lazy(()=> import('./pages/ChangeHistory/ChangeHistory'));
 
+const CustomizedCalendar = React.lazy(()=> import('./components/CustomizedCalendar/CustomizedCalendar'));
+
 const App = () => {
   // Plantilla para incluir Navbar
   function GlobalTemplate(){
@@ -46,6 +48,8 @@ const App = () => {
           <Route path={PrivateRoutes.CALENDAR.MODIFY} element={<CalendarModify />} />
           <Route path={PrivateRoutes.CHECKPATIENTSCHEDULE} element={<CheckPatientSchedule />} />
           <Route path={PrivateRoutes.CHANGEHISTORY} element={<ChangeHistory />} />
+          <Route path={PrivateRoutes.CALENDAR.BIGCALENDAR} element={<CustomizedCalendar />} />
+
         </Route>
       </Route>
       <Route path="*" element={<Navigate to={PrivateRoutes.HOME} />} />
