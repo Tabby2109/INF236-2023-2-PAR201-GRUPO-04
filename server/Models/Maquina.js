@@ -1,9 +1,9 @@
 const mongoose = require('mongoose');
 
-// Define el esquema de usuario
 const maquinaSchema = new mongoose.Schema({
-  _id: {
-    type: Number, // Tipo de dato para el RUT (puedes ajustarlo según tus necesidades)
+  index: {
+    type: Number, // Index es el identificador por tipo de maquina, no confundir con _id de MongoDB
+    required: true,
   },
   tipoMaquina: {
     type: String,
@@ -11,7 +11,6 @@ const maquinaSchema = new mongoose.Schema({
   },
 });
 
-// Crea el modelo de datos del usuario
 const Maquina = mongoose.model('Maquina', maquinaSchema);
 
 module.exports = Maquina;

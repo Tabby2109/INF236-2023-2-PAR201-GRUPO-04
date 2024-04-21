@@ -18,7 +18,17 @@ const CustomizedCalendar = () => {
   const [showModal, setShowModal] = useState(false);
   const [selectedDate, setSelectedDate] = useState(null);
   const [selectedEvent, setSelectedEvent] = useState(null);
+  // Tipo y id de máquina
   const [tipoExamen, setTipoExamen] = useState("Radiografía");
+  const [maquinaId, setMaquinaId] = useState(-1);
+
+  // El useMemo hace que se cargue solo una vez.
+  const opcionesId = useMemo(() => ({
+    "Radiografía": Array.from({ length: 10 }, (_, i) => i + 1), // [1, 2, ..., 10]
+    "Scanner": Array.from({ length: 3 }, (_, i) => i + 1), // [1, 2, 3]
+    "Ecografía": Array.from({ length: 5 }, (_, i) => i + 1),
+    "Resonancia": Array.from({ length: 3 }, (_, i) => i + 1)
+  }), []);
 
   const [settings, setSettings] = useState({
     step: 15
@@ -63,26 +73,28 @@ const CustomizedCalendar = () => {
         step: 20
       })
     }
+
     axios.get('http://localhost:5000/citas/getCitas', {
       params:  {
-        tipoEx: tipoExamen
+        index: maquinaId,
+        tipoMaquina: tipoExamen,
       }, 
       headers: {
         'Authorization': `Bearer ${token}`
       }
     })
     .then(response => {
+      console.log(response)
       const events = response.data.map(schedule => ({
         title: schedule.nombrePaciente,
         start: new Date(schedule.fecha),
         end: new Date(schedule.fin),
         data: { schedule }
       }));
-
       setEvents(events);
     })
     .catch(error => console.error(error));
-  }, [token, tipoExamen]);
+  }, [token, tipoExamen, maquinaId]);
 
   const handleClose = () =>{
     if (selectedDate){setSelectedDate(null)}
@@ -100,6 +112,13 @@ const CustomizedCalendar = () => {
           <option value="Scanner">Scanner</option>
           <option value="Ecografía">Ecografía</option>
           <option value="Resonancia">Resonancia magnética</option>
+        </select>
+        <h5>Seleccionar id de máquina:</h5>
+        <select className='form-select mb-4' name="maquinaId" value={maquinaId} onChange={(e) => setMaquinaId(e.target.value)}>
+          <option value={-1}>Todas las máquinas</option>
+        {opcionesId[tipoExamen].map((maquinaId, index)=>(
+          <option key={index} value={maquinaId}>{maquinaId}</option>
+        ))}
         </select>
       </div>
       {/* Sección derecha */}

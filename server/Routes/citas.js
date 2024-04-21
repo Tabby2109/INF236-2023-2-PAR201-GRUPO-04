@@ -5,6 +5,7 @@ const mongoose = require('mongoose');
 const moment = require('moment-timezone');
 
 const Cita = require('../Models/Cita');
+const Maquina = require('../Models/Maquina');
 const Cambio = require('../Models/Cambio');
 
 function authenticateToken(req,res,next){
@@ -27,14 +28,14 @@ function authenticateToken(req,res,next){
     });
 }
 
-// Ruta para crear un usuario (Padmin)
-router.post('/registrarCita', authenticateToken, (req, res) => {
+// Ruta para crear una cita
+router.post('/registrarCita', authenticateToken, async (req, res) => {
     try{
         console.log(req);
         console.log("user: " + req.user.userId);
         const personalId = Number(req.user.userId);
         var {rutPaciente, nombrePaciente, maquinaId, fecha, motivoEx, tipoEx, contacto, infoExtra} = req.body;
-
+        // Manejo de las horas
         var duration;
 
         if (tipoEx == "Radiografía") { duration = 15} 
@@ -49,7 +50,24 @@ router.post('/registrarCita', authenticateToken, (req, res) => {
         const hora = String(moment(fecha).format("HH:mm"));
         console.log(hora)
 
-        const nuevaCita = new Cita({personalId, rutPaciente, nombrePaciente, maquinaId, fecha: fecha, fin: final, hora, motivoEx, tipoEx, contacto, infoExtra});
+        const maquina = await Maquina.findOne({ index: maquinaId, tipoMaquina: tipoEx });
+        if (!maquina) {
+            throw new Error('La máquina no existe');
+        }
+
+        const nuevaCita = new Cita({
+            personalId, 
+            rutPaciente, 
+            nombrePaciente, 
+            maquinaId: maquina._id, 
+            fecha: fecha, 
+            fin: final, 
+            hora, 
+            motivoEx, 
+            tipoEx, 
+            contacto, 
+            infoExtra
+        });
         nuevaCita.save()
             .then(Cita => {
                 const cambio = new Cambio({ usuario: req.user.userId, tipoCambio: "Nueva cita" });
@@ -77,8 +95,21 @@ router.post('/registrarCita', authenticateToken, (req, res) => {
 
 router.get('/getCitas', authenticateToken, async (req,res) => {
     try {
-        const tipoExamen = req.query.tipoEx;
-        const result = await Cita.find({tipoEx: tipoExamen});
+        let result;
+        const tipoMaquina = req.query.tipoMaquina;
+        const index = Number(req.query.index);
+
+        // Si el index = -1 incluye todas las maquinas para ese tipo de examen
+        if (index === -1){
+            result = await Cita.find({tipoEx: tipoMaquina});
+        } else { // En caso contrario, escoge un id especifico de maquina
+            const maquina = await Maquina.findOne({ index: index, tipoMaquina: tipoMaquina });
+            if (!maquina) {
+                throw new Error('La máquina no existe');
+            }
+            result = await Cita.find({tipoEx: tipoMaquina, maquinaId: maquina._id}).populate('maquinaId');
+        }
+
         res.status(200).json(result)
     } catch (error) {
         console.error(error);

@@ -24,7 +24,7 @@ const citaSchema = new mongoose.Schema({
     required: true,
   },
   maquinaId: {
-    type: Number,
+    type: mongoose.Schema.Types.ObjectId,
     ref: 'Maquina',
     required: true,
   },

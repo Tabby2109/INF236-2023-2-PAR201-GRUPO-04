@@ -7,7 +7,7 @@ const EventForm = ({ token, setShowModal, data, handleClose }) => {
     rut: data.rutPaciente,
     nombre: data.nombrePaciente,
     motivoEx: data.motivoEx,
-    maquinaId: data.maquinaId,
+    maquinaId: data.maquinaId.index,
     contacto: data.contacto,
     infoExtra: data.infoExtra
   })
@@ -16,7 +16,7 @@ const EventForm = ({ token, setShowModal, data, handleClose }) => {
     rut: data.rutPaciente,
     nombre: data.nombrePaciente,
     motivoEx: data.motivoEx,
-    maquinaId: data.maquinaId,
+    maquinaId: data.maquinaId.index,
     contacto: data.contacto,
     infoExtra: data.infoExtra
   }
