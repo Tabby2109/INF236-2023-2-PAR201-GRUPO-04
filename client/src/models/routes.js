@@ -4,12 +4,13 @@ export const PublicRoutes = {
 
 export const PrivateRoutes = {
     HOME: 'inicio',
-    CALENDAR: {
-        VISUALIZER: 'calendar-visualizacion',
-        SCHEDULER: 'calendar-ingreso-horas',
-        MODIFY: 'calendar-modificacion',
-        BIGCALENDAR: 'customized-calendar'
-    },
+    // CALENDAR: {
+    //     VISUALIZER: 'calendar-visualizacion',
+    //     SCHEDULER: 'calendar-ingreso-horas',
+    //     MODIFY: 'calendar-modificacion',
+    //     BIGCALENDAR: 'customized-calendar'
+    // },
+    CALENDAR: 'calendario',
     CHECKPATIENTSCHEDULE: 'busqueda-por-paciente',
     CHANGEHISTORY: 'historial-de-cambios'
 };

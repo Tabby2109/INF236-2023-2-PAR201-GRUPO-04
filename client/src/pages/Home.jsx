@@ -4,26 +4,22 @@ import { PrivateRoutes } from '../models/routes';
 
 const Inicio = () => {
   return(
-    <>
-      <div className="background-color" style={containerStyle}>
-        <div style={triangleContainerStyle}>
-          <Link replace to={`/${PrivateRoutes.CALENDAR.SCHEDULER}`} style={boxStyle}>
-            Ingreso de horas
+    <div className="background-color" style={containerStyle}>
+      <div style={triangleContainerStyle}>
+        <Link replace to={`/${PrivateRoutes.CALENDAR}`} style={boxStyle}>
+          Calendario
+        </Link>
+        <div style={sideBoxesContainerStyle}>
+          <Link replace to={`/${PrivateRoutes.CHECKPATIENTSCHEDULE}`} style={boxStyle}>
+            Búsqueda por paciente
           </Link>
-          <div style={sideBoxesContainerStyle}>
-            <Link replace to={`/${PrivateRoutes.CALENDAR.VISUALIZER}`} style={boxStyle}>
-              Visualización de horas
-            </Link>
-            {/* Se debe agregar modificación de horas */}
-            <Link replace to={`/${PrivateRoutes.CALENDAR.MODIFY}`} style={boxStyle}>
-              Modificación de horas
-            </Link>
-          </div>
+          <Link replace to={`/${PrivateRoutes.CHANGEHISTORY}`} style={boxStyle}>
+            Historial de cambios
+          </Link>
         </div>
-      </div>
-    </>
+      </div> 
+    </div>
   )
-
 };
 
 const containerStyle = {
