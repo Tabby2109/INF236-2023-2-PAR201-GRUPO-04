@@ -101,7 +101,7 @@ router.get('/getCitas', authenticateToken, async (req,res) => {
 
         // Si el index = -1 incluye todas las maquinas para ese tipo de examen
         if (index === -1){
-            result = await Cita.find({tipoEx: tipoMaquina});
+            result = await Cita.find({tipoEx: tipoMaquina}).populate('maquinaId');
         } else { // En caso contrario, escoge un id especifico de maquina
             const maquina = await Maquina.findOne({ index: index, tipoMaquina: tipoMaquina });
             if (!maquina) {
