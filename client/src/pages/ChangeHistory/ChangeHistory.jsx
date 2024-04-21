@@ -17,6 +17,10 @@ const ChangeHistory = ({ setToken,OnLogout }) => {
             'Authorization': `Bearer ${token}`
           }})
         const data = response.data;
+        data.sort((a, b) => {
+          return new Date(b.fecha) - new Date(a.fecha);
+        });
+
         setChangesHistory(data);
         setLoading(false);
       } catch(error) {
