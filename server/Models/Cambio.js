@@ -13,11 +13,6 @@ const cambioSchema = new mongoose.Schema({
     fecha: {
         type: Date,
         default: Date.now,
-        set: function(v) { // Convierte a la zona horaria de chile
-            const date = new Date(v);
-            date.setMinutes(date.getMinutes() - date.getTimezoneOffset());
-            return date;
-        }
     },
 }, {collection: 'Historial'});
 

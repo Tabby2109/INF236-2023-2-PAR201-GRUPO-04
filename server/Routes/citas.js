@@ -8,6 +8,21 @@ const Cita = require('../Models/Cita');
 const Maquina = require('../Models/Maquina');
 const Cambio = require('../Models/Cambio');
 
+function obtenerDuracion(tipoExamen) {
+    switch (tipoExamen) {
+        case "Radiografía":
+            return 15;
+        case "Resonancia":
+            return 60;
+        case "Scanner":
+            return 40;
+        case "Ecografía":
+            return 20;
+        default:
+            return 0; // Caso error
+    }
+}
+
 function authenticateToken(req,res,next){
     const authHeader = req.headers['authorization'];
     const token = authHeader && authHeader.split(' ')[1];
@@ -36,15 +51,9 @@ router.post('/registrarCita', authenticateToken, async (req, res) => {
         const personalId = Number(req.user.userId);
         var {rutPaciente, nombrePaciente, maquinaId, fecha, motivoEx, tipoEx, contacto, infoExtra} = req.body;
         // Manejo de las horas
-        var duration;
-
-        if (tipoEx == "Radiografía") { duration = 15} 
-        else if (tipoEx == "Resonancia"){ duration = 60} 
-        else if (tipoEx == "Scanner"){ duration = 40} 
-        else if (tipoEx == "Ecografía"){ duration = 20}
+        var duration = obtenerDuracion(tipoEx);
 
         var final = new Date(fecha)
-   
         final.setMinutes(final.getMinutes() + duration);
         
         const hora = String(moment(fecha).format("HH:mm"));
@@ -92,6 +101,77 @@ router.post('/registrarCita', authenticateToken, async (req, res) => {
         console.log('ID del usuario:', req.user.userId);
     }
 });
+
+// Patch modifica una sola parte de la cita o toda no es necesario enviar todos los campos, 
+// PUT para modificarlo completo.
+router.patch('/modificarCita/:citaId', authenticateToken, async (req, res) => {
+    try {
+        const citaId = req.params.citaId;
+        const updates = req.body;
+        // Prohibir algunas modificaciones
+        if (updates.hora || updates.fin){
+            throw new Error('Esta modificación está prohibida');
+        }
+
+        const cita = await Cita.findById(citaId); // Cita original
+        if (!cita){
+            throw new Error('La cita no existe.\n');
+        }
+
+        if (updates.fecha) {
+            const duration = obtenerDuracion(updates.tipoEx);
+            const final = new Date(updates.fecha);
+            final.setMinutes(final.getMinutes() + duration);
+
+            updates.fin = final;
+            updates.hora = String(moment(updates.fecha).format("HH:mm"));
+        }
+
+        if (updates.maquinaId) {
+            const maquina = await Maquina.findOne({ index: updates.maquinaId, tipoMaquina: updates.tipoEx || cita.tipoEx });
+            if (!maquina) {
+                throw new Error('La máquina no existe.');
+            }
+            updates.maquinaId = maquina._id;
+        }
+
+        const citaModificada = await Cita.findByIdAndUpdate(citaId, updates, { new: true });
+
+        if (!citaModificada) {
+            throw new Error('La cita no existe');
+        }
+
+        const cambio = new Cambio({ usuario: req.user.userId, tipoCambio: "Modificación de cita" });
+        await cambio.save();
+
+        console.log('cita modificada con éxito', cita);
+        res.status(200).json({ confirmacion: 'cita modificada con éxito' });
+    } catch (error) {
+        console.error('Error al modificar la cita:', error);
+        res.status(500).json({ error: 'error al modificar la cita' });
+    }
+});
+
+router.delete('/eliminarCita/:citaId', authenticateToken, async (req, res) => {
+    try {
+        const citaId = req.params.citaId;
+        const citaEliminada = await Cita.findByIdAndDelete(citaId);
+
+        if (!citaEliminada) {
+            throw new Error('La cita no existe');
+        }
+
+        const cambio = new Cambio({ usuario: req.user.userId, tipoCambio: "Eliminación de cita" });
+        await cambio.save();
+
+        console.log('Cita eliminada con éxito', citaEliminada);
+        res.status(200).json({ confirmacion: 'Cita eliminada con éxito' });
+    } catch (error) {
+        console.error('Error al eliminar la cita:', error);
+        res.status(500).json({ error: 'Error al eliminar la cita' });
+    }
+});
+
 
 router.get('/getCitas', authenticateToken, async (req,res) => {
     try {

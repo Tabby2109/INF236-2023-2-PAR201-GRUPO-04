@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-// import axios from 'axios';
+import axios from 'axios';
 import './formStyles.css';
 
 const EventForm = ({ token, setShowModal, data, handleClose }) => {
@@ -25,8 +25,6 @@ const EventForm = ({ token, setShowModal, data, handleClose }) => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    console.log(original[name])
-    console.log(value)
     set_form_data((prevData) => ({
       ...prevData,
       [name]: value
@@ -46,9 +44,38 @@ const EventForm = ({ token, setShowModal, data, handleClose }) => {
   }
   };
   
-  const handleSubmit = () => {
-    console.log("MODIFICADO ", form_data)
-    console.log("ORIGINAL ", original)
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const modifiedData = {};
+      modified.forEach((field) => {
+        modifiedData[field] = form_data[field];
+    });
+    console.log(data)
+    axios.patch(`http://localhost:5000/citas/modificarCita/${data._id}`, modifiedData,{
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+    } )
+    .then(response => {
+      setShowModal(false);
+      alert("Modificación realizada");
+      window.location.reload(true);
+    })
+    .catch(error => console.error('Error modificando cita:', error));
+  }
+
+  const handleDeleteEvent = (e) => {
+    axios.delete(`http://localhost:5000/citas/eliminarCita/${data._id}`,{
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+    } )
+    .then(response => {
+      setShowModal(false);
+      alert("Cita eliminada");
+      window.location.reload(true);
+    })
+    .catch(error => console.error('Error eliminando cita:', error));
   }
 
   return (
@@ -83,11 +110,12 @@ const EventForm = ({ token, setShowModal, data, handleClose }) => {
       <label className='label-info' htmlFor="infoExtra">
         Información extra {modified.includes("infoExtra") && ("(*)")}: 
         <textarea id="infoExtra" name="infoExtra" value={form_data.infoExtra} onChange={handleChange} />
- 
       </label>
+
       <div className="modal-footer">
-        <button type="button" className="btn btn-success" data-bs-dismiss="modal" onClick={handleClose}>Cancelar cambios</button>
-        <button type="button" className="btn btn-danger" onClick={handleSubmit}>Modificar</button>
+        <button type="button" className="btn btn-secondary w-25" data-bs-dismiss="modal" onClick={handleClose}>Cerrar</button>
+        <button type="button" className="btn btn-danger" onClick={handleDeleteEvent}>Eliminar cita</button>
+        <button type="button" className="btn btn-warning" onClick={handleSubmit}>Modificar</button>
       </div>
     </form>
   )
