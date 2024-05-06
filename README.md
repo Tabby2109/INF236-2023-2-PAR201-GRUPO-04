@@ -14,7 +14,7 @@ NOTA: ACTUALIZACIÓN DE INTEGRANTES PARA INGENIERÍA DE SOFTWARE 2024-1
 * Juan Daniel Alegría Vásquez, 202023510-4
 * Juan Daniel Cucurella Mora, 202173608-5
 * Pablo Antonio Retamales Jara, 202173650-6
-* Nicolas Mauricio Vergara Ayca - 2021305308-6
+* Nicolas Mauricio Vergara Ayca - 202130538-6
 * **Tutor**: Sebastián Cifuentes
 
 Para mayor información, visitar "retrospectiva" en la wiki del proyecto
