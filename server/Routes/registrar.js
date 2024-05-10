@@ -6,6 +6,19 @@ const jwt = require('jsonwebtoken')
 const router = express.Router();
 const Personal = require('../Models/Personal');
 
+function authenticateToken(req,res,next){
+    const authHeader = req.headers['authorization'];
+    const token = authHeader && authHeader.split(' ')[1];
+  
+    if (token == null) return res.sendStatus(401);
+    
+    jwt.verify(token, process.env.TOKEN_SECRET, (err, user) => {
+        if (err) return res.sendStatus(403);
+        req.user = user;
+        next();
+    });
+}
+
 // Ruta para crear un usuario (Padmin)
 router.post('/registrar', async (req, res) => {
 
@@ -30,4 +43,23 @@ router.post('/registrar', async (req, res) => {
         });
 });
 
+router.post('/eliminarUser', authenticateToken, async (req,res)=>{
+    const {rut} = req.body;
+    const existingUser = await Personal.findOne({ rut });
+    try{
+        if (existingUser) {
+            const eliminacionUser = await Personal.findByIdAndDelete(existingUser._id)
+            if(!eliminacionUser){
+                throw new Error('usuario no borrado');
+            }
+            console.log('usuario borrado');
+            res.status(200).json({confirmacion:'usuario borrado exitosamente'});
+        } else {
+            throw new Error('usuario no existe');
+        }
+    } catch(error) {
+        console.error('error eliminando usuario', error);
+        res.status(500).json({error:'Error al eliminar usuario'})
+    }
+});
 module.exports = router;

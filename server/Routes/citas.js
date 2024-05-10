@@ -83,7 +83,7 @@ router.post('/registrarCita', authenticateToken, async (req, res) => {
                 cambio.save()
                 .then(()=>{
                     console.log('cita guardada con exito', Cita);
-                    res.status(201).json({ confirmacion: 'cita registrada con exito'});
+                    res.status(201).json({ confirmacion: 'cita registrada con exito', id:Cita._id});
                 })
                 .catch(error =>{
                     console.error('error guardando cambio', error);
@@ -97,7 +97,7 @@ router.post('/registrarCita', authenticateToken, async (req, res) => {
             });
         
     } catch (error) {
-        res.status(500).json({ error: 'error general registrando cita'});
+        res.status(500).json({ error: 'error general registrando cita', detail:error.message});
         console.log('ID del usuario:', req.user.userId);
     }
 });
