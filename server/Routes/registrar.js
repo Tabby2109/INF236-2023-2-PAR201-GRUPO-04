@@ -21,26 +21,43 @@ function authenticateToken(req,res,next){
 
 // Ruta para crear un usuario (Padmin)
 router.post('/registrar', async (req, res) => {
+    try {
+        const { rut, password, nombre, isAdmin} = req.body;
 
-    const { rut, password, nombre, isAdmin} = req.body;
-    const existingUser = await Personal.findOne({ rut });
-    if (existingUser) {
-        return res.status(400).json({ message: 'usuario ya existe'});
+        const rutRegex = /^\d{8}-[\dK]$/;
+        if (!rutRegex.test(rut)) {
+            throw new Error('rut no cumple')
+        }
+
+        if (nombre.length >= 20){
+            throw new Error('nombre es muy largo')
+        }
+
+        if (password.length >= 16){
+            throw new Error('contrasena muy larga')
+        }
+    
+        const existingUser = await Personal.findOne({ rut });
+        if (existingUser) {
+            return res.status(400).json({ message: 'usuario ya existe'});
+        }
+    
+        const hashPass = await bcryptjs.hash(password, 10);
+    
+        const newPersonal = new Personal({ rut, password: hashPass, nombre, isAdmin})
+    
+        await newPersonal.save()
+            .then(personal => {
+                console.log('Personal guardado', Personal);
+                res.status(201).json({ message: 'registro exitoso'});
+            })
+            .catch(error => {
+                console.error('error guardando', error);
+                res.status(500).json({error: error.message});
+            });
+    } catch(error){
+        res.status(500).json({message: 'error guardando'});
     }
-
-    const hashPass = await bcryptjs.hash(password, 10);
-
-    const newPersonal = new Personal({ rut, password: hashPass, nombre, isAdmin})
-
-    await newPersonal.save()
-        .then(personal => {
-            console.log('Personal guardado', Personal);
-            res.status(201).json({ message: 'registro exitoso'});
-        })
-        .catch(error => {
-            console.error('error guardando', error);
-            res.status(500).json({error: error.message});
-        });
 });
 
 router.post('/eliminarUser', authenticateToken, async (req,res)=>{

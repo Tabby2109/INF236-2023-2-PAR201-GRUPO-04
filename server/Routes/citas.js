@@ -49,7 +49,26 @@ router.post('/registrarCita', authenticateToken, async (req, res) => {
         console.log(req);
         console.log("user: " + req.user.userId);
         const personalId = Number(req.user.userId);
+
+        if (isNaN(personalId)) {
+            throw new Error('personal id no es numero');
+        }
+
         var {rutPaciente, nombrePaciente, maquinaId, fecha, motivoEx, tipoEx, contacto, infoExtra} = req.body;
+        
+        const rutRegex = /^\d{8}-[\dK]$/;
+        if (!rutRegex.test(rutPaciente)) {
+            throw new Error('rut no cumple')
+        }
+
+        if (!rutPaciente || !nombrePaciente || !maquinaId || !fecha || !motivoEx || !tipoEx || !contacto) {
+            throw new Error('falta parametros')
+        }
+
+        tipoEx[0].toUpperCase()
+        if (tipoEx === 'Radiografia') tipoEx = 'Radiografía'
+        else if (tipoEx === 'Ecografia') tipoEx = 'Ecografía'
+
         // Manejo de las horas
         var duration = obtenerDuracion(tipoEx);
 
@@ -82,8 +101,8 @@ router.post('/registrarCita', authenticateToken, async (req, res) => {
                 const cambio = new Cambio({ usuario: req.user.userId, tipoCambio: "Nueva cita" });
                 cambio.save()
                 .then(()=>{
-                    console.log('cita guardada con exito', Cita);
-                    res.status(201).json({ confirmacion: 'cita registrada con exito', id:Cita._id});
+                    console.log('cita registrada con exito', Cita);
+                    res.status(201).json({ confirmacion: 'cita registrada con exito', id: Cita._id});
                 })
                 .catch(error =>{
                     console.error('error guardando cambio', error);
@@ -97,7 +116,7 @@ router.post('/registrarCita', authenticateToken, async (req, res) => {
             });
         
     } catch (error) {
-        res.status(500).json({ error: 'error general registrando cita', detail:error.message});
+        res.status(500).json({ error: 'error registrando cita', detail:error.message});
         console.log('ID del usuario:', req.user.userId);
     }
 });
