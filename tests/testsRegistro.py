@@ -205,8 +205,8 @@ class RegistroTests(unittest.TestCase):
         data_response = response.json()
         self.assertEqual("error guardando",data_response["message"])
 
-        response_rollback = requests.post(self.delete_url, headers=head, json={"rut":"ajsk1c43osjf-12421"})
-        self.assertEqual("200", str(response_rollback.status_code))
+        # response_rollback = requests.post(self.delete_url, headers=head, json={"rut":"ajsk1c43osjf-12421"})
+        # self.assertEqual("200", str(response_rollback.status_code))
 
     def test_invalid_rut_nonalfanum(self):
         login_response = requests.post(self.url_login, json=self.test_credentials)
@@ -219,8 +219,8 @@ class RegistroTests(unittest.TestCase):
         data_response = response.json()
         self.assertEqual("error guardando",data_response["message"])
 
-        response_rollback = requests.post(self.delete_url, headers=head, json={"rut":"%29412kfnais-#$/"})
-        self.assertEqual("200", str(response_rollback.status_code))
+        # response_rollback = requests.post(self.delete_url, headers=head, json={"rut":"%29412kfnais-#$/"})
+        # self.assertEqual("200", str(response_rollback.status_code))
         
     def test_invalid_name_nonalfanum(self):
         login_response = requests.post(self.url_login, json=self.test_credentials)
@@ -233,8 +233,8 @@ class RegistroTests(unittest.TestCase):
         data_response = response.json()
         self.assertEqual("error guardando",data_response["message"])
 
-        response_rollback = requests.post(self.delete_url, headers=head, json={"rut":"20459528-1"})
-        self.assertEqual("200", str(response_rollback.status_code))
+        # response_rollback = requests.post(self.delete_url, headers=head, json={"rut":"20459528-1"})
+        # self.assertEqual("200", str(response_rollback.status_code))
 
     def test_invalid_long_rut(self):
         login_response = requests.post(self.url_login, json=self.test_credentials)
@@ -247,8 +247,9 @@ class RegistroTests(unittest.TestCase):
         data_response = response.json()
         self.assertEqual("error guardando",data_response["message"])
 
-        response_rollback = requests.post(self.delete_url, headers=head, json={"rut":"204595132509350124096856025328-1345678924758723465825456789876543234938947398676532886729837529735"})
-        self.assertEqual("200", str(response_rollback.status_code))
+        # Rollback en caso de no estar implementado
+        # response_rollback = requests.post(self.delete_url, headers=head, json={"rut":"204595132509350124096856025328-1345678924758723465825456789876543234938947398676532886729837529735"})
+        # self.assertEqual("200", str(response_rollback.status_code))
 
     def test_invalid_long_name(self):
         login_response = requests.post(self.url_login, json=self.test_credentials)
@@ -261,8 +262,9 @@ class RegistroTests(unittest.TestCase):
         data_response = response.json()
         self.assertEqual("error guardando",data_response["message"])
 
-        response_rollback = requests.post(self.delete_url, headers=head, json={"rut":"20459522-8"})
-        self.assertEqual("200", str(response_rollback.status_code))
+        # Rollback en caso de no estar implementado
+        # response_rollback = requests.post(self.delete_url, headers=head, json={"rut":"20459522-8"})
+        # self.assertEqual("200", str(response_rollback.status_code))
 
     def test_invalid_long_password(self):
         login_response = requests.post(self.url_login, json=self.test_credentials)
@@ -270,10 +272,11 @@ class RegistroTests(unittest.TestCase):
         print(data_login["token"])
         head = {'Authorization':'token {}'.format(data_login["token"])}
 
-        response = requests.post(self.base_url, json=self.invalid_user_rut_nonalfanum)
+        response = requests.post(self.base_url, json=self.invalid_user_long_password)
         self.assertEqual("500",str(response.status_code))
         data_response = response.json()
         self.assertEqual("error guardando",data_response["message"])
-
-        response_rollback = requests.post(self.delete_url, headers=head, json={"rut":"20459522-7"})
-        self.assertEqual("200", str(response_rollback.status_code))
+        
+        # Rollback en caso de no estar implementado
+        # response_rollback = requests.post(self.delete_url, headers=head, json={"rut":"20459522-7"})
+        # self.assertEqual("200", str(response_rollback.status_code))
