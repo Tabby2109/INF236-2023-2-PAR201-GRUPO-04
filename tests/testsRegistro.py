@@ -130,7 +130,7 @@ class RegistroTests(unittest.TestCase):
         data_response = response.json()
         self.assertEqual("registro exitoso",data_response["message"])
 
-        response_rollback = requests.post(self.delete_url, headers=head, json={"rut":"20459522-2"})
+        response_rollback = requests.post(self.delete_url, headers=head, json={"rut":"21928342-2"})
         self.assertEqual("200", str(response_rollback.status_code))
 
     def test_registrar_usuario_nonadmin(self):
