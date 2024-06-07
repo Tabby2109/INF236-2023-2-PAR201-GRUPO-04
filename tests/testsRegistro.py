@@ -181,6 +181,8 @@ class RegistroTests(unittest.TestCase):
         response = requests.post(self.base_url, json=self.invalid_user_noname)
         self.assertEqual("500",str(response.status_code))
         data_response = response.json()
+        
+        #print(data_response)
         self.assertEqual("error guardando",data_response["message"])
 
     def test_user_nobool(self):

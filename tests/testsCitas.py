@@ -256,9 +256,10 @@ class CitasTests(unittest.TestCase):
         self.assertEqual("500",str(response.status_code))
         self.assertEqual("error registrando cita", data_response["error"])
 
-    
-        erase_response = requests.delete(self.url_erase+"/"+str(data_response["id"]), headers=head)
-        self.assertEqual("200",str(erase_response.status_code))
+        
+        #erase_response = requests.delete(self.url_erase+"/"+str(data_response["id"]), headers=head)
+        #self.assertEqual("200",str(erase_response.status_code))
+        
 
     def test_hora_rut_invalido_noalfanumerico(self):
         #secuencia de login
@@ -274,8 +275,8 @@ class CitasTests(unittest.TestCase):
         self.assertEqual("error registrando cita", data_response["error"])
 
     
-        erase_response = requests.delete(self.url_erase+"/"+str(data_response["id"]), headers=head)
-        self.assertEqual("200",str(erase_response.status_code))
+        #erase_response = requests.delete(self.url_erase+"/"+str(data_response["id"]), headers=head)
+        #self.assertEqual("200",str(erase_response.status_code))
 
     def test_hora_typo_tipoex(self):
         login_response = requests.post(self.url_login, json=self.test_credentials)
@@ -305,8 +306,8 @@ class CitasTests(unittest.TestCase):
         self.assertEqual("error registrando cita", data_response["error"])
 
     
-        erase_response = requests.delete(self.url_erase+"/"+str(data_response["id"]), headers=head)
-        self.assertEqual("200",str(erase_response.status_code))
+        #erase_response = requests.delete(self.url_erase+"/"+str(data_response["id"]), headers=head)
+        #self.assertEqual("200",str(erase_response.status_code))
 
 if __name__ == '__main__':
     unittest.main()
