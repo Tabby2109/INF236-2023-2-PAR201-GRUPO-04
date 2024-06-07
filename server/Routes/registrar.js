@@ -36,7 +36,11 @@ router.post('/registrar', async (req, res) => {
         if (password.length >= 16){
             throw new Error('contrasena muy larga')
         }
-    
+        
+        if (!rut || !password || !nombre || !isAdmin){
+            throw new Error('falta uno de los campos')
+        }
+        
         const existingUser = await Personal.findOne({ rut });
         if (existingUser) {
             return res.status(400).json({ message: 'usuario ya existe'});
