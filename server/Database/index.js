@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 
-dotenv.config();
+dotenv.config({ path: '../.env' });
 
 const { DB_USER, DB_PASSWORD, DB_HOST } = process.env
 

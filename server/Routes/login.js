@@ -4,7 +4,7 @@ const bcryptjs = require('bcryptjs');
 const jwt = require('jsonwebtoken')
 const dotenv = require('dotenv');
 
-dotenv.config();
+dotenv.config({ path: '../server.env' });
 
 const router = express.Router();
 const Personal = require('../Models/Personal');
@@ -12,7 +12,7 @@ const Personal = require('../Models/Personal');
 router.post('/login', async (req, res) => {
     try {
       const { rut, password } = req.body;
-  
+
       // Verificar si el usuario existe
       const user = await Personal.findOne({ rut });
       if (!user) {
@@ -25,7 +25,6 @@ router.post('/login', async (req, res) => {
         return res.status(401).json({ message: 'Credenciales incorrectas.' });
       }
       
-      //console.log(process.env)
       // Generar un token JWT
       const token = jwt.sign({ userId: user._id, userIsAdmin: user.isAdmin }, process.env.TOKEN_SECRET, { expiresIn: '1d' });
   
