@@ -26,17 +26,11 @@ function obtenerDuracion(tipoExamen) {
 function authenticateToken(req,res,next){
     const authHeader = req.headers['authorization'];
     const token = authHeader && authHeader.split(' ')[1];
-    // console.log("authheader: ", authHeader);
-    // console.log("token: ", token);
-    console.log("\n");
+
     if (token == null) return res.sendStatus(401);
     
     jwt.verify(token, process.env.TOKEN_SECRET, (err, user) => {
-        // console.log("USUARIOOOOO: " + req.user);
-        // console.log(err);
-
         if (err) return res.sendStatus(403);
-        // console.log("this user: " + req.user);
         req.user = user;
 
         next();
@@ -46,8 +40,6 @@ function authenticateToken(req,res,next){
 // Ruta para crear una cita
 router.post('/registrarCita', authenticateToken, async (req, res) => {
     try{
-        console.log(req);
-        console.log("user: " + req.user.userId);
         const personalId = Number(req.user.userId);
 
         if (isNaN(personalId)) {
@@ -70,15 +62,16 @@ router.post('/registrarCita', authenticateToken, async (req, res) => {
         else if (tipoEx === 'Ecografia') tipoEx = 'Ecografía'
 
         // Manejo de las horas
-        var duration = obtenerDuracion(tipoEx);
+        let duration = obtenerDuracion(tipoEx);
 
-        var final = new Date(fecha)
+        let final = new Date(fecha)
         final.setMinutes(final.getMinutes() + duration);
         
         const hora = String(moment(fecha).format("HH:mm"));
-        console.log(hora)
 
-        const maquina = await Maquina.findOne({ index: maquinaId, tipoMaquina: tipoEx });
+        let queryFindMachine = { index: maquinaId, tipoMaquina: tipoEx.toString() }
+
+        const maquina = await Maquina.findOne(queryFindMachine);
         if (!maquina) {
             throw new Error('La máquina no existe');
         }
@@ -147,7 +140,11 @@ router.patch('/modificarCita/:citaId', authenticateToken, async (req, res) => {
         }
 
         if (updates.maquinaId) {
-            const maquina = await Maquina.findOne({ index: updates.maquinaId, tipoMaquina: updates.tipoEx || cita.tipoEx });
+            machineType = updates.tipoEx || cita.tipoEx
+            let queryFindMachine = { index: updates.maquinaId, tipoMaquina: machineType.toString() }
+
+            const maquina = await Maquina.findOne(queryFindMachine);
+
             if (!maquina) {
                 throw new Error('La máquina no existe.');
             }
@@ -200,13 +197,20 @@ router.get('/getCitas', authenticateToken, async (req,res) => {
 
         // Si el index = -1 incluye todas las maquinas para ese tipo de examen
         if (index === -1){
-            result = await Cita.find({tipoEx: tipoMaquina}).populate('maquinaId');
+            let queryAppointment = {tipoEx: tipoMaquina.toString()}
+
+            result = await Cita.find(queryAppointment).populate('maquinaId');
         } else { // En caso contrario, escoge un id especifico de maquina
-            const maquina = await Maquina.findOne({ index: index, tipoMaquina: tipoMaquina });
+            let queryFindMachine = { index: index, tipoMaquina: tipoMaquina.toString() }
+
+            const maquina = await Maquina.findOne(queryFindMachine);
             if (!maquina) {
                 throw new Error('La máquina no existe');
             }
-            result = await Cita.find({tipoEx: tipoMaquina, maquinaId: maquina._id}).populate('maquinaId');
+
+            let queryAppointment = {tipoEx: tipoMaquina.toString(), maquinaId: maquina._id}
+
+            result = await Cita.find(queryAppointment).populate('maquinaId');
         }
 
         res.status(200).json(result)
@@ -218,9 +222,10 @@ router.get('/getCitas', authenticateToken, async (req,res) => {
 });
 
 router.post('/getCitaById', authenticateToken, async (req,res) => {
-    console.log(req);
     try {
-        const result = await Cita.find({_id:req.body.id});
+        let queryFindAppointment = {_id: Number(req.body.id)}
+
+        const result = await Cita.find(queryFindAppointment);
         res.status(200).json(result)
     } catch (error) {
         console.error(error);
@@ -254,7 +259,7 @@ router.get('/getCitaByName/:nombre', authenticateToken, async (req, res) => {
         const name = req.params.nombre;
         var today = new Date();
         today.setHours(0, 0, 0, 0);
-        console.log(today);
+        
         // Desde hoy en adelante busca las citas pendientes por nombre
         const result = await Cita.find({ 
             nombrePaciente: name, 
