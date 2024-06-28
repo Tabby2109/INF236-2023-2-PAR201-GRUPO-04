@@ -48,6 +48,7 @@
     ]
   },
   "devDependencies": {
-    "@daypilot/daypilot-lite-react": "^3.18.0"
+    "@daypilot/daypilot-lite-react": "^3.18.0",
+    "prop-types": "^15.8.1"
   }
 }

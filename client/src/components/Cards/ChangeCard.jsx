@@ -1,4 +1,5 @@
 import moment from 'moment';
+import PropTypes from 'prop-types';
 
 export const ChangeCard = ({ data, index }) => {
     let fecha = moment(data.fecha).format("DD/MM/YYYY");
@@ -12,5 +13,21 @@ export const ChangeCard = ({ data, index }) => {
         <p>Fecha y hora: {fecha} {hora}</p>
       </div>
     )
-    
 }
+
+const userShape = PropTypes.shape({
+  rut: PropTypes.string.isRequired,
+  nombre: PropTypes.string.isRequired,
+});
+
+const dataShape = {
+  _id: PropTypes.string.isRequired,
+  usuario: userShape.isRequired,
+  tipoCambio: PropTypes.string.isRequired,
+  fecha: PropTypes.string.isRequired,
+};
+
+ChangeCard.propTypes = {
+  data: PropTypes.shape(dataShape).isRequired,
+  index: PropTypes.number.isRequired,
+};
