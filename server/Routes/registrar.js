@@ -41,14 +41,15 @@ router.post('/registrar', async (req, res) => {
             throw new Error('falta uno de los campos')
         }
         
-        const existingUser = await Personal.findOne({ rut });
+        let queryFindExistingUser = { rut: rut.toString() }
+        const existingUser = await Personal.findOne(queryFindExistingUser);
         if (existingUser) {
             return res.status(400).json({ message: 'usuario ya existe'});
         }
     
         const hashPass = await bcryptjs.hash(password, 10);
     
-        const newPersonal = new Personal({ rut, password: hashPass, nombre, isAdmin})
+        const newPersonal = new Personal({ rut: rut.toString(), password: hashPass, nombre, isAdmin})
     
         await newPersonal.save()
             .then(personal => {
