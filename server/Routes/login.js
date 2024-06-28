@@ -14,7 +14,8 @@ router.post('/login', async (req, res) => {
       const { rut, password } = req.body;
 
       // Verificar si el usuario existe
-      const user = await Personal.findOne({ rut });
+      let queryFindUser = { rut: rut.toString() }
+      const user = await Personal.findOne(queryFindUser);
       if (!user) {
         return res.status(401).json({ message: 'Credenciales incorrectas.' });
       }
