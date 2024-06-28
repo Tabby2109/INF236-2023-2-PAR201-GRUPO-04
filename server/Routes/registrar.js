@@ -67,7 +67,8 @@ router.post('/registrar', async (req, res) => {
 
 router.post('/eliminarUser', authenticateToken, async (req,res)=>{
     const {rut} = req.body;
-    const existingUser = await Personal.findOne({ rut });
+    let queryFindExistingUser = { rut: rut.toString() }
+    const existingUser = await Personal.findOne(queryFindExistingUser);
     try{
         if (existingUser) {
             const eliminacionUser = await Personal.findByIdAndDelete(existingUser._id)
