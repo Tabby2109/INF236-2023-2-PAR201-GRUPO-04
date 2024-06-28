@@ -1,20 +1,12 @@
 import moment from 'moment';
+import PropTypes from 'prop-types'
+import { calcDiff } from '../../utilities/calc-diff-dates.utility';
 
-export const PendingAppointmentCard = ({event, index}) =>{
-  function calcDiff(date1, date2){
-    var initial = new Date(date1);
-    var final = new Date(date2);
-
-    // diff está en milisegundos
-    var diff = final - initial;
-    var hhmm = moment.duration(diff);
-    return hhmm.hours() + " horas y " + hhmm.minutes() + " minutos."
-  }
-
+export const PendingAppointmentCard = ({ event, index }) =>{
   let date = moment(event.fecha).format('DD/MM/YYYY');
   let duration = calcDiff(event.fecha, event.fin);
 
-  return <>
+  return(
     <div className="shadow p-3 m-2" key={event._id}>
       <h3>Cita {index + 1}</h3>
       <p>RUT: {event.rutPaciente}</p>
@@ -27,5 +19,22 @@ export const PendingAppointmentCard = ({event, index}) =>{
       <p>Información extra: {event.infoExtra}</p>
       <p>Duración: {duration}</p>
     </div>
-  </>
+  )
+}
+const eventPropTypes = {
+  _id: PropTypes.string.isRequired,
+  fecha: PropTypes.string.isRequired,
+  fin: PropTypes.string.isRequired,
+  rutPaciente: PropTypes.string.isRequired,
+  nombrePaciente: PropTypes.string.isRequired,
+  hora: PropTypes.string.isRequired,
+  contacto: PropTypes.string.isRequired,
+  tipoEx: PropTypes.string.isRequired,
+  motivoEx: PropTypes.string.isRequired,
+  infoExtra: PropTypes.string.isRequired,
+};
+
+PendingAppointmentCard.propTypes = {
+  event: PropTypes.shape(eventPropTypes).isRequired,
+  index: PropTypes.number.isRequired
 }
