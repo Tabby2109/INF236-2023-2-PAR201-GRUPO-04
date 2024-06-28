@@ -69,7 +69,7 @@ router.post('/registrarCita', authenticateToken, async (req, res) => {
         
         const hora = String(moment(fecha).format("HH:mm"));
 
-        let queryFindMachine = { index: maquinaId, tipoMaquina: examTypeFormatted.toString() }
+        let queryFindMachine = { index: Number(maquinaId), tipoMaquina: examTypeFormatted.toString() }
 
         const maquina = await Maquina.findOne(queryFindMachine);
         if (!maquina) {
