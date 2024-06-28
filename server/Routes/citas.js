@@ -46,7 +46,7 @@ router.post('/registrarCita', authenticateToken, async (req, res) => {
             throw new Error('personal id no es numero');
         }
 
-        var {rutPaciente, nombrePaciente, maquinaId, fecha, motivoEx, tipoEx, contacto, infoExtra} = req.body;
+        const {rutPaciente, nombrePaciente, maquinaId, fecha, motivoEx, tipoEx, contacto, infoExtra} = req.body;
         
         const rutRegex = /^\d{8}-[\dK]$/;
         if (!rutRegex.test(rutPaciente)) {
@@ -57,26 +57,26 @@ router.post('/registrarCita', authenticateToken, async (req, res) => {
             throw new Error('falta parametros')
         }
 
-        tipoEx[0].toUpperCase()
-        if (tipoEx === 'Radiografia') tipoEx = 'Radiografía'
-        else if (tipoEx === 'Ecografia') tipoEx = 'Ecografía'
+        let examTypeFormatted = tipoEx.charAt(0).toUpperCase() + tipoEx.slice(1).toLowerCase();
+        if (examTypeFormatted === 'Radiografia') examTypeFormatted = 'Radiografía'
+        else if (examTypeFormatted === 'Ecografia') examTypeFormatted = 'Ecografía'
 
         // Manejo de las horas
-        let duration = obtenerDuracion(tipoEx);
+        const duration = obtenerDuracion(examTypeFormatted);
 
         let final = new Date(fecha)
         final.setMinutes(final.getMinutes() + duration);
         
         const hora = String(moment(fecha).format("HH:mm"));
 
-        let queryFindMachine = { index: maquinaId, tipoMaquina: tipoEx.toString() }
+        let queryFindMachine = { index: maquinaId, tipoMaquina: examTypeFormatted.toString() }
 
         const maquina = await Maquina.findOne(queryFindMachine);
         if (!maquina) {
             throw new Error('La máquina no existe');
         }
 
-        const nuevaCita = new Cita({
+        const newAppointment = new Cita({
             personalId, 
             rutPaciente, 
             nombrePaciente, 
@@ -85,32 +85,33 @@ router.post('/registrarCita', authenticateToken, async (req, res) => {
             fin: final, 
             hora, 
             motivoEx, 
-            tipoEx, 
+            tipoEx: examTypeFormatted, 
             contacto, 
             infoExtra
         });
-        nuevaCita.save()
-            .then(Cita => {
-                const cambio = new Cambio({ usuario: req.user.userId, tipoCambio: "Nueva cita" });
-                cambio.save()
-                .then(()=>{
-                    console.log('cita registrada con exito', Cita);
-                    res.status(201).json({ confirmacion: 'cita registrada con exito', id: Cita._id});
-                })
-                .catch(error =>{
-                    console.error('error guardando cambio', error);
-                    res.status(500).json({ error: 'error guardando cambio', user:req.user.userId})
-                })
-                
-            })
-            .catch(error => {
-                console.error('error guardando', error);
-                res.status(500).json({ error: 'error registrando cita', user:req.user.userId})
-            });
-        
+
+        let savedAppointment
+        try {
+            savedAppointment = await newAppointment.save()
+        } catch (error) {
+            console.error('error guardando', error)
+            res.status(500).json({ error: 'error registrando cita', user: req.user.userId})
+        }
+
+        const change = new Cambio({ usuario: req.user.userId, tipoCambio: "Nueva cita" })
+
+        try {
+            await change.save()
+        } catch (error){
+            if (savedAppointment) {
+                await Cita.findByIdAndDelete(savedAppointment._id)
+            }
+            res.status(500).json({ error: 'error guardando cambio', user: req.user.userId})
+        }
+
+        res.status(201).json({ confirmacion: 'cita registrada con exito', id: newAppointment._id})
     } catch (error) {
         res.status(500).json({ error: 'error registrando cita', detail:error.message});
-        console.log('ID del usuario:', req.user.userId);
     }
 });
 
@@ -140,7 +141,7 @@ router.patch('/modificarCita/:citaId', authenticateToken, async (req, res) => {
         }
 
         if (updates.maquinaId) {
-            machineType = updates.tipoEx || cita.tipoEx
+            let machineType = updates.tipoEx || cita.tipoEx
             let queryFindMachine = { index: updates.maquinaId, tipoMaquina: machineType.toString() }
 
             const maquina = await Maquina.findOne(queryFindMachine);
@@ -239,7 +240,7 @@ router.post('/getCitaById', authenticateToken, async (req,res) => {
 router.get('/getCitaByRUT/:rut', authenticateToken, async (req, res) => {
     try {
         const rut = req.params.rut;
-        var today = new Date();
+        let today = new Date();
         today.setHours(0, 0, 0, 0);
         console.log(today);
         // Desde hoy en adelante busca las citas pendientes por rut
@@ -257,7 +258,7 @@ router.get('/getCitaByRUT/:rut', authenticateToken, async (req, res) => {
 router.get('/getCitaByName/:nombre', authenticateToken, async (req, res) => {
     try {
         const name = req.params.nombre;
-        var today = new Date();
+        let today = new Date();
         today.setHours(0, 0, 0, 0);
         
         // Desde hoy en adelante busca las citas pendientes por nombre
