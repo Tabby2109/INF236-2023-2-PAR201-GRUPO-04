@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import './formStyles.css';
+import PropTypes from 'prop-types'
 
 const EventForm = ({ token, setShowModal, data, handleClose }) => {
   const [form_data, set_form_data] = useState({
@@ -120,5 +121,22 @@ const EventForm = ({ token, setShowModal, data, handleClose }) => {
     </form>
   )
 }
+
+const dataShapeTypes ={
+  _id: PropTypes.string.isRequired,
+  rutPaciente: PropTypes.string.isRequired,
+  nombrePaciente: PropTypes.string.isRequired,
+  motivoEx: PropTypes.string.isRequired,
+  maquinaId: PropTypes.shape({ index: PropTypes.number.isRequired }),
+  contacto: PropTypes.string.isRequired,
+  infoExtra: PropTypes.string.isRequired,
+}
+
+EventForm.propTypes = {
+  token: PropTypes.string.isRequired,
+  setShowModal: PropTypes.func.isRequired,
+  data: PropTypes.shape(dataShapeTypes).isRequired,
+  handleClose: PropTypes.func.isRequired
+};
 
 export default EventForm;

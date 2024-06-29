@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import './formStyles.css';
+import PropTypes from 'prop-types'
 
 const SlotForm = ({ token, setShowModal, tipoExamen, fecha, handleClose }) => {
   const [formData, setFormData] = useState({
@@ -61,33 +62,33 @@ const SlotForm = ({ token, setShowModal, tipoExamen, fecha, handleClose }) => {
     <form className="form-content">
       <div className='d-flex'>
         <label className='label-rut' htmlFor="rutPaciente">
-          RUT:
+          RUT:{' '}
           <input type="text" id="rutPaciente" name="rutPaciente" value={formData.rutPaciente} autoComplete="off" onChange={handleChange} />
         </label>
         <label className='label-nombre' htmlFor="nombrePaciente">
-          Nombre:
+          Nombre:{' '}
           <input type="text" id="nombrePaciente" name="nombrePaciente" value={formData.nombrePaciente} autoComplete="off" onChange={handleChange} />
         </label>
       </div>
       
       <label htmlFor="motivoEx">
-        Motivo:
+        Motivo:{' '}
         <textarea id="motivoEx" name="motivoEx" value={formData.motivoEx} onChange={handleChange} />
       </label>
 
       <div className='d-flex justify-content-start'>
         <label className='label-maquina' htmlFor="maquinaId">
-          Máquina ID:
+          Máquina ID:{' '}
           <input type="text" id="maquinaId" name="maquinaId" value={formData.maquinaId} onChange={handleChange} />
         </label>
         <label className='label-contacto' htmlFor="contacto">
-          Contacto:
+          Contacto:{' '}
           <input type="text" id="contacto" name="contacto" value={formData.contacto} autoComplete="off" onChange={handleChange} />
         </label>
       </div>
 
       <label className='label-info' htmlFor="infoExtra">
-        Información extra:
+        Información extra:{' '}
         <textarea id="infoExtra" name="infoExtra" value={formData.infoExtra} onChange={handleChange} />
       </label>
       <div className="modal-footer">
@@ -97,5 +98,13 @@ const SlotForm = ({ token, setShowModal, tipoExamen, fecha, handleClose }) => {
     </form>
   )
 }
+
+SlotForm.propTypes = {
+  token: PropTypes.string.isRequired,
+  setShowModal: PropTypes.func.isRequired,
+  tipoExamen: PropTypes.string.isRequired,
+  fecha: PropTypes.string.isRequired,
+  handleClose: PropTypes.func.isRequired,
+};
 
 export default SlotForm;
