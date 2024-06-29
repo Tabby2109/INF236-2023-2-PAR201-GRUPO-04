@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { PrivateRoutes } from '../models/routes';
+import { PrivateRoutes } from '../navigation/routes';
 
 const Inicio = () => {
   return(

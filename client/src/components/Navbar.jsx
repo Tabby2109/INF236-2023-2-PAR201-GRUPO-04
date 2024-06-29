@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { PrivateRoutes, PublicRoutes } from '../models/routes';
+import { PrivateRoutes, PublicRoutes } from '../navigation/routes';
 
 const Navbar = () => {
   const [unLogged, setUnLogged] = useState(false);

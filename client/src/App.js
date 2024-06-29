@@ -4,18 +4,15 @@ import './App.css';
 
 import ProtectedRoute from './components/ProtectedRoute';
 import LoginLoader from './components/ContentLoader/LoginLoader';
-import { PrivateRoutes, PublicRoutes } from './models/routes';
+import { PrivateRoutes, PublicRoutes } from './navigation/routes';
 
 
 const Navbar = React.lazy(() => import('./components/Navbar'));
 const Login = React.lazy(()=> import('./pages/Login'));
 const Home = React.lazy(() => import('./pages/Home'));
-// const CalendarVisualizer = React.lazy(()=> import('./pages/CalendarVisualizer/CalendarVisualizer'));
-// const CalendarScheduler = React.lazy(()=> import('./pages/CalendarScheduler/CalendarScheduler'));
-// const CalendarModify = React.lazy(()=> import('./pages/CalendarModify/CalendarModify'));
+
 const CheckPatientSchedule = React.lazy(()=> import('./pages/CheckPatientSchedule/CheckPatientSchedule'));
 const ChangeHistory = React.lazy(()=> import('./pages/ChangeHistory/ChangeHistory'));
-
 const CustomizedCalendar = React.lazy(()=> import('./components/CustomizedCalendar/CustomizedCalendar'));
 
 const App = () => {
@@ -43,13 +40,9 @@ const App = () => {
       <Route element={<ProtectedRoute />}>
         <Route element={<GlobalTemplate/>}>
           <Route path={PrivateRoutes.HOME} element={<Home />} />
-          {/* <Route path={PrivateRoutes.CALENDAR.VISUALIZER} element={<CalendarVisualizer />} />
-          <Route path={PrivateRoutes.CALENDAR.SCHEDULER} element={<CalendarScheduler />} />
-          <Route path={PrivateRoutes.CALENDAR.MODIFY} element={<CalendarModify />} /> */}
           <Route path={PrivateRoutes.CHECKPATIENTSCHEDULE} element={<CheckPatientSchedule />} />
           <Route path={PrivateRoutes.CHANGEHISTORY} element={<ChangeHistory />} />
           <Route path={PrivateRoutes.CALENDAR} element={<CustomizedCalendar />} />
-
         </Route>
       </Route>
       <Route path="*" element={<Navigate to={PrivateRoutes.HOME} />} />
