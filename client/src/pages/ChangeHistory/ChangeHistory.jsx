@@ -3,7 +3,7 @@ import axios from 'axios';
 
 import { ChangeCard } from '../../components/Cards/ChangeCard';
 
-const ChangeHistory = ({ setToken,OnLogout }) => {
+const ChangeHistory = () => {
   let gettoken = sessionStorage.getItem('token');
   let token = JSON.parse(gettoken);
   const [changesHistory, setChangesHistory] = useState([]);
