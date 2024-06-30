@@ -12,7 +12,7 @@ const Personal = require('../Models/Personal');
 router.post('/login', async (req, res) => {
     try {
       const { rut, password } = req.body;
-
+      //console.log(rut,password)
       // Verificar si el usuario existe
       let queryFindUser = { rut: rut.toString() }
       const user = await Personal.findOne(queryFindUser);
